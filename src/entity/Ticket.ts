@@ -1,5 +1,5 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Event, EventModel} from "./Event";
+import EventModel, {Event} from "./Event";
 import {ProfileModel} from "./User";
 
 @Entity({name: 'tickets'})

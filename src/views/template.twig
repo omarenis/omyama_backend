@@ -11,7 +11,6 @@
     </title>
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
-
     <!-- Nucleo Icons -->
     <link href="/css/nucleo-icons.css" rel="stylesheet"/>
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
@@ -20,9 +19,7 @@
     <link href="/css/nucleo-svg.css" rel="stylesheet"/>
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css" rel="stylesheet"/>
-
 </head>
-
 <body id="">
 <!-- Navbar -->
 {% block navbar %}
@@ -193,26 +190,18 @@
         </div>
     </footer>
 {% endblock %}
-<!--   Corejs Files   -->
-
-
-<!--   Core JS Files   -->
 <script type="text/javascript" src="/js/core/popper.min.js"></script>
 <script type="text/javascript" src="/js/core/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/plugins/perfect-scrollbar.min.js"></script>
 <script type="text/javascript" src="/js/plugins/smooth-scrollbar.min.js"></script>
-<!-- Kanban scripts -->
 <script type="text/javascript" src="/js/plugins/dragula/dragula.min.js"></script>
 <script type="text/javascript" src="/js/plugins/jkanban/jkanban.js"></script>
-
-
-<script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-        var options = {
+<script type="text/javascript">
+  const win = navigator.platform.indexOf('Win') > -1;
+  if (win && document.querySelector('#sidenav-scrollbar')) {
+        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), {
             damping: '0.5'
-        }
-        Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+        });
     }
 </script>
 

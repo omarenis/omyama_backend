@@ -1,8 +1,8 @@
+import "reflect-metadata";
 import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Ticket, TicketModel} from "./Ticket";
-
 @Entity({name: 'events'})
-export class EventModel {
+export default class EventModel {
 
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) title: string;

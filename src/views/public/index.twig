@@ -1,0 +1,32 @@
+{% extends 'template.twig' %}
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg shadow fixed-top bg-white">
+        <div class="container-fluid">
+            <a class="navbar-brand font-weight-bolder " href="/public/interfaces/index.twig">
+                Events
+            </a>
+            <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+                <ul class="navbar-nav navbar-nav-hover mx-auto">
+                    <a href="/public/interfaces/index.twig" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Home</span>
+                    </a>
+                    <a href="/public/interfaces/index.twig" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Our partners</span>
+                    </a>
+                    <a href="/public/interfaces/index.twig" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Contact</span>
+                    </a>
+                    <a href="/public/interfaces/index.twig" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Our Events</span>
+                    </a>
+                    <a href="/auth/login" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Login</span>
+                    </a>
+                    <a href="/auth/signup" class="dropdown-item border-radius-md">
+                        <span class="ps-3">Sign-up</span>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </nav>
+{% endblock %}

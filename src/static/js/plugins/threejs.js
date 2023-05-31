@@ -8050,7 +8050,7 @@
 
     intersectsLine: function(line) {
 
-      // Note: this tests if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
+      // Note: this __tests__ if a line intersects the plane, not whether it (or its end-points) are coplanar with it.
 
       var startSign = this.distanceToPoint(line.start);
       var endSign = this.distanceToPoint(line.end);

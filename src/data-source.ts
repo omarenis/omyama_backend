@@ -1,6 +1,5 @@
-import "reflect-metadata"
+import "reflect-metadata";
 import { DataSource } from "typeorm"
-import { User } from "./entity/User"
 import * as path from "path";
 import {PlatformTools} from "typeorm/platform/PlatformTools";
 
@@ -8,14 +7,14 @@ export const AppDataSource = new DataSource({
     type: "mysql",
     driver: PlatformTools.load('mysql2'),
     connectorPackage: 'mysql2',
-    host: "localhost",
+    host: "db4free.net",
     port: 3306,
-    username: "root",
+    username: "root_for_test_40",
     password: "Mysql1996@+=",
-    database: "test",
+    database: "test_databse_400",
     synchronize: true,
     logging: false,
-    entities: [path.join(__dirname, "./../src/entity/*.ts")],
+    entities: [path.join(__dirname, 'entity/*.ts')],
     migrations: [],
     subscribers: [],
 })

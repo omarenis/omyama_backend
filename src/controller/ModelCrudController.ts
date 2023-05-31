@@ -1,56 +1,60 @@
 import { Request, Response } from 'express';
 import { ObjectType } from '../data-source';
-import {User, UserModel} from "../entity/User";
 import {IModelCrudService} from "../services/interfaces/IModelCrud";
+import {ModelCrudServiceImplementation} from "../services/implementations/ModelCrudService";
+import {IRestController} from "./IRestController";
+import {ITemplateController} from "./ITemplateController";
+import {EntityTarget, ObjectLiteral} from "typeorm";
 
 
-/*
-export class RestModelController<T> implements IRestController<T>
+export class RestModelController<T, P> implements IRestController<P>
 {
-    private service: IModelCrudService<T>;
+    private service: IModelCrudService<P>;
 
     constructor(type)
     {
-        this.service = new ModelCrudService<T>(type);
+        this.service = new ModelCrudServiceImplementation<T, P>(type);
     }
 
-    async list(request: Request, response: Response, next: Function): Promise<T[]> {
+    async list(request: Request, response: Response): Promise<P[]> {
         return await this.service.findAll();
     }
-    async retrieve(request: Request, response: Response, next: Function): Promise<T> {
+    async retrieve(request: Request, response: Response): Promise<P> {
         return await this.service.findById(request.params.id);
     }
-    async create(request: Request, response: Response, next: Function): Promise<T> {
+    async create(request: Request, response: Response): Promise<P> {
         return await this.service.create(request.body);
     }
-    async delete(request: Request, response: Response, next: Function): Promise<void> {
+    async delete(request: Request, response: Response): Promise<void> {
         await this.service.delete(request.params.id);
     }
-    update(request: Request, response: Response, next: Function): Promise<T> {
-        throw new Error('Method not implemented.');
+    update(request: Request, response: Response): Promise<P> {
+        return this.service.update((request.body as ObjectType<P>), request.params.id)
+    }
+
+    findAll(request, response): Promise<P[]> {
+        return Promise.resolve([]);
     }
 }
-*/
 
-/*
 
-export class ModelTemplate<T> implements ITemplateController<T>
+export class ModelTemplate<T, P> implements ITemplateController<P>
 {
-    private service: IModelCrud<T>;
+    private service: ModelCrudServiceImplementation<T, P>;
     private readonly template: string;
     private readonly urlRedirect: string;
-    constructor(template: string, type, urlRedirect: string)
+    constructor(template: string, type: EntityTarget<ObjectLiteral>, urlRedirect: string)
     {
         this.template = template;
-        this.service = new ModelCrudService<T>(type);
+        this.service = new ModelCrudServiceImplementation<T, P>(type);
         this.urlRedirect = urlRedirect;
     }
-    get(request: Request, response: Response, next: Function) {
+    async get(request: Request, response: Response,) {
         response.render(this.template, {instances: this.service.findAll()});
     }
-    post(request: Request, response: Response, next: Function) {
+    async post(request: Request, response: Response) {
         try {
-            this.service.create(request.body);
+           await this.service.create(request.body);
             response.redirect(this.urlRedirect);
         }
         catch {
@@ -58,36 +62,5 @@ export class ModelTemplate<T> implements ITemplateController<T>
             response.redirect("")
         }
             response.json({message: {type: 'error', content: ''}})
-
     }
 }
-
-
-export class LoginTemplate
-{
-    async get(request: Request, response: Response, next: Function)
-    {
-        response.render('public/interfaces/login.njk');
-    }
-
-    async post(request: Request, response: Response, next: Function)
-    {
-
-    }
-}
-
-export class SignupTemplate
-{
-    private service: ModelCrudService<UserModel, User>
-
-    constructor()
-    {
-        this.service = new ModelCrudService<UserModel, User>(User);
-    }
-
-    async get(request: Request, response: Response, next: Function)
-    {
-        response.render('public/interfaces/signup.njk')
-    }
-}
-*/

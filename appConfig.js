@@ -1,10 +1,22 @@
 const dotenv = require('dotenv');
 
-export const SECRET_KEY = process.env.SECRECT_KEY;
-export const REDIS_SECRET_KEY = process.env.REDIS_SECRET_KEY;
-export const    type= "mysql";
-export const    host= "localhost";
-export const    port= 3306;
-export const    username= "test";
-export const    password= "test";
-export const    database= "test";
+const SECRET_KEY = "$2b$10$bqgY5QHENX0IcRDfg8.upO";
+const REDIS_SECRET_KEY = "2(DCA4Vjjdt)y#B*W8Fu38#gD2a$qTV5Wsb23Du#pW7&WVsk3TW%8IIF!*R%MTy^";
+const type = "mysql";
+const host = "localhost";
+const port = 3306;
+const username = "test";
+const password = "test";
+const database = "test";
+const tokens = require('csrf');
+module.exports = {
+    SECRET_KEY,
+    REDIS_SECRET_KEY,
+    type,
+    host,
+    port,
+    username,
+    password,
+    database,
+    tokens
+}

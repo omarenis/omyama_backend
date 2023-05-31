@@ -6,6 +6,7 @@ import {Routes} from "./routes"
 import * as path from "path";
 import * as session from 'express-session';
 import RedisStore from "connect-redis";
+import "reflect-metadata";
 
 const redis = require("redis");
 let createEngine = require('node-twig').createEngine;
@@ -13,6 +14,7 @@ AppDataSource.initialize().then(async () => {
 
     // create express app
     const app = express();
+    app.use(require('connect-flash')());
     app.set('/', 'static');
     app.set("twig options", {
         allowAsync: true, // Allow asynchronous compiling
@@ -20,16 +22,14 @@ AppDataSource.initialize().then(async () => {
     });
     app.set('trust proxy', 1);
 
-    const redisClient = redis.createClient({
-        url :'redis://127.0.0.1:6379'
-    });
+    const redisClient = redis.createClient();
     redisClient.on('error', function (err) {
         console.log('Could not establish a connection with redis. ' + err);
     });
     redisClient.on('connect', function (err) {
         console.log('Connected to redis successfully');
     });
-
+    await redisClient.connect();
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'twig');
     app.use(bodyParser.json());
@@ -38,16 +38,16 @@ AppDataSource.initialize().then(async () => {
     app.use(express.static(path.join(__dirname, 'static')));
 
     app.use(session({
-    store: new RedisStore({ client: redisClient }),
-    secret: 'secret$%^134',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: false, // if true only transmit cookie over https
-        httpOnly: false, // if true prevent client side JS from reading the cookie
-        maxAge: 1000 * 60 * 10 // session max age in miliseconds
-    }
-}))
+        store: new RedisStore({client: redisClient}),
+        secret: 'secret$%^134',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false, // if true only transmit cookie over https
+            httpOnly: false, // if true prevent client side JS from reading the cookie
+            maxAge: 1000 * 60 * 10 // session max age in miliseconds
+        }
+    }));
 
     app.get('/', (req, res) => {
         res.render('index.twig');

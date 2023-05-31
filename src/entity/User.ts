@@ -1,19 +1,25 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from "typeorm"
 import {compare, hash } from 'bcrypt';
 import {Ticket, TicketModel} from "./Ticket";
 import {SECRET_KEY} from '../../appConfig';
+import {ParticipationModel} from "./Participation";
 @Entity({name: 'users'})
 export class UserModel {
 
     @PrimaryGeneratedColumn() id: number
-
-    @Column({type: "varchar", unique: true}) username: string
-
-    @Column({type: 'varchar', unique: true}) email: string
-
+    @Column({type: "varchar", unique: true, length: 255}) username: string
+    @Column({type: 'varchar', unique: true, length: 255}) email: string
     @Column({type: 'boolean'}) is_superuser: boolean
+    @Column({type: 'text'}) password: string;
+    @OneToOne(() => ProfileModel, (profile: ProfileModel) => profile.user, {cascade: true})
+    profile: ProfileModel;
+    async setPassword(password: string) {
 
+    }
 
+    check_password(password: string) {
+        return compare(password, this.password);
+    }
 }
 
 @Entity()
@@ -21,18 +27,32 @@ export class ProfileModel {
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) firstname: string;
     @Column({type: 'text'}) lastname: string;
-    @OneToMany(() => TicketModel, (ticketModel: TicketModel) => ticketModel.person) tickets: TicketModel[];
+    @Column({type: 'text', nullable: true}) image: string;
+    @Column({type: 'float'}) gainedAmount: number;
+    @Column({type: 'text'}) address: string;
+    @Column({type: "text"}) phone: string;
+    @OneToMany(() => TicketModel, (ticketModel: TicketModel) => ticketModel.person)
+    tickets: TicketModel[];
+    @OneToMany(() => ParticipationModel, (participation) => participation.organizer)
+    participation_set: ParticipationModel[];
+    @OneToOne(() => UserModel, (user: UserModel) => user.profile)
+    user: UserModel;
 }
 
-export class User {
-    constructor( public username: string, public email: string, public password ?: string,
-                 public id ?: number) {}
+export interface User {
+    username: string;
+    email: string;
+    profile ?: Profile;
+    password ?: string;
+    id ?: number;
+}
 
-    setPassword(value: string) {
-        hash()
-    }
-
-    checkPassword(password: string) {
-        compare();
-    }
+export interface  Profile {
+    address: string;
+    firstname: string;
+    lastname: string;
+    gainedAmount: number;
+    phone: string;
+    image ?: string;
+    id ?: number;
 }

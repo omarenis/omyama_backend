@@ -1,28 +1,51 @@
 import {ObjectType, AppDataSource} from "../../data-source";
-import {EntityNotFoundError, EntityTarget, ObjectLiteral} from "typeorm";
+import {EntityNotFoundError} from "typeorm";
 import {IModelCrudService} from "../interfaces/IModelCrud";
-import {IModelRepository} from "../../repositories/interfaces/IModelRepository";
-import {IModelRepositoryImplementation} from "../../repositories/implementations/IModelRepositoryImplementation";
 
-export class ModelCrudServiceImplementation<T extends EntityTarget<P>, P> implements IModelCrudService<P>
-{
-    private repository: IModelRepository<T, P>;
+export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P> {
+    protected repository;
     private readonly type: ObjectType<T>;
-    constructor(type) {
-        this.type = type;
-        this.repository = new IModelRepositoryImplementation<T, P>(type.type);
+
+    constructor(Model) {
+        this.repository = AppDataSource.getRepository(Model);
+    }
+
+    loadData(instanceModel: T): P {
+        const instance: P = ({} as P);
+        Object.keys(instanceModel).forEach((key) => {
+            instance[key] = instanceModel[key];
+        });
+        return instance;
+    }
+
+    convertDataIntoModelInstance(instance: P): T {
+        const modelInstance = ({} as T);
+        Object.keys(instance).forEach((key) => {
+            modelInstance[key] = instance[key];
+        });
+        console.log(modelInstance);
+        return modelInstance;
     }
     create(instance: P): Promise<P> {
-        return this.repository.create(instance);
+        const modelInstance = this.convertDataIntoModelInstance(instance);
+        return this.repository.save(modelInstance);
     }
 
     async delete(id: number): Promise<void> {
         await this.repository.delete(id);
-        return ;
     }
 
-    findAll(): Promise<P[]> {
-        return this.repository.list(undefined);
+    async findAll(): Promise<P[]> {
+        const model_instances: T[] = await this.repository.list();
+        return [].concat(
+            model_instances.map((model_instance) => {
+                return this.loadData(model_instance);
+            })
+        );
+    }
+
+    getBy(params: {[key: string]: string}) {
+        return this.repository.findOneBy(params);
     }
 
     update(instance: ObjectType<P>, id: number): Promise<P> {
@@ -30,9 +53,8 @@ export class ModelCrudServiceImplementation<T extends EntityTarget<P>, P> implem
     }
 
     async findById(id: number): Promise<P> {
-        const instance =  await this.repository.retrieve(id);
-        if(instance === null)
-        {
+        const instance = await this.repository.findOneBy({id});
+        if (instance === null) {
             throw  new EntityNotFoundError(this.type, `object of type${this.type.name} not found with id ${id}`);
         }
         return instance;

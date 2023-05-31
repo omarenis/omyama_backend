@@ -1,13 +1,11 @@
 import {ObjectType} from "typeorm";
 
-export interface IModelCrudService<T>
+export interface IModelCrudService<P>
 {
-    findAll(): Promise<T[]>;
-
-    create(instance: T): Promise<T>;
-
-    update(person: ObjectType<T>, id: number): Promise<T>;
-
+    findAll(): Promise<P[]>;
+    create(instance: P): Promise<P>;
+    update(person: ObjectType<P>, id: number): Promise<P>;
     delete(id: number): Promise<void>;
-    findById(id: number): Promise<T>;
+    findById(id: number): Promise<P>;
+    getBy(params: {[key: string]: string}): Promise<P>;
 }
