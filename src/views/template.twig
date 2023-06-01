@@ -20,7 +20,7 @@
     <!-- CSS Files -->
     <link id="pagestyle" href="/css/argon-dashboard.css" rel="stylesheet"/>
 </head>
-<body id="">
+<body id="" class="{{ session.uset.is_superuser ? '': '' }}">
 <!-- Navbar -->
 {% block navbar %}
 

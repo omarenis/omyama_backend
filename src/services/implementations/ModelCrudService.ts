@@ -10,6 +10,10 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
         this.repository = AppDataSource.getRepository(Model);
     }
 
+    list() {
+        return this.repository.find();
+    }
+
     loadData(instanceModel: T): P {
         const instance: P = ({} as P);
         Object.keys(instanceModel).forEach((key) => {
@@ -36,7 +40,8 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     }
 
     async findAll(): Promise<P[]> {
-        const model_instances: T[] = await this.repository.list();
+        const model_instances: T[] = await this.repository.find();
+        console.log(model_instances);
         return [].concat(
             model_instances.map((model_instance) => {
                 return this.loadData(model_instance);

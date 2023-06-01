@@ -27,7 +27,11 @@ export class ILoginTemplate {
                 category: 403
             });
         } else {
-            response.redirect('/');
+            request.session.user = user;
+            request.session.save(function (err) {
+                console.log(err);
+            });
+            response.redirect('/web/events');
         }
     }
 }
