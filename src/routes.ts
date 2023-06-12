@@ -1,9 +1,18 @@
-import {ILoginTemplate} from "./controller/ILoginTemplate";
-import {SignupTemplate} from "./controller/SignupTemplate";
+import {ILoginTemplate} from "./controller/auth/ILoginTemplate";
+import {SignupTemplate} from "./controller/auth/SignupTemplate";
 import {SpeakerRestController} from "./controller/SpeakerRestController";
 import {EventTemplate} from "./controller/EventController";
+import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
+import {EventList} from "./controller/dashboard/events/ListEvents";
 
-export const Routes = [{
+interface Route {
+    method: string,
+    route: string,
+    controller: any,
+    action: string
+}
+
+export const Routes: Route[] = [{
     method: 'get',
     route: '/auth/login',
     controller: ILoginTemplate,
@@ -26,25 +35,24 @@ export const Routes = [{
         action: 'post'
     },
     // the events crud
-        {
+    {
         method: 'get',
         route: '/web/events',
         action: 'get',
-        controller: EventTemplate
-    },,
+        controller: EventList
+    },
     {
         method: 'post',
         route: '/web/events',
         action: 'post',
-        controller: EventTemplate
+        controller: SingleEvent
     },
     {
-        method: 'post',
+        method: 'get',
         route: '/web/events/:id',
         action: 'get',
-        controller: EventTemplate
+        controller: SingleEvent
     },
-    // the Intervenors crud
     {
         method: 'get',
         route: '/api/intervenors',
@@ -68,5 +76,17 @@ export const Routes = [{
         controller: SpeakerRestController,
         action: 'delete',
         route: '/api/intervenors'
+    },
+    {
+        method: 'get',
+        controller: EventTemplate,
+        action: 'get',
+        route: '/dashboard/events'
+    },
+    {
+        method: 'get',
+        controller: SingleEvent,
+        action: 'get',
+        route: '/dashboard/events/:id'
     },
 ];

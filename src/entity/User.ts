@@ -1,8 +1,9 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from "typeorm"
 import {compare, hash } from 'bcrypt';
-import {Ticket, TicketModel} from "./Ticket";
-import {SECRET_KEY} from '../../appConfig';
+import { TicketModel } from "./Ticket";
 import {ParticipationModel} from "./Participation";
+
+const {SECRET_KEY} = require('../../appConfig');
 @Entity({name: 'users'})
 export class UserModel {
 
@@ -14,7 +15,7 @@ export class UserModel {
     @OneToOne(() => ProfileModel, (profile: ProfileModel) => profile.user, {cascade: true})
     profile: ProfileModel;
     async setPassword(password: string) {
-
+        this.password =  await hash(password, SECRET_KEY);
     }
 
     check_password(password: string) {

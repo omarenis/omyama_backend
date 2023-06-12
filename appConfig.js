@@ -19,4 +19,4 @@ module.exports = {
     password,
     database,
     tokens
-}
+};

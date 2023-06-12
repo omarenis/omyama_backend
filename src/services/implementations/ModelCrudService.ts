@@ -3,10 +3,12 @@ import {EntityNotFoundError} from "typeorm";
 import {IModelCrudService} from "../interfaces/IModelCrud";
 
 export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P> {
-    protected repository;
+    protected readonly repository;
     private readonly type: ObjectType<T>;
+    private readonly model: any;
 
     constructor(Model) {
+        this.model = Model;
         this.repository = AppDataSource.getRepository(Model);
     }
 
@@ -36,6 +38,15 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     }
 
     async delete(id: number): Promise<void> {
+        const _object = this.repository.findOneBy({id});
+        if(_object !== null)
+        {
+            this.repository.delete(_object);
+        }
+        else
+        {
+            throw new EntityNotFoundError(this.model, `${this.model.name.toLowerCase()} not found`);
+        }
         await this.repository.delete(id);
     }
 

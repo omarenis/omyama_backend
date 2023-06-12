@@ -7,11 +7,24 @@ import * as path from "path";
 import * as session from 'express-session';
 import RedisStore from "connect-redis";
 import "reflect-metadata";
+import {UserModel} from "./entity/User";
 
 const redis = require("redis");
 let createEngine = require('node-twig').createEngine;
 AppDataSource.initialize().then(async () => {
+    const userRepository = AppDataSource.getRepository(UserModel);
+    let admin = await userRepository.findOneBy({username: 'admin'});
 
+    if (admin == null) {
+        admin = AppDataSource.getRepository(UserModel).create({
+            username: 'admin',
+            email: 'omartrikji712@gmail.com',
+            is_superuser: true,
+            password: "hello world"
+        });
+        await admin.setPassword("admin@admin");
+        await userRepository.save(admin);
+    }
     // create express app
     const app = express();
     app.use(require('connect-flash')());
@@ -21,7 +34,6 @@ AppDataSource.initialize().then(async () => {
         strict_variables: false
     });
     app.set('trust proxy', 1);
-
     const redisClient = redis.createClient();
     redisClient.on('error', function (err) {
         console.log('Could not establish a connection with redis. ' + err);
@@ -39,14 +51,19 @@ AppDataSource.initialize().then(async () => {
     app.use(session({
         store: new RedisStore({client: redisClient}),
         secret: 'secret$%^134',
-        resave: false,
+        resave: true,
         saveUninitialized: false,
         cookie: {
             secure: false, // if true only transmit cookie over https
             httpOnly: false, // if true prevent client side JS from reading the cookie
-            maxAge: 1000 * 60 * 10 // session max age in miliseconds
+            maxAge: 3600 * 60 * 60 * 24 // session max age in miliseconds
         }
     }));
+
+    app.use(function (req, res, next) {
+        res.locals.req = req;
+        next();
+    });
 
     app.get('/', (req, res) => {
         res.render('index.twig');
@@ -54,18 +71,14 @@ AppDataSource.initialize().then(async () => {
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller as any))[route.action](req, res, next)
+            const result = (new (route.controller))[route.action](req, res, next)
             if (result instanceof Promise) {
-                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
-
+                result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
             } else if (result !== null && result !== undefined) {
-                res.json(result)
+                res.json(result);
             }
         })
     })
-
     app.listen(3000);
-
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results")
-
+    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
 }).catch(error => console.log(error))

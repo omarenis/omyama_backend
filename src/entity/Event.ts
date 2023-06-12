@@ -15,12 +15,14 @@ export default class EventModel {
     @Column({type: 'float'}) hosting: number;
     @Column({type: "float"}) priceConference: number;
     @Column({type: 'float'}) priceTransporting: number;
+    @Column({type: 'bool', nullable: true}) transport: string;
 }
 
 
 export class Event {
     constructor(public title: string, public description: string, public imagePath: string, public dateStart: Date,
                 public dateEnd: Date, public address: string, public hosting: string, public priceConference: number,
-                public priceTransporting: number, public id ?: number, public tickets ?: Ticket[]) {
+                public priceTransporting: number, public transport: string, public id ?: number,
+                public tickets ?: Ticket[]) {
     }
 }

@@ -1,9 +1,9 @@
 import EventModel, { Event } from "../entity/Event";
-import { Speaker, SpeakerModel } from "../entity/Speaker";
-import { RestModelController } from "./ModelCrudController";
+import { Intervenor, IntervenorModel } from "../entity/Intervenor";
+import { RestModelController } from "./framework/ModelCrudController";
 
-export class SpeakerRestController extends RestModelController<SpeakerModel, Speaker> {
+export class SpeakerRestController extends RestModelController<IntervenorModel, Intervenor> {
     constructor() {
-        super(SpeakerModel);
+        super(IntervenorModel);
     }
 }

@@ -1,1 +1,109 @@
 {% extends 'dashboard/template.twig' %}
+{% block content %}
+    <div class="container-fluid py-1 px-3">
+        <div class="container py-4">
+            <section class="py-3">
+                <div class="row mt-lg-4 mt-2">
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card">
+                            <div class="card-body p-3">
+                                <img class="card-img-top" src="{{ event.image }}">
+                                <div class="card-body">
+                                    <h4>
+                                        fekjeejejengejekj
+                                    </h4>
+                                </div>
+                                <hr class="horizontal dark">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="text-sm mb-0">{{ event }}</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event place</p>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <h6 class="text-sm mb-0">02.03.22</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event date</p>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark">
+                                <div class="ms-auto text-end">
+                                    <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                       href="javascript:"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:"><i
+                                                class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+
+                            <div class="card-body p-3">
+                                <img class="card-img-top" src="/img/1.jpg">
+                                <div class="card-body">
+                                    <h4>
+                                        Argon Dashboard
+                                    </h4>
+
+                                    <a href="javascript:" class="text-primary icon-move-right">More about us
+                                        <i class="fas fa-arrow-right text-xs ms-1" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+
+                                <hr class="horizontal dark">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="text-sm mb-0">ISIMS</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event place</p>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <h6 class="text-sm mb-0">02.03.22</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event date</p>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark">
+                                <div class="ms-auto text-end">
+                                    <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                       href="javascript:"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:"><i
+                                                class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- start card -->
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card w-100">
+                            <div class="card-body p-1">
+                                <img class="card-img-top" src="/img/1.jpg">
+                                <div class="card-body">
+                                    <h5 class="h5 w-100 text-center">
+                                        Argon Dashboard
+                                    </h5>
+                                </div>
+                                <hr class="horizontal dark">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h6 class="text-sm mb-0">ISIMS</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event place</p>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                        <h6 class="text-sm mb-0">02.03.22</h6>
+                                        <p class="text-secondary text-sm font-weight-bold mb-0">Event date</p>
+                                    </div>
+                                </div>
+                                <hr class="horizontal dark">
+                                <div class="ms-auto text-end">
+                                    <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                       href="javascript:"><i class="far fa-trash-alt me-2"></i>Delete</a>
+                                    <a class="btn btn-link text-dark px-3 mb-0" href="javascript:"><i
+                                                class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end card -->
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock content %}
