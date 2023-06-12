@@ -1,52 +1,69 @@
 {% extends 'dashboard/template.twig' %}
 {% block content %}
     <div class="container-fluid">
-        <form class="row" action="/events/{{ event is defined ? event.id : 'create' }}">
-            <div class="col-lg-9 col-12 mx-auto">
+        <form class="row" method="post" enctype="multipart/form-data" action="/web/events/{{ event is defined ? event.id : 'create' }}">
+            <div class="mx-auto">
                 <div class="card card-body mt-4">
                     <h6 class="mb-0">New Event</h6>
-                    <p class="text-sm mb-0">{{ event is defined ? 'update': 'create'}} your event </p>
+                    <p class="text-sm mb-0">{{ event is defined ? 'update': 'create' }} your event </p>
                     <hr class="horizontal dark my-3">
-                    <label for="title" class="form-label">Event Name</label>
-                    <input type="text" class="form-control" name="title" id="title" value="{{ event.title }}"/>
-                    <label class="mt-4 form-label">Add Pictures for your event </label>
-                    <img class="iùg-fluid w-50 min-height-200" src="http://localhost:3000/img/img.png"
-                         id="imageLabel" alt="event_image"/>
-                    <label class="btn btn-info w-50" for="image">
-                    upload image
-                    <input type="file" accept="image/*" id="image" name="image" style="display: none" />
-                    </label>
-                    <input name="description" id="description" style="display: none" value="" />
-                    <label class="mt-4" for="editor">Event Description</label>
-                    <div class="" id="editor" onkeyup="edit()">
-                        This is how others will learn about the event, so make it good!
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <div class="form-group">
-                                <label>
-                                    Online Event
-                                </label>
-                                <div class="form-check form-switch ms-1">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault"
-                                           onclick="notify(this)" data-type="warning"
-                                           data-content="Once a project is made private, you cannot revert it to a public project."
-                                           data-title="Warning" data-icon="ni ni-bell-55">
-                                    <label class="form-check-label" for="flexSwitchCheckDefault"></label>
-                                </div>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12" style="display: flex; flex-direction: column">
+                            <fieldset class="form-group">
+                                <label for="title" class="form-label">Event Title</label>
+                                <input type="text" class="form-control" name="title" id="title"
+                                       value="{{ event.title }}"/>
+                            </fieldset>
+                            <div class="row">
+                                <fieldset class="col-md-6 col-sm-12 form-group">
+                                    <label class="form-label" for="startDate">Start Date</label>
+                                    <input class="form-control datetimepicker" id="startDate" type="date"
+                                           placeholder="Please select start date" value="{{ event.startDate }}"
+                                           data-input>
+                                </fieldset>
+                                <fieldset class="col-md-6 col-sm-12 form-group">
+                                    <label class="form-label">End Date</label>
+                                    <input class="form-control datetimepicker" type="text"
+                                           placeholder="Please select end date" data-input>
+                                </fieldset>
+                            </div>
+                            <div class="row mt-1">
+                                <fieldset class="col-md-6 col-sm-12">
+                                    <legend style="display: none">the event is online</legend>
+                                    <label for="isOnline">
+                                        Online Event
+                                    </label>
+                                    <div class="form-check form-switch ms-1">
+                                        <input class="form-check-input mt-2" type="checkbox" id="isOnline"
+                                               data-type="warning"
+                                               data-content="Once a project is made private, you cannot revert it to a public project."
+                                               data-title="Warning" data-icon="ni ni-bell-55">
+                                        <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                                    </div>
+                                </fieldset>
+                                <fieldset class="col-md-6 col-sm-12" style="display: none" id="locationContainer">
+                                    <legend style="display: none">location</legend>
+                                    <label for="location">location</label>
+                                    <input type="text" value="{{ event.location }}" class="form-control" name="location"
+                                           id="location"/>
+                                </fieldset>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <label class="form-label" for="startDate">Start Date</label>
-                            <input class="form-control datetimepicker" id="startDate" type="date"
-                                   placeholder="Please select start date" data-input>
+                        <div class=" col-md-6 col-sm-12 form-group" style="display: flex; flex-direction: column">
+                            <label class="form-label">Add Pictures for your event </label>
+                            <img class="img-fluid min-height-200" src="http://localhost:3000/img/img.png"
+                                 id="imageLabel" alt="event_image"/>
+                            <label class="btn btn-info w-100" for="image">
+                                upload image
+                                <input type="file" accept="image/*" id="image" name="image" style="display: none"/>
+                            </label>
                         </div>
-                        <div class="col-6">
-                            <label class="form-label">End Date</label>
-                            <input class="form-control datetimepicker" type="text"
-                                   placeholder="Please select end date" data-input>
+                    </div>
+                    <input name="description" id="description" style="display: none" value=""/>
+                    <label class="mt-4" for="editor">Event Description</label>
+                    <div class="min-height-300" id="editor"></div>
+                    <div class="row mt-4">
+                        <div class="col-lg-3 col-md-6 col-12">
                         </div>
                     </div>
                     <hr class="horizontal dark my-3">
@@ -55,7 +72,7 @@
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button type="button" name="button" class="btn btn-light m-0">Cancel</button>
-                    <button type="button" name="button" class="btn bg-gradient-primary m-0 ms-2">Create Event
+                    <button type="submit" name="button" class="btn bg-gradient-primary m-0 ms-2">Create Event
                     </button>
                 </div>
             </div>
@@ -66,23 +83,30 @@
     <script type="text/javascript" src="/js/plugins/flatpickr.min.js"></script>
     {{ parent() }}
     <script type="text/javascript">
-        flatpickr('.datetimepicker');
+      flatpickr('.datetimepicker');
       const quill = new Quill('#editor', {
         theme: 'snow' // Specify theme in configuration
       });
       quill.on('text-change', function (delta, oldDelta, source) {
         console.log(delta);
       });
-      function edit(event) {
+
+      document.getElementById('editor').addEventListener('keyup', (event) => {
         document.getElementById('description').setAttribute("value", event.target.innerHTML);
-      }
+      });
+
       document.getElementById('image').addEventListener('change', (event) => {
         const reader = new FileReader();
         reader.onload = async (e) => {
-            document.getElementById('imageLabel').src = reader.result;
+          document.getElementById('imageLabel').src = reader.result;
         }
         reader.readAsDataURL(event.target.files[0]);
       });
+
+      document.getElementById('isOnline').addEventListener('change', (event) => {
+        document.getElementById('locationContainer').style = `display: ${event.target.checked ? 'block' : 'none'}`;
+      });
+
     </script>
 {% endblock %}
 <a></a>

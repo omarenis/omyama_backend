@@ -9,9 +9,9 @@ export interface IFormView<T, P> {
 
 
 export class FormViewImplementation<T, P> implements IFormView<T, P> {
-    private _service: ModelCrudServiceImplementation<T, P>;
-    private readonly _template: string;
-    private readonly _redirectUrl: string;
+    protected _service: ModelCrudServiceImplementation<T, P>;
+    protected readonly _template: string;
+    protected readonly _redirectUrl: string;
 
     constructor(Model, template, redirectUrl) {
         this._service = new ModelCrudServiceImplementation<T, P>(Model);

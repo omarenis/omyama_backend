@@ -43,7 +43,7 @@ export const Routes: Route[] = [{
     },
     {
         method: 'post',
-        route: '/web/events',
+        route: '/web/events/:id',
         action: 'post',
         controller: SingleEvent
     },

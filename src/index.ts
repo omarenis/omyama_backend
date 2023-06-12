@@ -8,8 +8,9 @@ import * as session from 'express-session';
 import RedisStore from "connect-redis";
 import "reflect-metadata";
 import {UserModel} from "./entity/User";
-
 const redis = require("redis");
+const {upload} = require('../appConfig');
+const fileUpload = require('express-fileupload');
 let createEngine = require('node-twig').createEngine;
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
@@ -27,8 +28,15 @@ AppDataSource.initialize().then(async () => {
     }
     // create express app
     const app = express();
+
+    app.use(fileUpload({
+        createParentPath: true
+    }));
+    const cors = require('cors');
+    app.use(cors());
     app.use(require('connect-flash')());
     app.set('/', 'static');
+    app.use(upload.any())
     app.set("twig options", {
         allowAsync: true, // Allow asynchronous compiling
         strict_variables: false
