@@ -11,7 +11,7 @@ const database = "test";
 const tokens = require('csrf');
 const multer = require('multer');
 const {join} = require("path");
-const upload = multer({dest: join(__dirname, 'uploads')});
+const upload = multer({ dest: "uploads/" });
 module.exports = {
     SECRET_KEY,
     REDIS_SECRET_KEY,
