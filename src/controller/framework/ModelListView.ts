@@ -18,25 +18,28 @@ export class IModelListViewImplementation<T, P> implements IModelListView<T, P> 
     private readonly _template: string;
     private _urlForm: string;
 
-    constructor(template: string, urlForm: string) {
+    constructor(type, template: string, urlForm: string) {
         this._template = template;
         this._urlForm = urlForm;
+        this._modelService = new ModelCrudServiceImplementation<T, P>(type);
     }
 
     async get(request: Request, response: Response): Promise<void> {
-        response.render(this._template, {dataList: await this._modelService.list()})
+        response.render(this._template, { _objects: await this._modelService.list() })
     }
 }
 
 
 export class IModelListViewWithAjaxImplementation<T, P> implements IModelListViewWithAjax<T, P> {
-    private
     private _modelService: ModelCrudServiceImplementation<T, P>;
-    private _template: string;
-
+    private readonly _template: string;
+    constructor(type, template: string) {
+        this._modelService = new ModelCrudServiceImplementation<T, P>(type);
+        this._template = template;
+    }
     async get(request: Request, response: Response): Promise<void> {
         response.status(200);
-        response.render(this._template, {dataList: await this._modelService.list()})
+        response.render(this._template, {_objects: await this._modelService.list()})
     }
 
     async post(request, response): Promise<void> {

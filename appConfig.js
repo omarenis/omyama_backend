@@ -18,6 +18,10 @@ const saveFile = async (file) => {
     });
     return true;
 }
+const downloadFile = (req, res) => {
+        console.log(req.params.filename);
+        res.download(join(__dirname, `uploads/${req.params.filename}`))
+};
 module.exports = {
     SECRET_KEY,
     REDIS_SECRET_KEY,
@@ -28,5 +32,6 @@ module.exports = {
     password,
     database,
     tokens,
-    saveFile
+    saveFile,
+    downloadFile
 };

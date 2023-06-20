@@ -13,6 +13,7 @@ import { join } from "path";
 const redis = require("redis");
 const fileUpload = require('express-fileupload');
 let createEngine = require('node-twig').createEngine;
+const {downloadFile} = require('../appConfig');
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
     let admin = await userRepository.findOneBy({username: 'admin'});
@@ -73,9 +74,7 @@ AppDataSource.initialize().then(async () => {
         res.locals.req = req;
         next();
     });
-    app.get('/', (req, res) => {
-        res.render('index.twig');
-    });
+    app.get('/uploads/:filename', downloadFile);
     app.post('/upload', (req, res, next) => {
         req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
             if(err === undefined)
