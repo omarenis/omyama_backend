@@ -1,20 +1,21 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
-import {Request, Response} from "express"
-import {AppDataSource} from "./data-source"
-import {Routes} from "./routes"
+import * as express from "express";
+import * as bodyParser from "body-parser";
+import {Request, Response} from "express";
+import {AppDataSource} from "./data-source";
+import {Routes} from "./routes";
 import * as path from "path";
 import * as session from 'express-session';
 import RedisStore from "connect-redis";
 import "reflect-metadata";
 import {UserModel} from "./entity/User";
+import { join } from "path";
+
 const redis = require("redis");
-const {upload} = require('../appConfig');
+const fileUpload = require('express-fileupload');
 let createEngine = require('node-twig').createEngine;
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
     let admin = await userRepository.findOneBy({username: 'admin'});
-
     if (admin == null) {
         admin = AppDataSource.getRepository(UserModel).create({
             username: 'admin',
@@ -31,7 +32,6 @@ AppDataSource.initialize().then(async () => {
     app.use(cors());
     app.use(require('connect-flash')());
     app.set('/', 'static');
-    app.use(upload.any())
     app.set("twig options", {
         allowAsync: true, // Allow asynchronous compiling
         strict_variables: false
@@ -50,7 +50,6 @@ AppDataSource.initialize().then(async () => {
     app.use(bodyParser.json());
     app.use(express.urlencoded({extended: false}));
     app.use(express.static(path.join(__dirname, 'static')));
-
     app.use(session({
         store: new RedisStore({client: redisClient}),
         secret: 'secret$%^134',
@@ -63,25 +62,39 @@ AppDataSource.initialize().then(async () => {
         }
     }));
 
+    app.use(fileUpload({
+        limits: {fileSize: 50 * 1024 * 1024},
+        createParentPath: true,
+        safeFileNames: true,
+        preserveExtension: true
+    }));
+
     app.use(function (req, res, next) {
         res.locals.req = req;
         next();
     });
-
     app.get('/', (req, res) => {
         res.render('index.twig');
-    })
+    });
+    app.post('/upload', (req, res, next) => {
+        req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
+            if(err === undefined)
+            {
+                res.send('hello world');
+            }
+        });
+    });
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-            const result = (new (route.controller))[route.action](req, res, next)
+            const result = (new (route.controller))[route.action](req, res, next);
             if (result instanceof Promise) {
                 result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
             } else if (result !== null && result !== undefined) {
                 res.json(result);
             }
-        })
-    })
+        });
+    });
     app.listen(3000);
     console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
-}).catch(error => console.log(error))
+}).catch(error => console.log(error));

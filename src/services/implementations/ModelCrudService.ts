@@ -6,7 +6,9 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     protected readonly repository;
     private readonly type: ObjectType<T>;
     private readonly model: any;
-
+    public async  findBy(params) {
+        return await this.repository.findBy(params);
+    };
     constructor(Model) {
         this.model = Model;
         this.repository = AppDataSource.getRepository(Model);

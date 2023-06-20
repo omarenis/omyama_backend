@@ -9,9 +9,15 @@ const username = "test";
 const password = "test";
 const database = "test";
 const tokens = require('csrf');
-const multer = require('multer');
 const {join} = require("path");
-const upload = multer({ dest: "uploads/" });
+const saveFile = async (file) => {
+    await file.mv(join(__dirname, `uploads/${file.name}`), async (err) => {
+        if (err !== undefined) {
+            throw err;
+        }
+    });
+    return true;
+}
 module.exports = {
     SECRET_KEY,
     REDIS_SECRET_KEY,
@@ -22,5 +28,5 @@ module.exports = {
     password,
     database,
     tokens,
-    upload
+    saveFile
 };

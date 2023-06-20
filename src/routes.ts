@@ -1,7 +1,6 @@
 import {ILoginTemplate} from "./controller/auth/ILoginTemplate";
 import {SignupTemplate} from "./controller/auth/SignupTemplate";
 import {SpeakerRestController} from "./controller/SpeakerRestController";
-import {EventTemplate} from "./controller/EventController";
 import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
 import {EventList} from "./controller/dashboard/events/ListEvents";
 
@@ -76,12 +75,6 @@ export const Routes: Route[] = [{
         controller: SpeakerRestController,
         action: 'delete',
         route: '/api/intervenors'
-    },
-    {
-        method: 'get',
-        controller: EventTemplate,
-        action: 'get',
-        route: '/dashboard/events'
     },
     {
         method: 'get',

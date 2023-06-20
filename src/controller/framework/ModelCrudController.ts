@@ -50,7 +50,6 @@ export class ModelTemplate<T, P> implements ITemplateController<P>
         this.urlRedirect = urlRedirect;
     }
     async get(request: Request, response: Response,) {
-        console.log(request.session);
         response.render(this.template, {instances: this.service.findAll()});
     }
     async post(request: Request, response: Response) {
