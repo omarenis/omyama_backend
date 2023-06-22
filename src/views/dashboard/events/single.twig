@@ -53,7 +53,7 @@
                                     <fieldset class="col-md-6 col-sm-12" id="locationContainer" style="display: none">
                                         <legend style="display: none">location</legend>
                                         <label for="address">location</label>
-                                        <input type="text" value="{{ _object is defined ? _object.location  : '' }}"
+                                        <input type="text" value="{{ _object is defined ? _object.address  : '' }}"
                                                class="form-control" name="address"
                                                id="address"/>
                                     </fieldset>
@@ -111,7 +111,7 @@
                         </div>
                         <div class=" col-md-6 col-sm-12 form-group" style="display: flex; flex-direction: column">
                             <label class="form-label">Add Pictures for your event </label>
-                            <img class="img-fluid min-height-200" src="http://localhost:3000/img/img.png"
+                            <img class="img-fluid min-height-200" src="{{ _object is defined ? '/uploads/' + _object.imagePath : '' }}"
                                  id="imageLabel" alt="event_image"/>
                             <label class="btn btn-info w-100" for="image">
                                 upload image
@@ -146,6 +146,7 @@
         document.getElementById('image').setAttribute('required', 'true');
       {% endif %}
       flatpickr('.datetimepicker');
+      console.log(document.getElementById('dateEnd'));
       const quill = new Quill('#editor', {
         theme: 'snow' // Specify theme in configuration
       });

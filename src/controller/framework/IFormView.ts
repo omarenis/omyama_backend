@@ -22,7 +22,8 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
     async get(request, response) {
         const context: { [ky: string]: any } = {};
         if (request.params.id !== undefined) {
-            context['object'] = await this._service.getBy({id: request.params.id});
+            console.log(request.params);
+            context['_object'] = await this._service.getBy({id: request.params.id});
         }
         response.render(this._template, context);
     }

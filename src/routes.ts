@@ -75,11 +75,5 @@ export const Routes: Route[] = [{
         controller: SpeakerRestController,
         action: 'delete',
         route: '/api/intervenors'
-    },
-    {
-        method: 'get',
-        controller: SingleEvent,
-        action: 'get',
-        route: '/dashboard/events/:id'
-    },
+    }
 ];
