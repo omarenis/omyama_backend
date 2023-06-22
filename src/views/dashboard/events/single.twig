@@ -75,9 +75,9 @@
                                     <fieldset class="col-md-6 col-sm-12" id="priceTransportContainer">
                                         <legend style="display: none">price transport</legend>
                                         <label for="transport">price of transport</label>
-                                        <input type="number" value="{{ _object is defined ? _object.transport : 0 }}"
+                                        <input type="number" value="{{ _object is defined ? _object.priceTransporting : 0 }}"
                                                class="form-control" name="priceTransport"
-                                               id="transport" disabled="disabled" required/>
+                                               id="transport" required/>
                                     </fieldset>
                                 </div>
                                 <div class="row mt-2">
@@ -96,12 +96,13 @@
                                     </fieldset>
                                     <fieldset class="col-md-6 col-sm-12" id="hostingContainer">
                                         <legend style="display: none">hosting</legend>
-                                        <label for="hosting">Hosting</label>
                                         <div class="row">
+                                        <label for="hosting">Hosting</label>
                                             <input type="text" value="{{ _object is defined ? _object.hosting : '' }}"
                                                class="form-control col-md-6 col-sm-12" name="hosting"
                                                id="hosting"/>
-                                        <input type="number" value="{{ _object is defined ? _object.hosting : '' }}"
+                                            <label for="hosting col-form-label" class="mt-2">price hosting</label>
+                                        <input type="number" value="{{ _object is defined ? _object.priceHosting : '' }}"
                                                class="form-control col-md-6 col-sm-12" name="priceHosting"
                                                id="hosting"/>
                                         </div>
@@ -111,7 +112,7 @@
                         </div>
                         <div class=" col-md-6 col-sm-12 form-group" style="display: flex; flex-direction: column">
                             <label class="form-label">Add Pictures for your event </label>
-                            <img class="img-fluid min-height-200" src="{{ _object is defined ? '/uploads/' + _object.imagePath : '' }}"
+                            <img class="img-fluid min-height-200" src="http://localhost:3000/{{ _object is defined ?  _object.imagePath : '' }}"
                                  id="imageLabel" alt="event_image"/>
                             <label class="btn btn-info w-100" for="image">
                                 upload image
@@ -120,11 +121,13 @@
                         </div>
                     </div>
                     <label for="projectPlace" class="form-label">Event Place</label>
-                    <input type="text" class="form-control" id="projectPLace">
+                    <input type="text" class="form-control" id="projectPLace" >
                     <hr />
                     <input name="description" id="description" style="display: none" value=""/>
                     <label class="mt-4" for="description">Event Description</label>
-                    <div class="min-height-300" id="editor"></div>
+                    <div class="min-height-300" id="editor">
+                        {{  _object is defined ? _object.description : ''  }}
+                    </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-light m-0">Cancel</button>
@@ -150,6 +153,10 @@
       const quill = new Quill('#editor', {
         theme: 'snow' // Specify theme in configuration
       });
+      {% if _object is defined %}
+        document.getElementById('startDate').value = "{{ _object.dateStart }}";
+        document.getElementById('dateEnd').value = "{{ _object.dateEnd }}";
+      {% endif %}
       quill.on('text-change', function (delta, oldDelta, source) {
         console.log(delta);
       });
@@ -174,8 +181,8 @@
 
       document.getElementById('withTransport').addEventListener('change', (event) => {
         const element = document.getElementById('priceTransportContainer');
-        element.setAttribute('style', `display: ${event.target.checked ? 'none' : 'block'}`);
-        element.setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
+        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
+        document.getElementById('address').setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
       });
       document.getElementById('withHosting').addEventListener('change', (event) => {
         const element = document.getElementById('hostingContainer');

@@ -4,7 +4,7 @@ import {ModelCrudServiceImplementation} from "../../services/implementations/Mod
 export interface IFormView<T, P> {
 
     post(request: Request, response: Response): Promise<void>;
-    get(request: Request, response: Response): Promise<void>
+    get(request: Request, response: Response): Promise<void>;
 }
 
 
@@ -21,7 +21,7 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
 
     async get(request, response) {
         const context: { [ky: string]: any } = {};
-        if (request.params.id !== undefined) {
+        if (request.params.id !== 'create') {
             console.log(request.params);
             context['_object'] = await this._service.getBy({id: request.params.id});
         }
@@ -29,12 +29,15 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
     }
 
     async post(request: Request, response: Response) {
-        const promise: Promise<P> = request.params.id !== undefined ? this._service.update(request.body, Number(request.params.id)) : this._service.create(request.body)
+        console.log(request.params);
+        const promise: Promise<P> = request.params.id !== 'create' ? this._service.update(request.body, Number(request.params.id)) : this._service.create(request.body);
         try {
             await promise;
-            response.redirect(this._redirectUrl)
+            response.redirect(this._redirectUrl);
         } catch (err) {
-            response.status(500)
+            console.log(err);
+            response.status(500);
+
         }
     }
 }
