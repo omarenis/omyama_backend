@@ -24,7 +24,8 @@
 
 {% endblock main %}
 {% block footer %}
-    {% if req.session.user.is_superuser != true %}
+
+    {% if req.session.user is defined and  req.session.user.is_superuser != true %}
         <footer class="footer pt-5 mt-5">
             <div class="container">
                 <div class=" row">

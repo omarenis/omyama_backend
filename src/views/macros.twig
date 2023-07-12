@@ -1,0 +1,166 @@
+{% macro intervenors (intervenors) %}
+    {% if intervenors == [] %}
+    <p>
+        no intervenors
+    </p>
+    {% else %}
+    <div class="table table-responsive tableWrap">
+        <table class="table align-items-center mb-0">
+            <thead>
+            <tr>
+                <th scope="col"
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center">Id
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">titre de categorie
+                </th>
+                <th id="sku" scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">nombre de
+                    produits Total
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">nombre de
+                    produits achetées
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">number Purchases
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for intevenor in intervenors %}
+            <tr>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.id }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.title }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.number_products }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    0
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.number_purchases }}
+                </td>
+                <td class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-link" (click)="delete(category.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30px" height="24px"
+                             fill="red">
+                            <path
+                                    d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-link" onclick="delete(Number({{ intervenor.id }}))">
+                        <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'
+                             fill="yellow">
+                            <rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+                            <g transform="matrix(0.71 0 0 0.71 12 12)">
+                                <path
+                                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(201,159,6); fill-rule: nonzero; opacity: 1;"
+                                        transform=" translate(-18, -18.5)"
+                                        d="M 4 5 L 4 11 L 5 11 L 5 27 L 18.037109 27 L 17 32 L 22.300781 30.900391 L 31.099609 22.099609 C 31.699609 21.499609 32 20.75 32 20 C 32 19.25 31.699609 18.500391 31.099609 17.900391 C 30.499609 17.300391 29.75 17 29 17 C 28.289202 17 27.583111 17.279443 27 17.818359 L 27 11 L 28 11 L 28 5 L 4 5 z M 6 7 L 26 7 L 26 9 L 6 9 L 6 7 z M 7 11 L 25 11 L 25 19.800781 L 19.798828 25 L 7 25 L 7 11 z M 13 13 C 12.63936408342243 12.994899710454515 12.303918635428394 13.184375296169332 12.122112278513482 13.495872849714331 C 11.940305921598572 13.80737040325933 11.940305921598572 14.192629596740671 12.122112278513484 14.50412715028567 C 12.303918635428394 14.815624703830668 12.639364083422432 15.005100289545485 13 15 L 19 15 C 19.360635916577568 15.005100289545485 19.696081364571608 14.815624703830668 19.877887721486516 14.504127150285669 C 20.059694078401428 14.192629596740671 20.059694078401428 13.80737040325933 19.877887721486516 13.495872849714331 C 19.696081364571608 13.184375296169332 19.360635916577568 12.994899710454515 19 13 L 13 13 z M 29 19 C 29.25 19 29.499219 19.100781 29.699219 19.300781 C 30.099219 19.700781 30.099219 20.299219 29.699219 20.699219 L 21.300781 29.099609 L 19.599609 29.400391 L 19.900391 27.699219 L 28.300781 19.300781 C 28.500781 19.100781 28.75 19 29 19 z"
+                                        stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-link">
+                        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="blue"
+                             x="0px" y="0px" width="24px" height="24px" viewBox="0 0 122.878 110.041"
+                             xml:space="preserve"><g>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M1.149,0h120.583c0.631,0,1.146,0.518,1.146,1.149v28.383 c0,0.634-0.516,1.149-1.146,1.149H1.149C0.518,30.681,0,30.166,0,29.532V1.149C0,0.518,0.518,0,1.149,0L1.149,0z M7.224,36.787 h108.433c0.526,0,0.962,0.43,0.962,0.961v71.331c0,0.529-0.436,0.962-0.962,0.962H7.224c-0.528,0-0.961-0.433-0.961-0.962V37.749 C6.263,37.217,6.695,36.787,7.224,36.787L7.224,36.787z M45.005,48.526h32.87c3.529,0,6.419,2.888,6.419,6.417l0,0 c0,3.529-2.89,6.416-6.419,6.416h-32.87c-3.532,0-6.419-2.887-6.419-6.416l0,0C38.586,51.414,41.474,48.526,45.005,48.526 L45.005,48.526z"/>
+                            </g></svg>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}
+{% macro participants_table(participants) %}
+    {% if intervenors == [] %}
+    <p>
+        no intervenors
+    </p>
+    {% else %}
+    <div class="table table-responsive tableWrap">
+        <table class="table align-items-center mb-0">
+            <thead>
+            <tr>
+                <th scope="col"
+                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder text-center">Id
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder text-center">titre de categorie
+                </th>
+                <th id="sku" scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">nombre de
+                    produits Total
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">nombre de
+                    produits achetées
+                </th>
+                <th scope="col"
+                    class="text-uppercase text-secondary text-xxs font-weight-bolder ps-2 text-center">number Purchases
+                </th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center"></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for intevenor in intervenors %}
+            <tr>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.id }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.title }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.number_products }}
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    0
+                </td>
+                <td class="text-sm text-secondary mb-0 text-center">
+                    {{ intervenor.number_purchases }}
+                </td>
+                <td class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-link" (click)="delete(category.id)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30px" height="24px"
+                             fill="red">
+                            <path
+                                    d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"/>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-link" onclick="delete(Number({{ intervenor.id }}))">
+                        <svg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'
+                             fill="yellow">
+                            <rect width='24' height='24' stroke='none' fill='#000000' opacity='0'/>
+                            <g transform="matrix(0.71 0 0 0.71 12 12)">
+                                <path
+                                        style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(201,159,6); fill-rule: nonzero; opacity: 1;"
+                                        transform=" translate(-18, -18.5)"
+                                        d="M 4 5 L 4 11 L 5 11 L 5 27 L 18.037109 27 L 17 32 L 22.300781 30.900391 L 31.099609 22.099609 C 31.699609 21.499609 32 20.75 32 20 C 32 19.25 31.699609 18.500391 31.099609 17.900391 C 30.499609 17.300391 29.75 17 29 17 C 28.289202 17 27.583111 17.279443 27 17.818359 L 27 11 L 28 11 L 28 5 L 4 5 z M 6 7 L 26 7 L 26 9 L 6 9 L 6 7 z M 7 11 L 25 11 L 25 19.800781 L 19.798828 25 L 7 25 L 7 11 z M 13 13 C 12.63936408342243 12.994899710454515 12.303918635428394 13.184375296169332 12.122112278513482 13.495872849714331 C 11.940305921598572 13.80737040325933 11.940305921598572 14.192629596740671 12.122112278513484 14.50412715028567 C 12.303918635428394 14.815624703830668 12.639364083422432 15.005100289545485 13 15 L 19 15 C 19.360635916577568 15.005100289545485 19.696081364571608 14.815624703830668 19.877887721486516 14.504127150285669 C 20.059694078401428 14.192629596740671 20.059694078401428 13.80737040325933 19.877887721486516 13.495872849714331 C 19.696081364571608 13.184375296169332 19.360635916577568 12.994899710454515 19 13 L 13 13 z M 29 19 C 29.25 19 29.499219 19.100781 29.699219 19.300781 C 30.099219 19.700781 30.099219 20.299219 29.699219 20.699219 L 21.300781 29.099609 L 19.599609 29.400391 L 19.900391 27.699219 L 28.300781 19.300781 C 28.500781 19.100781 28.75 19 29 19 z"
+                                        stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </button>
+                    <button type="button" class="btn btn-link">
+                        <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="blue"
+                             x="0px" y="0px" width="24px" height="24px" viewBox="0 0 122.878 110.041"
+                             xml:space="preserve"><g>
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M1.149,0h120.583c0.631,0,1.146,0.518,1.146,1.149v28.383 c0,0.634-0.516,1.149-1.146,1.149H1.149C0.518,30.681,0,30.166,0,29.532V1.149C0,0.518,0.518,0,1.149,0L1.149,0z M7.224,36.787 h108.433c0.526,0,0.962,0.43,0.962,0.961v71.331c0,0.529-0.436,0.962-0.962,0.962H7.224c-0.528,0-0.961-0.433-0.961-0.962V37.749 C6.263,37.217,6.695,36.787,7.224,36.787L7.224,36.787z M45.005,48.526h32.87c3.529,0,6.419,2.888,6.419,6.417l0,0 c0,3.529-2.89,6.416-6.419,6.416h-32.87c-3.532,0-6.419-2.887-6.419-6.416l0,0C38.586,51.414,41.474,48.526,45.005,48.526 L45.005,48.526z"/>
+                            </g></svg>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+{% endmacro %}

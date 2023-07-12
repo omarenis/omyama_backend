@@ -10,12 +10,11 @@ export class ParticipationTemplate extends ModelTemplate<ParticipationModel, Par
      }
 
     async get(request, response): Promise<void> {
-        console.log(this.service.list());
         const events = this.eventService.list();
         response.render(this.template, {events: this.eventService.list()})
     }
 
-    post(request, response): Promise<void> {
+    async post(request, response): Promise<void> {
         const event = this.eventService.getBy({id: request.body.id});
         console.log(event);
 
