@@ -11,4 +11,9 @@ class  Payment extends FormViewImplementation<ParticipationModel, Participation>
     {
 
     }
+
+    async post(request: Request, response: Response)
+    {
+
+    }
 }

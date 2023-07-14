@@ -7,11 +7,12 @@ const {SECRET_KEY} = require('../../appConfig');
 @Entity({name: 'users'})
 export class UserModel {
 
-    @PrimaryGeneratedColumn() id: number
-    @Column({type: "varchar", unique: true, length: 255}) username: string
-    @Column({type: 'varchar', unique: true, length: 255}) email: string
-    @Column({type: 'boolean'}) is_superuser: boolean
-    @Column({type: 'text'}) password: string;
+    @PrimaryGeneratedColumn() id: number;
+    @Column({type: "varchar", unique: true, length: 255}) username: string;
+    @Column({type: 'varchar', unique: true, length: 255}) email: string;
+    @Column({type: 'boolean'}) is_superuser: boolean;
+    @Column({type: 'bool'}) is_active: boolean;
+    @Column({type: 'text', default: null, nullable: true}) password: string;
     @OneToOne(() => ProfileModel, (profile: ProfileModel) => profile.user, {cascade: true})
     profile: ProfileModel;
     async setPassword(password: string) {
