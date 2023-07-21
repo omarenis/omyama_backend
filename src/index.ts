@@ -5,12 +5,11 @@ import {AppDataSource} from "./data-source";
 import {Routes} from "./routes";
 import * as path from "path";
 import * as session from 'express-session';
-import RedisStore from "connect-redis";
 import "reflect-metadata";
 import {UserModel} from "./entity/User";
-import { join } from "path";
+import {join} from "path";
 
-const redis = require("redis");
+const ConnectCouchDB = require('connect-couchdb')(session);
 const fileUpload = require('express-fileupload');
 let createEngine = require('node-twig').createEngine;
 const {downloadFile} = require('../appConfig');
@@ -38,21 +37,20 @@ AppDataSource.initialize().then(async () => {
         strict_variables: false
     });
     app.set('trust proxy', 1);
-    const redisClient = redis.createClient();
-    redisClient.on('error', function (err) {
-        console.log('Could not establish a connection with redis. ' + err);
-    });
-    redisClient.on('connect', function (err) {
-        console.log('Connected to redis successfully');
-    });
-    await redisClient.connect();
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'twig');
     app.use(bodyParser.json());
     app.use(express.urlencoded({extended: false}));
     app.use(express.static(path.join(__dirname, 'static')));
     app.use(session({
-        store: new RedisStore({client: redisClient}),
+        store: new ConnectCouchDB({
+            name: 'session',
+            host: "db_server_ip_address",
+            port: 5984,
+            username: 'username',
+            password: 'password',
+            ssl: false
+        }),
         secret: 'secret$%^134',
         resave: true,
         saveUninitialized: false,
@@ -77,12 +75,16 @@ AppDataSource.initialize().then(async () => {
     app.get('/uploads/:filename', downloadFile);
     app.post('/upload', (req, res, next) => {
         req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
-            if(err === undefined)
-            {
+            if (err === undefined) {
                 res.send('hello world');
             }
         });
     });
+
+    function index_controller(request: Request, response: Response) {
+        response.render('test.twig');
+    }
+    app.get('/test', index_controller);
     // register express routes from defined application routes
     Routes.forEach(route => {
         (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {

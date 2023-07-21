@@ -6,6 +6,9 @@
     {% else %}
     <div class="table table-responsive tableWrap">
         <table class="table align-items-center mb-0">
+            <caption>
+
+            </caption>
             <thead>
             <tr>
                 <th scope="col"
@@ -163,4 +166,22 @@
             </tbody>
         </table>
     </div>
+{% endmacro %}
+
+{% macro fieldset (significaton,label, input, classStyle, otherClasses) %}
+
+    <fieldset class="row {{ classStyle=='form-inline' ? 'g-3': 'row' }} align-items-center">
+        <legend>
+            {{ signification }}
+        </legend>
+        <div class="col-auto">
+            <label class=" col-form-label {{ classStyle == 'form-inline' }}">
+                {{ label }}
+            </label>
+        </div>
+        <div class="col-auto">
+            {{ input }}
+        </div>
+    </fieldset>
+
 {% endmacro %}

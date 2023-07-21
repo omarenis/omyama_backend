@@ -1,3 +1,4 @@
+import {Request, Response} from "express";
 import {ILoginTemplate} from "./controller/auth/ILoginTemplate";
 import {SignupTemplate} from "./controller/auth/SignupTemplate";
 import {SpeakerRestController} from "./controller/SpeakerRestController";
@@ -13,36 +14,36 @@ interface Route {
 
 export const Routes: Route[] = [{
     method: 'get',
-    route: '/auth/login',
+    route: '/web/auth/login',
     controller: ILoginTemplate,
     action: 'get'
 }, {
     method: 'post',
-    route: '/auth/login',
+    route: '/web/auth/login',
     controller: ILoginTemplate,
     action: 'post'
 },
     {
         method: 'get',
-        route: '/auth/signup',
+        route: '/web/auth/signup',
         controller: SignupTemplate,
         action: 'get'
     }, {
         method: 'post',
-        route: '/auth/signup',
+        route: '/web/auth/signup',
         controller: SignupTemplate,
         action: 'post'
     },
     // the events crud
     {
         method: 'get',
-        route: '/web/events',
+        route: '/dashboard/events',
         action: 'get',
         controller: EventList
     },
     {
         method: 'post',
-        route: '/web/events/:id',
+        route: '/dashboard/events/:id',
         action: 'post',
         controller: SingleEvent
     },

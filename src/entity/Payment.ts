@@ -9,10 +9,7 @@ class PaymentModel {
 
 class Payment {
     constructor(
-        public participation: Participation | number,
-        public date: Date,
-        method: string,
-        public id ?: number,
+        public participation: Participation | number, public date: Date, method: string, public id ?: number,
     ) {
     }
 }

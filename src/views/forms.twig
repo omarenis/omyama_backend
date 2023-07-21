@@ -1,0 +1,17 @@
+{% macro field(label, input, styleForm='form-inline') %}
+<div class="row w-100 {{ styleform == 'form-inline' ? 'g-3' : '' }}">
+    {% if styleForm == 'form-inline' %}
+        <div class="col-auto">
+    {% endif %}
+    <label for="{{ input.id }}" id="{{ label.id }}" class="col-form-label {{ label.class }}">
+        {{ label.description }}
+    </label>
+    {% if styleForm == 'form-inline' %}
+        </div>
+    {% endif %}
+    <div class="{{ input.classContainer }}">
+        <input  id="{{ input.id }}" name="{{ input.name }}" {{ input.readonly ? 'readonly' : '' }}
+               class="form-control{{ input.readonly ? '-plaintext' :  '' }} {{ input.otherClass }}"/>
+    </div>
+    </div>
+{% endmacro %}

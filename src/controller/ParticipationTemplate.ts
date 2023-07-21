@@ -38,7 +38,7 @@ export class ParticipationTemplate extends ModelTemplate<ParticipationModel, Par
                 }
             }
         }
-        // let user = request.session.user === undefined ? this.userService.create(): request.session.user;
+
         if (event === null) {
             response.render(this.template, {message: 'No event found'});
         }
