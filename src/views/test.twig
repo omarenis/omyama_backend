@@ -1,6 +1,7 @@
 {% extends 'template.twig' %}
 {% import 'forms.twig' as form %}
 {% import 'cms/navbars.twig'  as navbars%}
+{% import 'cms/cards.twig' as cards %}
 {% block navbar %}
     {{ navbars.Navbar({
         logo: 'hello',
@@ -12,6 +13,9 @@
     }]) }}
 {% endblock %}
 {% block main %}
+    {{
+        cards.CardHorizontal()
+    }}
     {#    {{ form.field( #}
     {#        { #}
     {#            id: "id", #}
