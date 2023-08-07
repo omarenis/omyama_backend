@@ -1,0 +1,36 @@
+{% macro CardHorizontal(imageUrl, imageSettings, content, contentSettings, header, headerSettgins, footer, footerSettings) %}
+    <div class="card mb-3">
+        {% if header is defined and header != null %}
+            <div class="card-header {{ cardFoter.settings }}">
+                {{ footer }}
+            </div>
+        {% endif %}
+        <div class="card-body row g-0">
+            {% if imageUrl is defined and imageUrl != null %}
+                <div class="{{ imageSettings.className }}">
+                    <img src="{{ imageUrl }}" alt="{{ imageSettings.alt }}" loading="lazy" class="img-fluid w-10"/>
+                </div>
+            {% endif %}
+            {% if content is defined and header != null %}
+                <div class="{{ contentSettings.className }}">
+                    {{ content }}
+                </div>
+            {% endif %}
+        </div>
+        {% if footer is defined and footer != null %}
+            <div class="card-header {{ cardFoter.settings }}">
+                {{ footer }}
+            </div>
+        {% endif %}
+    </div>
+{% endmacro %}
+{% macro CardVertical(imageUrl, text) %}
+    <div class="card" style="width: 18rem;">
+        {% if imageUrl is defined and imageUrl != null %}
+            <img src="{{ imageUrl }}" alt="card img" loading="lazy" class="img-fluid w-10"/>
+        {% endif %}
+        <div class="card-body">
+
+        </div>
+    </div>
+{% endmacro %}
