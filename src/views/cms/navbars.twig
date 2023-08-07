@@ -1,0 +1,27 @@
+{% from 'cms/Brand.twig' import Brand %}
+{% macro Navbar(settings, links) %}
+    <nav class="navbar navbar-expand-lg {{ settings.position != null and settings.position is defined ? settings.position }} bg-transparent">
+        <div class="container-fluid">
+            {{ Brand(
+                false, 'https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/product-thumb.jpg', 'hello world'
+            ) }}
+            {% if links is defined and links != [] %}
+                <div class="collapse navbar-collapse w-100" id="navigation" style="border: 1px solid red">
+                    <ul class="navbar-nav">
+                        {% for link in links %}
+                            <li class="nav-item">
+                                {% set className = '' %}
+                                {% for class  in link.classes %}
+                                    {% set className = className + class + ' ' %}
+                                {% endfor %}
+                                <a href="{{ link.href }}" class="nav-link {{ className }}">
+                                    {{ link.text }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+    </nav>
+{% endmacro %}

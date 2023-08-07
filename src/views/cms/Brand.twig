@@ -1,0 +1,10 @@
+{% macro Brand(withUrl, imageUrl, text) %}
+<a class="navbar-band  {{ (imageUrl is defined ? "d-flex align-items-center") }}" >
+    {% if imageUrl is defined and imageUrl != null %}
+        <img src="{{ imageUrl }}" alt="website logo" loading="lazy" class="img-fluid w-10" />
+    {% endif %}
+    <span class={{  }} >
+        {{ text }}
+    </span>
+</a>
+{% endmacro %}

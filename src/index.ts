@@ -72,6 +72,10 @@ AppDataSource.initialize().then(async () => {
         res.locals.req = req;
         next();
     });
+    app.get('/test', function (request: Request, response: Response) {
+        response.render('test.twig');
+    });
+
     app.get('/uploads/:filename', downloadFile);
     app.post('/upload', (req, res, next) => {
         req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
