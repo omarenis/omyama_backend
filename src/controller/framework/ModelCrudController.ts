@@ -4,7 +4,6 @@ import {IModelCrudService} from "../../services/interfaces/IModelCrud";
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
 import {IRestController} from "./IRestController";
 import {ITemplateController} from "./ITemplateController";
-import {EntityTarget, ObjectLiteral} from "typeorm";
 
 
 export class RestModelController<T, P> implements IRestController<P>
@@ -20,15 +19,15 @@ export class RestModelController<T, P> implements IRestController<P>
         return await this.service.findAll();
     }
     async retrieve(request: Request, response: Response): Promise<P> {
-        return await this.service.findById(request.params.id);
+        return await this.service.findById(Number(request.params.id));
     }
     async create(request: Request, response: Response): Promise<P> {
         return await this.service.create(request.body);
     }
     async delete(request: Request, response: Response): Promise<void> {
-        await this.service.delete(request.params.id);
+        await this.service.delete(Number(request.params.id));
     }
-    update(request: Request, response: Response): Promise<P> {
+    update(request: any, response: Response): Promise<P> {
         return this.service.update((request.body as ObjectType<P>), request.params.id)
     }
 
@@ -52,7 +51,7 @@ export class ModelTemplate<T, P> implements ITemplateController<P>
     async get(request: Request, response: Response,) {
         response.render(this.template, {instances: this.service.findAll()});
     }
-    async post(request: Request, response: Response) {
+    async post(request: any, response: Response) {
         try {
            await this.service.create(request.body);
             response.redirect(this.urlRedirect);

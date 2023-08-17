@@ -9,10 +9,13 @@ import "reflect-metadata";
 import {UserModel} from "./entity/User";
 import {join} from "path";
 
+import fileUpload from "express-fileupload";
+
+const {downloadFile} = require('../appConfig.js');
+
 const ConnectCouchDB = require('connect-couchdb')(session);
-const fileUpload = require('express-fileupload');
 let createEngine = require('node-twig').createEngine;
-const {downloadFile} = require('../appConfig');
+
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
     let admin = await userRepository.findOneBy({username: 'admin'});
@@ -68,7 +71,7 @@ AppDataSource.initialize().then(async () => {
         preserveExtension: true
     }));
 
-    app.use(function (req, res, next) {
+    app.use(function (req: any, res, next) {
         res.locals.req = req;
         next();
     });
@@ -77,7 +80,7 @@ AppDataSource.initialize().then(async () => {
     });
 
     app.get('/uploads/:filename', downloadFile);
-    app.post('/upload', (req, res, next) => {
+    app.post('/upload', (req: any, res, next) => {
         req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
             if (err === undefined) {
                 res.send('hello world');

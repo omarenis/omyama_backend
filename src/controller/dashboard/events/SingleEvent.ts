@@ -10,7 +10,7 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
         super(EventModel, 'dashboard/events/single.twig', '/web/events');
     }
 
-    async post(request: Request, response: Response) {
+    async post(request: any, response: Response) {
         console.log(request.body);
         const events = await this._service.findBy({title: request.body.title});
         if (events.length > 0) {

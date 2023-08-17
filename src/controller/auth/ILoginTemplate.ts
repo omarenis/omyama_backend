@@ -13,7 +13,7 @@ export class ILoginTemplate {
         response.render('public/interfaces/login.twig');
     }
 
-    async post(request: Request, response: Response) {
+    async post(request: any, response: Response) {
         const username = request.body.username;
         const user = await this._userService.getBy({username});
         if (user === null) {
