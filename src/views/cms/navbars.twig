@@ -10,11 +10,7 @@
                     <ul class="navbar-nav">
                         {% for link in links %}
                             <li class="nav-item">
-                                {% set className = '' %}
-                                {% for class  in link.classes %}
-                                    {% set className = className + class + ' ' %}
-                                {% endfor %}
-                                <a href="{{ link.href }}" class="nav-link {{ className }}">
+                                <a href="{{ link.href }}" class="nav-link {{ style }}">
                                     {{ link.text }}
                                 </a>
                             </li>

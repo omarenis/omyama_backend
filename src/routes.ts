@@ -1,9 +1,9 @@
-import {Request, Response} from "express";
 import {ILoginTemplate} from "./controller/auth/ILoginTemplate";
 import {SignupTemplate} from "./controller/auth/SignupTemplate";
 import {SpeakerRestController} from "./controller/SpeakerRestController";
 import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
 import {EventList} from "./controller/dashboard/events/ListEvents";
+import {PageListTemplate} from "./controller/dashboard/pages/PageListTemplate";
 
 interface Route {
     method: string,
@@ -40,6 +40,19 @@ export const Routes: Route[] = [{
         route: '/dashboard/events',
         action: 'get',
         controller: EventList
+    },
+    {
+        method: 'post',
+        route: '/dashboard/events/:id',
+        action: 'post',
+        controller: SingleEvent
+    },
+    // the pages crud
+    {
+        method: 'get',
+        route: '/dashboard/events/pages',
+        action: 'get',
+        controller: PageListTemplate
     },
     {
         method: 'post',

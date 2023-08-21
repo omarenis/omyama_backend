@@ -6,8 +6,6 @@ export class BlockModel
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) blockType: string;
     @Column({type: 'text'}) style: string;
-    @Column({type: 'text'}) type: string;
-    @Column({type: 'text', nullable: true, default: null}) url: string;
     @Column({type: 'text', nullable: true, default: null}) content: string;
 }
 
@@ -16,21 +14,18 @@ export interface Block
 {
     blockType: string;
     style: string;
-    type: string;
+    content: string;
     id ?: number;
 }
 
-export interface Text extends Block
-{
-    content: string;
-}
+export interface Text extends Block {}
 
 
 export interface Link
 {
     style: string;
     type: string;
-    url: string;
+    href: string;
     id : number;
 }
 interface Card
@@ -46,7 +41,6 @@ interface Card
 interface Image
 {
     style: string;
-    type: string;
-    title: string;
-    url: string;
+    alt: string;
+    src: string;
 }

@@ -1,6 +1,6 @@
-import * as express from "express";
+import * as express from 'express';
+import {Response} from "express";
 import * as bodyParser from "body-parser";
-import {Request, Response} from "express";
 import {AppDataSource} from "./data-source";
 import {Routes} from "./routes";
 import * as path from "path";
@@ -8,14 +8,11 @@ import * as session from 'express-session';
 import "reflect-metadata";
 import {UserModel} from "./entity/User";
 import {join} from "path";
-
-import fileUpload from "express-fileupload";
-
-const {downloadFile} = require('../appConfig.js');
-
-const ConnectCouchDB = require('connect-couchdb')(session);
-let createEngine = require('node-twig').createEngine;
-
+import * as fileUpload from "express-fileupload";
+import {downloadFile} from "../appConfig";
+import * as cors from "cors";
+import * as connect_memcached from "connect-memcached";
+const MemcachedStore = connect_memcached(session);
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
     let admin = await userRepository.findOneBy({username: 'admin'});
@@ -29,9 +26,8 @@ AppDataSource.initialize().then(async () => {
         await admin.setPassword("admin@admin");
         await userRepository.save(admin);
     }
-    // create express app
-    const app = express();
-    const cors = require('cors');
+
+    const app = require('express')();
     app.use(cors());
     app.use(require('connect-flash')());
     app.set('/', 'static');
@@ -46,17 +42,14 @@ AppDataSource.initialize().then(async () => {
     app.use(express.urlencoded({extended: false}));
     app.use(express.static(path.join(__dirname, 'static')));
     app.use(session({
-        store: new ConnectCouchDB({
-            name: 'session',
-            host: "db_server_ip_address",
-            port: 5984,
-            username: 'username',
-            password: 'password',
-            ssl: false
+        store: new MemcachedStore({
+            hosts: ["127.0.0.1:11211"],
+            secret: "123, easy as ABC. ABC, easy as 123" // Optionally use transparent encryption for memcached session data
         }),
         secret: 'secret$%^134',
         resave: true,
         saveUninitialized: false,
+        proxy: true,
         cookie: {
             secure: false, // if true only transmit cookie over https
             httpOnly: false, // if true prevent client side JS from reading the cookie
@@ -75,7 +68,7 @@ AppDataSource.initialize().then(async () => {
         res.locals.req = req;
         next();
     });
-    app.get('/test', function (request: Request, response: Response) {
+    app.get('/test', function (request: any, response: Response) {
         response.render('test.twig');
     });
 
@@ -88,13 +81,14 @@ AppDataSource.initialize().then(async () => {
         });
     });
 
-    function index_controller(request: Request, response: Response) {
+    function index_controller(request: any, response: Response) {
         response.render('test.twig');
     }
+
     app.get('/test', index_controller);
     // register express routes from defined application routes
     Routes.forEach(route => {
-        (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
+        app[route.method](route.route, (req: any, res: Response, next: Function) => {
             const result = (new (route.controller))[route.action](req, res, next);
             if (result instanceof Promise) {
                 result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);

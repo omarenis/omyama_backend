@@ -1,11 +1,11 @@
-const executeAjaxRequest = (data, method, url) => {
+const executeAjaxRequest = (data, dataType, method, url, callback) => {
   $.ajax({
-    url,
-    context: document.body,
+    url: url,
+    type: method,
     data: data,
-    method: method,
-    success: function () {
-      $(this).addClass("done");
-    }
-  });
+    async: false,
+    cache: false,
+    contentType: false,
+    processData: false,
+    success: callback});
 }

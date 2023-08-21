@@ -1,8 +1,9 @@
 
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
-import {Request, Response} from "../../../appConfig";
-const BlockService = new ModelCrudServiceImplementation<Block>();
-const Header = (request: Request, response: Response) => {
+import { Response} from "../../../appConfig";
+import {Block, BlockModel} from "../../entity/cms/Block";
+const BlockService = new ModelCrudServiceImplementation<BlockModel, Block>(BlockModel);
+const Header = (request: any, response: Response) => {
     if (request.method === 'POST') {
 
     }

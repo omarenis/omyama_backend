@@ -1,17 +1,13 @@
-import tokens from "csrf";
-
+import {Request as GlobalRequest, Response as GlobalResponse} from "express";
 import {join} from "path";
 
-import {Request as GlobalRequest, Response as GlobalResponse} from "express";
-
-
-export interface Request extends GlobalRequest
-{
+export interface Request extends GlobalRequest {
+    files: any;
+    session: any;
     flash: any;
 }
 
-export interface Response extends GlobalResponse
-{
+export interface Response extends GlobalResponse {
 
 }
 
@@ -32,6 +28,6 @@ export const saveFile = async (file) => {
     });
     return true;
 }
-export const downloadFile = (req: Request, res: Response) => {
-        res.download(join(__dirname, `uploads/${req.params.filename}`))
+export const downloadFile = (req: any, res: Response) => {
+    res.download(join(__dirname, `uploads/${req.params.filename}`))
 };

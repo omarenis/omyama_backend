@@ -1,6 +1,9 @@
 import "reflect-metadata";
-import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Ticket, TicketModel} from "./Ticket";
+import {ProfileModel} from "./User";
+import {PageModel} from "./cms/Page";
+
 @Entity({name: 'events'})
 export default class EventModel {
 
@@ -15,6 +18,8 @@ export default class EventModel {
     @Column({type: 'text'}) hosting: string;
     @Column({type: "float"}) priceHosting: number;
     @Column({type: 'float', nullable: true, default: null}) priceTransporting: number;
+    @ManyToOne(() => ProfileModel, (customer) => customer.events) customer: ProfileModel;
+    @OneToMany(() => PageModel, (page: PageModel) => page.event) pages: PageModel;
 }
 
 export class Event {

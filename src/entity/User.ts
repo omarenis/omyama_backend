@@ -3,7 +3,9 @@ import {compare, hash } from 'bcrypt';
 import { TicketModel } from "./Ticket";
 import {ParticipationModel} from "./Participation";
 
-const {SECRET_KEY} = require('../../appConfig');
+import {SECRET_KEY} from "../../appConfig";
+import EventModel from "./Event";
+
 @Entity({name: 'users'})
 export class UserModel {
 
@@ -28,7 +30,7 @@ export class UserModel {
 export class ProfileModel {
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) firstname: string;
-    @Column({type: 'text'}) lastname: string;
+        @Column({type: 'text'}) lastname: string;
     @Column({type: 'text', nullable: true}) image: string;
     @Column({type: 'float'}) gainedAmount: number;
     @Column({type: 'text'}) address: string;
@@ -39,6 +41,7 @@ export class ProfileModel {
     participation_set: ParticipationModel[];
     @OneToOne(() => UserModel, (user: UserModel) => user.profile)
     user: UserModel;
+    @OneToMany(() => EventModel, (event) => event.customer) events: EventModel[];
 }
 
 export interface User {

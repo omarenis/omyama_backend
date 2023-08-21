@@ -2,8 +2,8 @@ import {ModelCrudServiceImplementation} from "./ModelCrudService";
 import {Profile, ProfileModel, User, UserModel} from "../../entity/User";
 import {AppDataSource} from "../../data-source";
 import {hash, genSalt} from 'bcrypt';
+import {SECRET_KEY} from "../../../appConfig";
 
-const {SECRET_KEY} = require('../../../appConfig.js');
 
 export class UserServiceImplementation extends ModelCrudServiceImplementation<UserModel, User> {
     private _profileRepository;

@@ -17,25 +17,31 @@ export class ILoginTemplate {
         const username = request.body.username;
         const user = await this._userService.getBy({username});
         if (user === null) {
-            response.render('public/interfaces/login.twig', {
+            return response.render('public/interfaces/login.twig', {
                 message: 'user not found with the specified username',
                 category: 404
             });
-        } else if (! await user.check_password(request.body.password)) {
-            response.render('public/interfaces/login.twig', {
+        }
+        if (!await user.check_password(request.body.password)) {
+            return response.render('public/interfaces/login.twig', {
                 message: 'password did not match',
                 category: 403
             });
-        } else {
-            request.session.user = user;
-            console.log(request.session.user);
-            await request.session.save(function (err) {
-                console.log("err = ", err);
-            }, function (data) {
-                console.log(data);
-            });
-            console.log(request.session.user);
-            response.redirect('/web/events');
         }
+        if(!user.is_active)
+        {
+            return response.render('public/interfaces/login.twig', {
+                message: 'compte onn active appelez administrateur pour voir le probléme ',
+                category: 401
+            })
+        }
+        request.session.user = user;
+        await request.session.save(function (err) {
+            console.log("err = ", err);
+        }, function (data) {
+            console.log(data);
+        });
+        console.log(request.session.user);
+        response.redirect('/web/events');
     }
 }
