@@ -1,4 +1,4 @@
-import {Request, Response} from "express";
+import { Request, Response } from "../../../appConfig";
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
 
 export interface IFormView<T, P> {
@@ -19,7 +19,7 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
         this._redirectUrl = redirectUrl;
     }
 
-    async get(request, response) {
+    async get(request: Request, response: Response) {
         const context: { [ky: string]: any } = {};
         if (request.params.id !== 'create') {
             console.log(request.params);

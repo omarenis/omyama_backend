@@ -7,5 +7,6 @@ const executeAjaxRequest = (data, dataType, method, url, callback) => {
     cache: false,
     contentType: false,
     processData: false,
-    success: callback});
+    success: callback
+  });
 }

@@ -15,16 +15,18 @@ export class Page {
 
     constructor(
         public title: string,
-        public slug: string,
         public order: string,
-        public id ?: number,
-        public event ?: Event
+        public event ?: Event | number,
+        public slug ?: string,
+        public id ?: number
     ) {
     }
 }
 
 
-const ModelConfig = {
+export const ModelConfig = {
     title: {type: 'string', required: true},
     slug: {type: 'slug', required: true, fieldToSlug: 'title'},
+    event: {type: 'foreign_key', required: true, classMap:  EventModel},
+    order: {type: 'number', required: true}
 }

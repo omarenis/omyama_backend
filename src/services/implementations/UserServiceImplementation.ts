@@ -3,10 +3,11 @@ import {Profile, ProfileModel, User, UserModel} from "../../entity/User";
 import {AppDataSource} from "../../data-source";
 import {hash, genSalt} from 'bcrypt';
 import {SECRET_KEY} from "../../../appConfig";
+import {Repository} from "typeorm";
 
 
 export class UserServiceImplementation extends ModelCrudServiceImplementation<UserModel, User> {
-    private _profileRepository;
+    private _profileRepository:  Repository<ProfileModel>;
 
     constructor() {
         super(UserModel);
@@ -27,7 +28,7 @@ export class UserServiceImplementation extends ModelCrudServiceImplementation<Us
             userModel.profile.address = instance.profile.address;
             userModel.profile.phone = instance.profile.phone;
         }
-        this.repository.save(userModel);
+        await this.repository.save(userModel);
         instance.id = userModel.id
         return instance;
     }

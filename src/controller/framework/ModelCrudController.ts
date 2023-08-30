@@ -4,6 +4,7 @@ import {IModelCrudService} from "../../services/interfaces/IModelCrud";
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
 import {IRestController} from "./IRestController";
 import {ITemplateController} from "./ITemplateController";
+import { ObjectLiteral } from 'typeorm';
 
 
 export class RestModelController<T, P> implements IRestController<P> {
@@ -43,7 +44,7 @@ export class ModelTemplate<T, P> implements ITemplateController<P> {
     protected service: ModelCrudServiceImplementation<T, P>;
     protected readonly template: string;
     protected readonly urlRedirect: string;
-
+    protected readonly modelConfig: {[key: string]: {type: string, required: boolean, classMap ?: ObjectLiteral, fieldToSlugify ?: string}}
     constructor(template: string, type, urlRedirect: string) {
         this.template = template;
         this.service = new ModelCrudServiceImplementation<T, P>(type);
@@ -56,6 +57,10 @@ export class ModelTemplate<T, P> implements ITemplateController<P> {
 
     async post(request: any, response: Response) {
         try {
+            if(this.modelConfig !== undefined)
+            {
+
+            }
             await this.service.create(request.body);
             return response.redirect(this.urlRedirect);
         } catch {
