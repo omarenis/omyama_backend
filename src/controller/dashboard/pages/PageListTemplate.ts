@@ -13,7 +13,7 @@ export class PageListTemplate extends ModelTemplate<PageModel, Page> {
         return response.render(this.template, {pages: await this.service.findAll()});
     }
 
-    async post(request: Request, response: Response): Promise<void> {
+    async post(request: Request, response: Response): Promise<Response> {
         let page = await this.service.findOneBy({title: request.body.title});
         if(page !== null)
         {
@@ -26,7 +26,6 @@ export class PageListTemplate extends ModelTemplate<PageModel, Page> {
             order: request.body.order,
             event: Number(request.query.event)
         });
-
-        return response.status(201).json();
+        return response.json(page).status(201);
     }
 }

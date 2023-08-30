@@ -21,7 +21,7 @@ export class ParticipationTemplate extends ModelTemplate<ParticipationModel, Par
         });
     }
 
-    async post(request, response: Response): Promise<void> {
+    async post(request: e.Request, response: e.Response): Promise<Response> {
         const event = this.eventService.getBy({id: request.body.id});
         let user: User;
         user = request.sesion.user;
