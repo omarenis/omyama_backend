@@ -1,0 +1,131 @@
+{% extends 'dashboard/template.twig' %}
+{% block styles %}
+    <style>
+        legend {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    <div class="row my-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
+                                Page title
+                            </th>
+                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                Slug
+                            </th>
+                            <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                Date creation
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Date publish
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Statut
+                            </th>
+                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                Action
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>
+                                <div class="w-100 d-flex justify-content-center p-0">
+                                    <h6 class="text-sm p-0">About as</h6>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="w-100 d-flex justify-content-center">
+                                    <p class="text-sm">about-us</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex w-100 justify-content-center">
+                                    <p class="text-secondary text-sm">23/04/18</p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex w-100 justify-content-center">
+                                    <p class="text-secondary text-sm">23/04/18</p>
+                                </div>
+                            </td>
+                            <td class="">
+                                <div class="d-flex w-100 justify-content-center p-0">
+                                    <p class="badge badge-dot me-4">
+                                        <i class="bg-info"></i>
+                                        <span class="text-dark text-xs">positive</span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <a href="javascript:" data-bs-toggle="tooltip"
+                                       data-bs-original-title="Preview product">
+                                        <i class="fas fa-eye text-secondary"></i>
+                                    </a>
+                                    <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
+                                       data-bs-original-title="Edit product">
+                                        <i class="fas fa-user-edit text-secondary"></i>
+                                    </a>
+                                    <a href="javascript:" data-bs-toggle="tooltip"
+                                       data-bs-original-title="Delete product">
+                                        <i class="fas fa-trash text-secondary"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form class="modal-dialog" id="form-submit" name="create_page_for_event">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <label for="page" class="col-form-label">Title</label>
+                        </div>
+                        <div class="col-auto">
+                            <input type="text" id="page" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+      const form = document.forms['create_page_for_event'];
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log(form.elements);
+      });
+    </script>
+{% endblock %}

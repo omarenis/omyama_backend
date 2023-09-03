@@ -11,16 +11,13 @@ export class SignupTemplate {
     }
 
     async get(request: Request, response: Response) {
-        return response.render('public/interfaces/signup.twig');
+        return response.render('public/interfaces/auth/signup.twig');
     }
 
     async post(request: Request, response: Response) {
         let user = await this.service.getBy({email: request.body.email});
         if (user !== null) {
-            response.render('public/interfaces/signup.twig', {
-                message: 'user found with the specified username',
-                category: 400
-            });
+            request.flash('user found with the specified username', 'error');
         } else {
             user = await this.service.getBy({username: request.body.username});
             if (user !== null) {
@@ -49,5 +46,6 @@ export class SignupTemplate {
                 }
             }
         }
+        return response.render('/public/auth/signup.twig');
     }
 }

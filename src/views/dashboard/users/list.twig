@@ -1,0 +1,109 @@
+{% extends 'dashboard/template.twig' %}
+{% block content %}
+    <div class="ms-auto card">
+        <div class="ms-auto me-2 mb-3 mt-5 d-flex">
+            <div class="modal fade" id="import" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog mt-lg-10">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalLabel">Import CSV</h5>
+                            <i class="fas fa-upload ms-3"></i>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>You can browse your computer for a file.</p>
+                            <input type="text" placeholder="Browse file..." class="form-control mb-3">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn bg-gradient-secondary btn-sm" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="button" class="btn bg-gradient-primary btn-sm">Upload</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-outline-primary btn-sm export mb-0 mt-sm-0 mt-1" data-type="csv" type="button"
+                    name="button">
+                Export
+            </button>
+        </div>
+        <div class="table table-responsive tableWrap">
+            <table class="table mb-0" aria-description="this a table for collections for the admin">
+                <caption class="d-none">this a table for collections for the admin</caption>
+                <thead>
+                <tr>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">User
+                    </th>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                        Email
+                    </th>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                        phone
+                    </th>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                        date joined
+                    </th>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                        last login
+                    </th>
+                    <th scope="col"
+                        class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-center">
+                        status Account
+                    </th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">
+                        Actions
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user  in objects %}
+                    <tr class="align-items-center w-100">
+                        <td class=" text-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img
+                                        src="{{ user.profile.image }}"
+                                        class="avatar avatar-md me-3" alt="table image" width="40" height="40">
+                                <h5 class="mb-0 text-sm">{{ user.profile.firstname }}  {{ user.profile.lastname }}</h5>
+                            </div>
+                        <td class="text-sm text-secondary text-center p-2">
+                            {{ user.email }}
+                        </td>
+                        <td class="text-sm text-secondary text-center p-2">
+                            {{ user.profile.phone }}
+                        </td>
+                        <td class="text-sm text-secondary text-center p-2">
+                            {{ user.date_joined  | date }}
+                        </td>
+                        <td class="text-sm text-secondary text-center p-2">
+                            {{ user.last_login  | date }}
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-link" (click)="delete(user.id)">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30px" height="24px"
+                                     fill="red">
+                                    <path
+                                            d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="btn btn-link">
+                                <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="blue"
+                                     x="0px" y="0px" width="24px" height="24px" viewBox="0 0 122.878 110.041"
+                                     xml:space="preserve"><g>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                              d="M1.149,0h120.583c0.631,0,1.146,0.518,1.146,1.149v28.383 c0,0.634-0.516,1.149-1.146,1.149H1.149C0.518,30.681,0,30.166,0,29.532V1.149C0,0.518,0.518,0,1.149,0L1.149,0z M7.224,36.787 h108.433c0.526,0,0.962,0.43,0.962,0.961v71.331c0,0.529-0.436,0.962-0.962,0.962H7.224c-0.528,0-0.961-0.433-0.961-0.962V37.749 C6.263,37.217,6.695,36.787,7.224,36.787L7.224,36.787z M45.005,48.526h32.87c3.529,0,6.419,2.888,6.419,6.417l0,0 c0,3.529-2.89,6.416-6.419,6.416h-32.87c-3.532,0-6.419-2.887-6.419-6.416l0,0C38.586,51.414,41.474,48.526,45.005,48.526 L45.005,48.526z"/>
+                                    </g></svg>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

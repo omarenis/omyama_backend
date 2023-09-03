@@ -1,0 +1,268 @@
+{% extends 'public/template.twig' %}
+{% block styles %}
+    {{ parent() }}
+    <style>
+        .contact .info {
+            width: 100%;
+            background: #fff;
+        }
+
+        .section-title h2::after {
+            content: "";
+            width: 120px;
+            height: 1px;
+            display: inline-block;
+            background: #fd9042;
+            margin: 4px 10px;
+        }
+
+        .section-title h2 {
+            font-size: 14px;
+            font-weight: 500;
+            padding: 0;
+            line-height: 1px;
+            margin: 0 0 5px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #aaaaaa;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .section-title p {
+            margin: 0;
+            margin: 0;
+            font-size: 36px;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-family: "Poppins", sans-serif;
+            color: #2a2c39;
+        }
+
+        .info-logo {
+            color: #ef6603;
+            float: left;
+            background: #ffecde;
+            display: flex;
+            justify-content: center;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            margin: 5px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .info-logo:hover {
+            color: white;
+            float: left;
+            background: #ef6603;
+            display: flex;
+            justify-content: center;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            margin: 5px;
+            width: 44px;
+            height: 44px;
+        }
+
+        .info-logo > svg {
+            width: 20px;
+            height: 20px;
+            align-self: center;
+        }
+
+        .contact .info h4 {
+            padding: 0 0 0 60px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2a2c39;
+        }
+
+        .contact .info p {
+            padding: 0 0 0 60px;
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #555974;
+        }
+
+        .contact .info .email,
+        .contact .info .phone {
+            margin-top: 40px;
+        }
+
+        .contact .info .email:hover i,
+        .contact .info .address:hover i,
+        .contact .info .phone:hover i {
+            background: #ef6603;
+            color: #fff;
+        }
+
+        .contact .php-email-form {
+            width: 100%;
+            background: #fff;
+        }
+
+        .contact .php-email-form .form-group {
+            padding-bottom: 8px;
+        }
+
+        .contact .php-email-form .error-message {
+            display: none;
+            color: #fff;
+            background: #ed3c0d;
+            text-align: left;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .contact .php-email-form .error-message br + br {
+            margin-top: 25px;
+        }
+
+        .contact .php-email-form .sent-message {
+            display: none;
+            color: #fff;
+            background: #18d26e;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+        }
+
+        .contact .php-email-form .loading {
+            display: none;
+            background: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        .contact .php-email-form .loading:before {
+            content: "";
+            display: inline-block;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            margin: 0 10px -6px 0;
+            border: 3px solid #18d26e;
+            border-top-color: #eee;
+            animation: animate-loading 1s linear infinite;
+        }
+
+        .contact .php-email-form input,
+        .contact .php-email-form textarea {
+            border-radius: 0;
+            box-shadow: none;
+            font-size: 14px;
+        }
+
+        .contact .php-email-form input {
+            height: 44px;
+        }
+
+        .contact .php-email-form textarea {
+            padding: 10px 12px;
+        }
+
+        .contact .php-email-form button[type=submit] {
+            background: #ef6603;
+            border: 0;
+            padding: 10px 24px;
+            color: #fff;
+            transition: 0.4s;
+            border-radius: 50px;
+        }
+
+        .contact .php-email-form button[type=submit]:hover {
+            background: #fc8129;
+        }
+
+        @keyframes animate-loading {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <main class="container mt-5">
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="section-title" data-aos="zoom-out">
+                    <h2>Contact</h2>
+                    <p>Contact Us</p>
+                </div>
+                <div class="row mt-5">
+                    <div class="col-lg-4" data-aos="fade-right">
+                        <div class="info">
+                            <div class="address">
+                                <span class="info-logo">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                       class="bi bi-geo-alt" viewBox="0 0 16 16">
+                                    <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                                    <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                </svg>
+                                </span>
+                                <h4>Location:</h4>
+                                <p>Tunisie , Sfax</p>
+                            </div>
+                            <div class="email">
+                                <span class="info-logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope"
+     viewBox="0 0 16 16">
+  <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+</svg>
+                                </span>
+                                <h4>Email:</h4>
+                                <p>brighteventscreater@gmail.com</p>
+                            </div>
+                            <div class="phone">
+                                <span class="info-logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-phone"
+     viewBox="0 0 16 16">
+  <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+  <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+</svg>
+                                </span>
+                                <h4>Call:</h4>
+                                <p>+216 28 067 370 </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left">
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                           placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6 form-group mt-3 mt-md-0">
+                                    <input type="email" class="form-control" name="email" id="email"
+                                           placeholder="Your Email" required>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="text" class="form-control" name="subject" id="subject"
+                                       placeholder="Subject" required>
+                            </div>
+                            <div class="form-group mt-3">
+                                <textarea class="form-control" name="message" rows="5" placeholder="Message"
+                                          required></textarea>
+                            </div>
+                            <div class="my-3">
+                                <div class="loading">Loading</div>
+                                <div class="error-message"></div>
+                                <div class="sent-message">Your message has been sent. Thank you!</div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Contact Section -->
+    </main>
+{% endblock %}

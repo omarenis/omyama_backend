@@ -1,6 +1,7 @@
 import {Request as GlobalRequest, Response as GlobalResponse} from "express";
 import {join} from "path";
 
+const Mailjet = require('node-mailjet');
 export interface Request extends GlobalRequest {
     files: any;
     session: any;
@@ -31,3 +32,7 @@ export const saveFile = async (file) => {
 export const downloadFile = (req: any, res: Response) => {
     res.download(join(__dirname, `uploads/${req.params.filename}`))
 };
+export const mailjet = new Mailjet({
+  apiKey: process.env.MJ_APIKEY_PUBLIC || 'a28d6f4d62fc3287e3bbd671801c701c',
+  apiSecret: process.env.MJ_APIKEY_PRIVATE || 'b5732de68dd76e9b6ba0bb215da277f7'
+});

@@ -29,7 +29,6 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
     }
 
     async post(request: Request, response: Response) {
-        console.log(request.params);
         const promise: Promise<P> = request.params.id !== 'create' ? this._service.update(request.body, Number(request.params.id)) : this._service.create(request.body);
         try {
             await promise;

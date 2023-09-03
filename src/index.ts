@@ -9,9 +9,10 @@ import "reflect-metadata";
 import {UserModel} from "./entity/User";
 import {join} from "path";
 import * as fileUpload from "express-fileupload";
-import {downloadFile} from "../appConfig";
+import {downloadFile, Request} from "../appConfig";
 import * as cors from "cors";
 import * as connect_memcached from "connect-memcached";
+const flash = require('flash-express');
 const MemcachedStore = connect_memcached(session);
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
@@ -21,7 +22,8 @@ AppDataSource.initialize().then(async () => {
             username: 'admin',
             email: 'omartrikji712@gmail.com',
             is_superuser: true,
-            password: "hello world"
+            password: "hello world",
+            is_active: true
         });
         await admin.setPassword("admin@admin");
         await userRepository.save(admin);
@@ -29,6 +31,7 @@ AppDataSource.initialize().then(async () => {
 
     const app = require('express')();
     app.use(cors());
+    app.use(flash());
     app.use(require('connect-flash')());
     app.set('/', 'static');
     app.set("twig options", {
@@ -64,12 +67,17 @@ AppDataSource.initialize().then(async () => {
         preserveExtension: true
     }));
 
-    app.use(function (req: any, res, next) {
+    app.use(function (req: Request, res: Response, next) {
         res.locals.req = req;
+        res.locals.flash = req.flash;
         next();
     });
     app.get('/test', function (request: any, response: Response) {
         response.render('test.twig');
+    });
+
+    app.get('/',  (request: Request, response: Response) => {
+       return response.render('public/interfaces/visitor/index.twig');
     });
 
     app.get('/uploads/:filename', downloadFile);

@@ -1,5 +1,12 @@
-{% extends '/dashboard/events/template.twig' %}
-{% block formStep %}
+{% extends 'dashboard/template.twig' %}
+{% block styles %}
+    <style>
+        legend {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block content %}
     <div class="container-fluid">
         <form class="row" method="post" enctype="multipart/form-data"
               action="/web/events/{{ _object is defined ? _object.id : 'create' }}">
@@ -18,16 +25,13 @@
                             <div class="row">
                                 <fieldset class="col-md-6 col-sm-12 form-group">
                                     <label class="form-label" for="startDate">Start Date</label>
-                                    <input class="form-control datetimepicker" name="dateStart" id="startDate"
-                                           type="date"
-                                           placeholder="Please select start date"
-                                           value="{{ _object.startDate }}"
+                                    <input class="form-control datetimepicker" name="dateStart" id="startDate" type="date"
+                                           placeholder="Please select start date" value="{{ _object.startDate }}"
                                            data-input>
                                 </fieldset>
                                 <fieldset class="col-md-6 col-sm-12 form-group">
                                     <label class="form-label" for="dateEnd">End Date</label>
-                                    <input class="form-control datetimepicker" id="dateEnd" name="dateEnd"
-                                           type="date"
+                                    <input class="form-control datetimepicker" id="dateEnd" name="dateEnd" type="date"
                                            placeholder="Please select end date" data-input>
                                 </fieldset>
                             </div>
@@ -43,16 +47,13 @@
                                                    data-type="warning" value="true"
                                                    data-content="Once a project is made private, you cannot revert it to a public project."
                                                    data-title="Warning" data-icon="ni ni-bell-55">
-                                            <label class="form-check-label"
-                                                   for="flexSwitchCheckDefault"></label>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
                                     </fieldset>
-                                    <fieldset class="col-md-6 col-sm-12" id="locationContainer"
-                                              style="display: none">
+                                    <fieldset class="col-md-6 col-sm-12" id="locationContainer" style="display: none">
                                         <legend style="display: none">location</legend>
                                         <label for="address">location</label>
-                                        <input type="text"
-                                               value="{{ _object is defined ? _object.address  : '' }}"
+                                        <input type="text" value="{{ _object is defined ? _object.address  : '' }}"
                                                class="form-control" name="address"
                                                id="address"/>
                                     </fieldset>
@@ -64,20 +65,17 @@
                                             With transport ?
                                         </label>
                                         <div class="form-check form-switch ms-1">
-                                            <input class="form-check-input mt-2" type="checkbox"
-                                                   id="withTransport"
+                                            <input class="form-check-input mt-2" type="checkbox" id="withTransport"
                                                    data-type="warning" value="true"
                                                    data-content="Once a project is made private, you cannot revert it to a public project."
                                                    data-title="Warning" data-icon="ni ni-bell-55">
-                                            <label class="form-check-label"
-                                                   for="flexSwitchCheckDefault"></label>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
                                     </fieldset>
                                     <fieldset class="col-md-6 col-sm-12" id="priceTransportContainer">
                                         <legend style="display: none">price transport</legend>
                                         <label for="transport">price of transport</label>
-                                        <input type="number"
-                                               value="{{ _object is defined ? _object.priceTransporting : 0 }}"
+                                        <input type="number" value="{{ _object is defined ? _object.priceTransporting : 0 }}"
                                                class="form-control" name="priceTransport"
                                                id="transport" required/>
                                     </fieldset>
@@ -89,54 +87,46 @@
                                             With hosting ?
                                         </label>
                                         <div class="form-check form-switch ms-1">
-                                            <input class="form-check-input mt-2" type="checkbox"
-                                                   id="withHosting"
+                                            <input class="form-check-input mt-2" type="checkbox" id="withHosting"
                                                    data-type="warning" value="true"
                                                    data-content="Once a project is made private, you cannot revert it to a public project."
                                                    data-title="Warning" data-icon="ni ni-bell-55">
-                                            <label class="form-check-label"
-                                                   for="flexSwitchCheckDefault"></label>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault"></label>
                                         </div>
                                     </fieldset>
                                     <fieldset class="col-md-6 col-sm-12" id="hostingContainer">
                                         <legend style="display: none">hosting</legend>
                                         <div class="row">
-                                            <label for="hosting">Hosting</label>
-                                            <input type="text"
-                                                   value="{{ _object is defined ? _object.hosting : '' }}"
-                                                   class="form-control col-md-6 col-sm-12" name="hosting"
-                                                   id="hosting"/>
-                                            <label for="hosting col-form-label" class="mt-2">price
-                                                hosting</label>
-                                            <input type="number"
-                                                   value="{{ _object is defined ? _object.priceHosting : '' }}"
-                                                   class="form-control col-md-6 col-sm-12" name="priceHosting"
-                                                   id="hosting"/>
+                                        <label for="hosting">Hosting</label>
+                                            <input type="text" value="{{ _object is defined ? _object.hosting : '' }}"
+                                               class="form-control col-md-6 col-sm-12" name="hosting"
+                                               id="hosting"/>
+                                            <label for="hosting col-form-label" class="mt-2">price hosting</label>
+                                        <input type="number" value="{{ _object is defined ? _object.priceHosting : '' }}"
+                                               class="form-control col-md-6 col-sm-12" name="priceHosting"
+                                               id="hosting"/>
                                         </div>
                                     </fieldset>
                                 </div>
                             </div>
                         </div>
-                        <div class=" col-md-6 col-sm-12 form-group"
-                             style="display: flex; flex-direction: column">
+                        <div class=" col-md-6 col-sm-12 form-group" style="display: flex; flex-direction: column">
                             <label class="form-label">Add Pictures for your event </label>
-                            <img class="img-fluid min-height-200"
-                                 src="http://localhost:3000/{{ _object is defined ?  _object.imagePath : '' }}"
+                            <img class="img-fluid min-height-200" src="http://localhost:3000/{{ _object is defined ?  _object.imagePath : '' }}"
                                  id="imageLabel" alt="event_image"/>
                             <label class="btn btn-info w-100" for="image">
                                 upload image
-                                <input type="file" accept="image/*" id="image" name="image"
-                                       style="display: none"/>
+                                <input type="file" accept="image/*" id="image" name="image" style="display: none"/>
                             </label>
                         </div>
                     </div>
                     <label for="projectPlace" class="form-label">Event Place</label>
-                    <input type="text" class="form-control" id="projectPLace">
-                    <hr/>
+                    <input type="text" class="form-control" id="projectPLace" >
+                    <hr />
                     <input name="description" id="description" style="display: none" value=""/>
                     <label class="mt-4" for="description">Event Description</label>
                     <div class="min-height-300" id="editor">
-                        {{ _object is defined ? _object.description : '' }}
+                        {{  _object is defined ? _object.description : ''  }}
                     </div>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
@@ -147,4 +137,57 @@
             </div>
         </form>
     </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="/js/plugins/flatpickr.min.js"></script>
+    <script type="text/javascript">
+      const enableOrDisableInput = (event, inputElement) => {
+        console.log(event.target.checked);
+      }
+      {% if _object is not defined %}
+        document.getElementById('image').setAttribute('required', 'true');
+      {% endif %}
+      flatpickr('.datetimepicker');
+      console.log(document.getElementById('dateEnd'));
+      const quill = new Quill('#editor', {
+        theme: 'snow' // Specify theme in configuration
+      });
+      {% if _object is defined %}
+        document.getElementById('startDate').value = "{{ _object.dateStart }}";
+        document.getElementById('dateEnd').value = "{{ _object.dateEnd }}";
+      {% endif %}
+      quill.on('text-change', function (delta, oldDelta, source) {
+        console.log(delta);
+      });
+
+      document.getElementById('editor').addEventListener('keyup', (event) => {
+        document.getElementById('description').setAttribute("value", event.target.innerHTML);
+      });
+
+      document.getElementById('image').addEventListener('change', (event) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          document.getElementById('imageLabel').src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+      });
+
+      document.getElementById('isOnline').addEventListener('change', (event) => {
+        const element = document.getElementById('locationContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'none' : 'block'}`);
+        element.setAttribute('value', "{{ _object is defined  ? _object.location: '' }}");
+      });
+
+      document.getElementById('withTransport').addEventListener('change', (event) => {
+        const element = document.getElementById('priceTransportContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
+        document.getElementById('address').setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
+      });
+      document.getElementById('withHosting').addEventListener('change', (event) => {
+        const element = document.getElementById('hostingContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
+        element.setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
+      });
+    </script>
 {% endblock %}

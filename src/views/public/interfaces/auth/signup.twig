@@ -1,4 +1,4 @@
-{% extends 'public/index.twig' %}
+{% extends 'public/template.twig' %}
 {% block main %}
     <main class="main-content main-content-bg">
         <div class="page-header min-vh-100" style="background-image: url('/img/1.jpg');">
@@ -58,7 +58,7 @@
                                 <p class="container text-bold text-center text-white alert alert-{{ category == 400 ? 'warning': (category == 404 ? 'danger': 'success') }}">{{ message }}</p>
                             {% endif %}
                             <div class="card-body">
-                                <form role="form" class="row" action="/auth/signup" method="post">
+                                <form role="form" class="row" action="/web/auth/signup" method="post">
                                     <div class="mb-3 col-md-6 col-sm-12">
                                         <input type="text" class="form-control" placeholder="First Name"
                                                aria-label="First_name" name="firstname">

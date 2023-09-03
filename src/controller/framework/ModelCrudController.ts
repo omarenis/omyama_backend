@@ -55,7 +55,7 @@ export class ModelTemplate<T, P> implements ITemplateController<P> {
         response.render(this.template, {instances: this.service.findAll()});
     }
 
-    async post(request: e.Request, response: e.Response): Promise<Response> {
+    async post(request: Request, response: Response): Promise<void> {
         try {
             if(this.modelConfig !== undefined)
             {
