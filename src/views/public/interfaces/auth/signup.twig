@@ -58,7 +58,7 @@
                                 <p class="container text-bold text-center text-white alert alert-{{ category == 400 ? 'warning': (category == 404 ? 'danger': 'success') }}">{{ message }}</p>
                             {% endif %}
                             <div class="card-body">
-                                <form role="form" class="row" action="/web/auth/signup" method="post">
+                                <form role="form" class="row" action="/public/auth/signup" method="post">
                                     <div class="mb-3 col-md-6 col-sm-12">
                                         <input type="text" class="form-control" placeholder="First Name"
                                                aria-label="First_name" name="firstname">
@@ -89,7 +89,7 @@
                                                aria-label="Password" name="password">
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up
+                                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign <up></up>
                                         </button>
                                     </div>
                                     <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:"

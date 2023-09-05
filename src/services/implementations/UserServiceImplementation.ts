@@ -19,6 +19,7 @@ export class UserServiceImplementation extends ModelCrudServiceImplementation<Us
         userModel.email = instance.email;
         userModel.username = instance.username;
         userModel.is_superuser = false;
+        userModel.is_active = true;
         userModel.password = await  hash(instance.password, SECRET_KEY);
         if (instance.profile !== undefined) {
             userModel.profile = new ProfileModel();

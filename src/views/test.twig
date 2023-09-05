@@ -1,9 +1,50 @@
 {% extends 'template.twig' %}
-{% import 'cms/forms.twig' as form %}
 {% block main %}
-   {{ form.cardForm() }}
+    <div class="position-absolute w-100 min-height-300 top-0"
+         style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">
+        <span class="mask bg-primary opacity-6"></span>
+    </div>
+
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <!-- Navbar -->
+
+        <!-- End Navbar -->
+
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="multisteps-form">
+
+                        <!--form panels-->
+                        <div class="row">
+                            <div class="col-12 col-lg-8 m-auto">
+                                <form class="multisteps-form__form mb-8">
+                                    <!--single form panel-->
+                                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active"
+                                         data-animation="FadeIn">
+
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 {% endblock %}
 {% block scripts %}
     {{ parent() }}
-    <script src="/js/custom.js"></script>
+    <script type="text/javascript">
+      Dropzone.autoDiscover = false;
+      const uploader = new Dropzone('#upload', {
+        url: '/upload',
+        maxFiles: 1,
+        sending: (file, xhr, formData) => {
+          console.log(xhr)
+        }
+      });
+    </script>
 {% endblock %}

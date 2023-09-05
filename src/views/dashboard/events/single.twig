@@ -1,10 +1,8 @@
 {% extends '/dashboard/events/template.twig' %}
 {% block formStep %}
-    <div class="container-fluid">
         <form class="row" method="post" enctype="multipart/form-data"
               action="/web/events/{{ _object is defined ? _object.id : 'create' }}">
             <div class="mx-auto">
-                <div class="card card-body mt-4">
                     <p class="text-sm mb-0">{{ _object is defined ? 'update': 'create' }} your event </p>
                     <hr class="horizontal dark my-3">
                     <div class="row">
@@ -135,10 +133,9 @@
                     <hr/>
                     <input name="description" id="description" style="display: none" value=""/>
                     <label class="mt-4" for="description">Event Description</label>
-                    <div class="min-height-300" id="editor">
+                    <div style="max-height: 40%" id="editor">
                         {{ _object is defined ? _object.description : '' }}
                     </div>
-                </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button type="button" class="btn btn-light m-0">Cancel</button>
                     <button type="submit" class="btn bg-gradient-primary m-0 ms-2">Create Event
@@ -146,5 +143,57 @@
                 </div>
             </div>
         </form>
-    </div>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="/js/plugins/flatpickr.min.js"></script>
+    <script type="text/javascript">
+      const enableOrDisableInput = (event, inputElement) => {
+        console.log(event.target.checked);
+      }
+      {% if _object is not defined %}
+      document.getElementById('image').setAttribute('required', 'true');
+      {% endif %}
+      flatpickr('.datetimepicker');
+      console.log(document.getElementById('dateEnd'));
+      const quill = new Quill('#editor', {
+        theme: 'snow' // Specify theme in configuration
+      });
+      {% if _object is defined %}
+      document.getElementById('startDate').value = "{{ _object.dateStart }}";
+      document.getElementById('dateEnd').value = "{{ _object.dateEnd }}";
+      {% endif %}
+      quill.on('text-change', function (delta, oldDelta, source) {
+        console.log(delta);
+      });
+
+      document.getElementById('editor').addEventListener('keyup', (event) => {
+        document.getElementById('description').setAttribute("value", event.target.innerHTML);
+      });
+
+      document.getElementById('image').addEventListener('change', (event) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          document.getElementById('imageLabel').src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+      });
+
+      document.getElementById('isOnline').addEventListener('change', (event) => {
+        const element = document.getElementById('locationContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'none' : 'block'}`);
+        element.setAttribute('value', "{{ _object is defined  ? _object.location: '' }}");
+      });
+
+      document.getElementById('withTransport').addEventListener('change', (event) => {
+        const element = document.getElementById('priceTransportContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
+        document.getElementById('address').setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
+      });
+      document.getElementById('withHosting').addEventListener('change', (event) => {
+        const element = document.getElementById('hostingContainer');
+        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
+        element.setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
+      });
+    </script>
 {% endblock %}

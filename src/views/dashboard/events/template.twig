@@ -7,84 +7,27 @@
     </style>
 {% endblock %}
 {% block content %}
-    <div class="multisteps-form">
-        <div class="row">
-            <div class="col-12 col-lg-8 mx-auto mt-4 mb-sm-5 mb-3">
-                <div class="multisteps-form__progress">
-                    <button class="multisteps-form__progress-btn js-active" type="button" title="Product Info">
-                        <span>Event Essential Information</span>
-                    </button>
-                    <button class="multisteps-form__progress-btn" type="button" title="Media">Speakers and Sponsors</button>
-                    <button class="multisteps-form__progress-btn" type="button" title="Socials">Detail of event</button>
-                    <button class="multisteps-form__progress-btn" type="button" title="Pricing">4. Pricing</button>
-                </div>
+    <div class="multisteps-form container-fluid">
+        <div class="col-12 mx-auto mt-5">
+            <div class="multisteps-form__progress">
+                <a class="multisteps-form__progress-btn js-active text-white text-center" type="button" title="Product Info" href="/dashboard/events/{{ req.params.id }}"  >
+                    Event Essential Information
+                </a>
+                <a class="multisteps-form__progress-btn text-center" type="button" title="Media">Speakers and Sponsors</a>
+                <a class="multisteps-form__progress-btn text-center" type="button" title="Socials">Detail of event</a>
+                <a class="multisteps-form__progress-btn text-center" type="button" title="Pricing">4. Pricing</a>
             </div>
         </div>
         <!--form panels-->
-        <div class="row">
-            <div class="col-12 col-lg-8 m-auto">
-                <form class="multisteps-form__form mb-8">
-                    <!--single form panel-->
-                    <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active"
-                         data-animation="FadeIn">
-                        {% block formStep %}
-                        {% endblock %}
-                    </div>
-                </form>
+        <div class="m-auto mt-5">
+            <div class="multisteps-form__form">
+                <!--single form panel-->
+                <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active container-fluid"
+                     data-animation="FadeIn">
+                    {% block formStep %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
-{% block scripts %}
-    {{ parent() }}
-    <script type="text/javascript" src="/js/plugins/flatpickr.min.js"></script>
-    <script type="text/javascript">
-      const enableOrDisableInput = (event, inputElement) => {
-        console.log(event.target.checked);
-      }
-      {% if _object is not defined %}
-      document.getElementById('image').setAttribute('required', 'true');
-      {% endif %}
-      flatpickr('.datetimepicker');
-      console.log(document.getElementById('dateEnd'));
-      const quill = new Quill('#editor', {
-        theme: 'snow' // Specify theme in configuration
-      });
-      {% if _object is defined %}
-      document.getElementById('startDate').value = "{{ _object.dateStart }}";
-      document.getElementById('dateEnd').value = "{{ _object.dateEnd }}";
-      {% endif %}
-      quill.on('text-change', function (delta, oldDelta, source) {
-        console.log(delta);
-      });
-
-      document.getElementById('editor').addEventListener('keyup', (event) => {
-        document.getElementById('description').setAttribute("value", event.target.innerHTML);
-      });
-
-      document.getElementById('image').addEventListener('change', (event) => {
-        const reader = new FileReader();
-        reader.onload = async (e) => {
-          document.getElementById('imageLabel').src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
-      });
-
-      document.getElementById('isOnline').addEventListener('change', (event) => {
-        const element = document.getElementById('locationContainer');
-        element.setAttribute('style', `display: ${event.target.checked ? 'none' : 'block'}`);
-        element.setAttribute('value', "{{ _object is defined  ? _object.location: '' }}");
-      });
-
-      document.getElementById('withTransport').addEventListener('change', (event) => {
-        const element = document.getElementById('priceTransportContainer');
-        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
-        document.getElementById('address').setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
-      });
-      document.getElementById('withHosting').addEventListener('change', (event) => {
-        const element = document.getElementById('hostingContainer');
-        element.setAttribute('style', `display: ${event.target.checked ? 'block' : 'none'}`);
-        element.setAttribute('value', "{{ _object is defined  ? _object.transport: '' }}");
-      });
-    </script>
 {% endblock %}

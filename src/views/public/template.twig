@@ -54,10 +54,6 @@
             border-radius: 30px;
         }
 
-        /**
-        * Mobile Navigation
-        */
-
         @media (max-width: 991px) {
 
             .navbar ul {
@@ -203,21 +199,21 @@
                     <div class="collapse navbar-collapse container-fluid container-lg w-100" id="navigation">
                         <ul class="navbar-nav navbar-nav-hover ms-auto">
                             <li class="nav-item pe-2 ps-2">
-                                <a role="button"
+                                <a role="button" href="/"
                                    class="nav-link cursor-pointer  text-center"
                                    id="dropdownMenuPages">
                                     Home
                                 </a>
                             </li>
                             <li class="nav-item  ms-2">
-                                <a role="button"
+                                <a role="button" href="/about"
                                    class="nav-link ps-3 d-flex justify-content-between cursor-pointer align-items-center "
                                    id="dropdownMenuAccount">
                                     About
                                 </a>
                             </li>
                             <li class="nav-item  ms-2">
-                                <a role="button"
+                                <a role="button" href="/services"
                                    class="nav-link ps-3 d-flex justify-content-between cursor-pointer align-items-center "
                                    id="dropdownMenuBlocks">
                                     Services
@@ -244,21 +240,39 @@
                                     Contact
                                 </a>
                             </li>
+                            {% if req.session.user is defined and not req.session.user.is_superuser %}
                             <li class="nav-item  ms-2">
-                                <a role="button"
+                                <a role="button" href="/dashboard/events"
+                                   class="nav-link ps-3  cursor-pointer text-center "
+                                   id="dropdownMenuDocs">
+                                    go to dashboard
+                                </a>
+                            </li>
+
+                            <li class="nav-item  ms-2">
+                                <a role="button" href="/public/auth/logout"
+                                   class="nav-link  cursor-pointer text-center "
+                                   id="dropdownMenuDocs">
+                                    logout
+                                </a>
+                            </li>
+                            {% elseif req.session.user is not defined %}
+                            <li class="nav-item  ms-2">
+                                <a role="button" href="/public/auth/login"
                                    class="nav-link ps-3  cursor-pointer text-center "
                                    id="dropdownMenuDocs">
                                     Sign in
                                 </a>
                             </li>
-
                             <li class="nav-item  ms-2">
-                                <a role="button"
+                                <a role="button" href="/public/auth/signup"
                                    class="nav-link  cursor-pointer text-center "
                                    id="dropdownMenuDocs">
                                     Sign up
                                 </a>
                             </li>
+                            {% endif %}
+
                         </ul>
                     </div>
                 </div>
@@ -284,7 +298,6 @@
                     <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
                     <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
                 </div>
-
                 <div class="credits">
                     <!-- All the links in the footer should remain intact. -->
                     <!-- You can delete the links only if you purchased the pro version. -->

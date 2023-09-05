@@ -23,7 +23,7 @@ export class ILoginTemplate {
             });
         }
         if (!await user.check_password(request.body.password)) {
-            return response.render('public/interfaces/login.twig', {
+            return response.render('public/interfaces/auth/login.twig', {
                 message: 'password did not match',
                 category: 403
             });
@@ -38,10 +38,10 @@ export class ILoginTemplate {
         request.session.user = user;
         await request.session.save(function (err) {
             console.log("err = ", err);
-        }, function (data) {
+        }, (data) => {
             console.log(data);
         });
         console.log(request.session.user);
-        response.redirect('/web/events');
+        response.redirect('/');
     }
 }

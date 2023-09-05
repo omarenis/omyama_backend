@@ -9,18 +9,27 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
     constructor() {
         super(EventModel, 'dashboard/events/single.twig', '/web/events');
     }
-
-    async post(request: any, response: Response) {
-        console.log(request.body);
-        const events = await this._service.findBy({title: request.body.title});
+    private uploadEventFile() {}
+    async post(request: Request, response: Response) {
+        let event = null;
+        if(request.params.id !== 'create')
+        {
+            event = await this._service.findById(Number(request.params.id));
+            if(event === null)
+            {
+                response.render('404.twig', { message: 'Event not found' });
+            }
+        } else {
+        const events = await this._service.findOneBy({title: request.body.title});
         if (events.length > 0) {
             response.render(this._template, {message: 'event is already created'});
-        } else {
-            console.log(request.body);
+        }
+        }
+        if(event === null) {
             const data: Event = {
                 title: request.body.title,
                 description: request.body.description,
-                imagePath: `uploads/${request.files.image.name}`,
+                imagePath: `uploads/${request.files.image['name']}`,
                 dateStart: new Date(request.body.dateStart),
                 dateEnd: new Date(request.body.dateEnd),
                 address: request.body.address,
@@ -31,9 +40,8 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
             try {
                 const uploaded = await saveFile(request.files.image);
                 const _ = await this._service.create(data);
-                response.redirect('/web/events');
+                response.redirect('/dashboard/events');
             } catch (err) {
-                console.log(err);
                 return response.render(this._template, {message: err.message})
             }
         }

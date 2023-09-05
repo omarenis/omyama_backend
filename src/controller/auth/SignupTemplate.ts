@@ -27,7 +27,7 @@ export class SignupTemplate {
                 });
             } else {
                 try {
-                    user = await this.service.create({
+                    await this.service.create({
                         username: request.body.username,
                         email: request.body.email,
                         password: request.body.password,
@@ -46,6 +46,6 @@ export class SignupTemplate {
                 }
             }
         }
-        return response.render('/public/auth/signup.twig');
+        return response.render('public/auth/signup.twig');
     }
 }

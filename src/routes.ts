@@ -29,23 +29,23 @@ export const Routes: Route[] = [
     },
     {
     method: 'get',
-    route: '/web/auth/login',
+    route: '/public/auth/login',
     controller: ILoginTemplate,
     action: 'get'
 }, {
     method: 'post',
-    route: '/web/auth/login',
+    route: '/public/auth/login',
     controller: ILoginTemplate,
     action: 'post'
 },
     {
         method: 'get',
-        route: '/web/auth/signup',
+        route: '/public/auth/signup',
         controller: SignupTemplate,
         action: 'get'
     }, {
         method: 'post',
-        route: '/web/auth/signup',
+        route: '/public/auth/signup',
         controller: SignupTemplate,
         action: 'post'
     },
@@ -60,6 +60,12 @@ export const Routes: Route[] = [
         method: 'post',
         route: '/dashboard/events/:id',
         action: 'post',
+        controller: SingleEvent
+    },
+    {
+        method: 'get',
+        route: '/dashboard/events/:id',
+        action: 'get',
         controller: SingleEvent
     },
     // the pages crud
@@ -77,7 +83,13 @@ export const Routes: Route[] = [
     },
     {
         method: 'get',
-        route: '/web/events/:id',
+        route: '/dashboard/events/:id/contributors',
+        action: 'get',
+        controller:
+    }
+    {
+        method: 'get',
+        route: '/public/events/:id',
         action: 'get',
         controller: SingleEvent
     },
