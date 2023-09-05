@@ -3,6 +3,7 @@ import {EntityNotFoundError, ObjectLiteral, Repository} from "typeorm";
 import {IModelCrudService} from "../interfaces/IModelCrud";
 import slugify from "slugify";
 import {saveFile} from "../../../appConfig";
+import {modelConfig} from "../../entity/Contributor";
 
 export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P> {
     protected readonly repository: Repository<ObjectLiteral>;
@@ -10,7 +11,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     private readonly model: any;
     private readonly modelConfig ?: { [key: string]: any };
 
-    constructor(Model, modelConfig ?: { [key: string]: any }) {
+    constructor(Model: Function, modelConfig ?: { [key: string]: any }) {
         this.model = Model;
         this.modelConfig = modelConfig;
         this.repository = AppDataSource.getRepository(Model);
@@ -53,8 +54,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
                     throw new Error('instance must not exist0');
                 }
             }
-            if(this.modelConfig[key].type === 'blob')
-            {
+            if (this.modelConfig[key].type === 'blob') {
                 saveFile(instance[key]).then((response) => {
 
                 });
@@ -62,6 +62,23 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
         }
         const modelInstance = this.convertDataIntoModelInstance(instance);
         return (await this.repository.save(modelInstance) as unknown as P);
+    }
+
+    async put(instance: P, id: number): Promise<P> {
+        const instance_model = this.repository.findOneBy({id: id});
+        if (instance_model === null) {
+            throw EvalError('instance not found');
+        }
+        Object.keys(instance_model).forEach((key) => {
+            if (instance[key] !== instance_model[key] && this.modelConfig[key].type !== 'blob') {
+                instance_model[key] = instance[key];
+            } else if (instance[key] !== null) {
+                saveFile(instance[key]).then((response) => {
+                    instance_model[key] = response;
+                });
+            }
+        });
+        return (await this.repository.save(instance_model) as unknown as P);
     }
 
     async delete(id: number): Promise<void> {

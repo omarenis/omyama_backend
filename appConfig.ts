@@ -27,7 +27,7 @@ export const saveFile = async (file) => {
             throw err;
         }
     });
-    return true;
+    return file.name;
 }
 export const downloadFile = (req: any, res: Response) => {
     res.download(join(__dirname, `uploads/${req.params.filename}`))

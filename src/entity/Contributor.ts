@@ -34,7 +34,7 @@ export const modelConfig = {
      lastname: {type: 'string', required: true},
      position: {type: 'string', required: true},
      description: {type: 'string', required: true},
-     image: {type: 'file', required: true},
+     image: {type: 'blob', required: true},
      facebook: {type: 'string', required: true},
      google: {type: 'string', required: true},
      instagram: {type: 'string', required: true},

@@ -6,6 +6,7 @@ import {EventList} from "./controller/dashboard/events/ListEvents";
 import {PageListTemplate} from "./controller/dashboard/pages/PageListTemplate";
 import {UsersView} from "./controller/dashboard/users/list";
 import {ContactPage} from "./controller/visitor";
+import {ContributorController} from "./controller/dashboard/events/ContributorConytroller";
 
 interface Route {
     method: string,
@@ -68,6 +69,12 @@ export const Routes: Route[] = [
         action: 'get',
         controller: SingleEvent
     },
+        {
+        method: 'get',
+        route: '/dashboard/events/:id/contributors',
+        action: 'get',
+        controller: ContributorController
+    },
     // the pages crud
     {
         method: 'get',
@@ -83,39 +90,9 @@ export const Routes: Route[] = [
     },
     {
         method: 'get',
-        route: '/dashboard/events/:id/contributors',
-        action: 'get',
-        controller:
-    }
-    {
-        method: 'get',
         route: '/public/events/:id',
         action: 'get',
         controller: SingleEvent
-    },
-    {
-        method: 'get',
-        route: '/api/intervenors',
-        controller: SpeakerRestController,
-        action: 'list'
-    },
-    {
-        method: 'post',
-        controller: SpeakerRestController,
-        action: 'create',
-        route: '/api/intervenors'
-    },
-    {
-        method: 'put',
-        controller: SpeakerRestController,
-        action: 'update',
-        route: '/api/intervenors'
-    },
-    {
-        method: 'delete',
-        controller: SpeakerRestController,
-        action: 'delete',
-        route: '/api/intervenors'
     },
     {
         method: 'get',
