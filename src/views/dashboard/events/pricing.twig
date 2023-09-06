@@ -1,0 +1,91 @@
+{% extends '/dashboard/events/template.twig' %}
+{% block formStep %}
+    <div class="multisteps-form__content">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Launch demo modal
+        </button>
+    </div>
+    <form class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable w-100 align-self-center">
+            <div class="modal-content" style="min-width: 1000px !important">
+                <div class="modal-header">
+                    <h5 class="font-weight-bolder">Speaker Information</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-body mt-4">
+                        <p class="text-sm mb-0">Event Price </p>
+                        <hr class="horizontal dark my-3">
+                        <div class="row">
+                            <div class="mb-3 col-12" style="display: flex; flex-direction: column">
+                                <div class="form-group">
+
+                                    <div class="mt-1">
+
+                                        <div class="row mt-3">
+                                            <fieldset class="col-md-12 col-sm-6">
+                                                <legend style="display: none">event with transport ?</legend>
+                                                <label for="isOnline">
+                                                    With transport ?
+                                                </label>
+                                                <div class="form-check form-switch ms-1">
+                                                    <input class="form-check-input mt-2" type="checkbox"
+                                                           id="withTransport"
+                                                           data-type="warning" value="true"
+                                                           data-content="Once a project is made private, you cannot revert it to a public project."
+                                                           data-title="Warning" data-icon="ni ni-bell-55">
+                                                    <label class="form-check-label"
+                                                           for="flexSwitchCheckDefault"></label>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="col-12 col-sm-6 mt-3 mt-sm-0">
+                                                <legend style="display: none">event with hosting ?</legend>
+                                                <label for="withHosting">
+                                                    With hosting ?
+                                                </label>
+                                                <div class="form-check form-switch ms-1">
+                                                    <input class="form-check-input mt-2" type="checkbox"
+                                                           id="withHosting"
+                                                           data-type="warning" value="true"
+                                                           data-content="Once a project is made private, you cannot revert it to a public project."
+                                                           data-title="Warning" data-icon="ni ni-bell-55">
+                                                    <label class="form-check-label"
+                                                           for="flexSwitchCheckDefault"></label>
+                                                </div>
+                                            </fieldset>
+
+                                        </div>
+                                        <div class="row mt-3">
+                                            <fieldset class="col-md-6 col-sm-12" id="hostingContainer">
+                                                <legend style="display: none">Total price</legend>
+                                                <div class="row">
+                                                    <label for="hosting col-form-label" class="mt-2">Total Price</label>
+                                                    <input type="number"
+                                                           value="{{ _object is defined ? _object.priceHosting : '' }}"
+                                                           class="form-control col-md-6 col-sm-12" name="priceHosting"
+                                                           id="hosting"/>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}

@@ -3,7 +3,6 @@ import {EntityNotFoundError, ObjectLiteral, Repository} from "typeorm";
 import {IModelCrudService} from "../interfaces/IModelCrud";
 import slugify from "slugify";
 import {saveFile} from "../../../appConfig";
-import {modelConfig} from "../../entity/Contributor";
 
 export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P> {
     protected readonly repository: Repository<ObjectLiteral>;
@@ -45,6 +44,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     }
 
     async create(instance: P): Promise<P> {
+        console.log(instance);
         for (const key of Object.keys(instance)) {
             if (this.modelConfig[key]?.unique) {
                 let data = await this.repository.findOneBy({

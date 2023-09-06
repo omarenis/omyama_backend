@@ -9,9 +9,11 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
     constructor() {
         super(EventModel, 'dashboard/events/single.twig', '/web/events');
     }
-    private uploadEventFile() {}
+
     async post(request: Request, response: Response) {
         let event = null;
+        console.log(request.body);
+        process.exit(0);
         if(request.params.id !== 'create')
         {
             event = await this._service.findById(Number(request.params.id));
@@ -20,8 +22,9 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
                 response.render('404.twig', { message: 'Event not found' });
             }
         } else {
+            console.log(request.body);
         const events = await this._service.findOneBy({title: request.body.title});
-        if (events.length > 0) {
+        if (events !== null) {
             response.render(this._template, {message: 'event is already created'});
         }
         }
@@ -36,12 +39,16 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
                 hosting: request.body.hosting,
                 priceHosting: request.body.priceHosting,
                 priceTransporting: request.body.priceTransporting,
+                url: request.body.url,
+                isOnline: request.body.isOnline
             };
             try {
                 const uploaded = await saveFile(request.files.image);
                 const _ = await this._service.create(data);
+                console.log(_);
                 response.redirect('/dashboard/events');
             } catch (err) {
+                console.log(err);
                 return response.render(this._template, {message: err.message})
             }
         }

@@ -9,9 +9,14 @@ export const  ContributorController  = () => {
             const contributors = await service.findBy({
                 event: {id: request.params.id}
             });
+            response.render('dashboard/events/contributors.twig');
         },
         post: async (request: Request, response: Response) => {
+            try {
 
+            } catch(err) {
+
+            }
         },
         put: (request: Request, response: Response) => {
 

@@ -8,21 +8,26 @@
 {% endblock %}
 {% block content %}
     <div class="multisteps-form container-fluid">
-        <div class="col-12 mx-auto mt-5">
-            <div class="multisteps-form__progress">
-                <a class="multisteps-form__progress-btn js-active text-white text-center" type="button" title="Product Info" href="/dashboard/events/{{ req.params.id }}"  >
-                    Event Essential Information
-                </a>
-                <a class="multisteps-form__progress-btn text-center" type="button" title="Media">Speakers and Sponsors</a>
-                <a class="multisteps-form__progress-btn text-center" type="button" title="Socials">Detail of event</a>
-                <a class="multisteps-form__progress-btn text-center" type="button" title="Pricing">4. Pricing</a>
+        {% if _object is defined %}
+            <div class="col-12 mx-auto mt-5">
+                <div class="multisteps-form__progress">
+                    <a class="multisteps-form__progress-btn js-active text-white text-center" type="button"
+                       title="Product Info" href="/dashboard/events/{{ req.params.id }}">
+                        Event Essential Information
+                    </a>
+                    <a class="multisteps-form__progress-btn text-center" type="button" title="Media">Speakers and
+                        Sponsors</a>
+                    <a class="multisteps-form__progress-btn text-center" type="button" title="Socials">Detail of
+                        event</a>
+                    <a class="multisteps-form__progress-btn text-center" type="button" title="Pricing">4. Pricing</a>
+                </div>
             </div>
-        </div>
+        {% endif %}
         <!--form panels-->
         <div class="m-auto mt-5">
             <div class="multisteps-form__form">
                 <!--single form panel-->
-                <div class="card multisteps-form__panel p-3 border-radius-xl bg-white js-active container-fluid"
+                <div class="card {{ _object ? 'multisteps-form__panel' }} p-3 border-radius-xl bg-white js-active container-fluid"
                      data-animation="FadeIn">
                     {% block formStep %}
                     {% endblock %}
