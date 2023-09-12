@@ -30,7 +30,7 @@ export const ContactPage = () => {
                             HTMLPart: `
                     
                     
-                    
+                 
                     `
                         }
                     ]

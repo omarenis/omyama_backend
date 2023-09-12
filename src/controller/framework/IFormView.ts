@@ -13,8 +13,8 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
     protected readonly _template: string;
     protected readonly _redirectUrl: string;
 
-    constructor(Model, template, redirectUrl) {
-        this._service = new ModelCrudServiceImplementation<T, P>(Model);
+    constructor(Model, template, redirectUrl, modelConfig = undefined) {
+        this._service = new ModelCrudServiceImplementation<T, P>(Model, modelConfig);
         this._template = template;
         this._redirectUrl = redirectUrl;
     }
@@ -25,6 +25,7 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
             console.log(request.params);
             context['_object'] = await this._service.getBy({id: request.params.id});
         }
+        console.log(context);
         response.render(this._template, context);
     }
 

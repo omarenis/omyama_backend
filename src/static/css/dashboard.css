@@ -1,14 +1,28 @@
 .tableWrap {
-  height:   70vh;
-  overflow: auto;
+    height: 70vh;
+    overflow: auto;
 }
-.tableWrap > table
-{
-  width: 100%;
+
+.tableWrap > table {
+    width: 100%;
 }
+
 .tableWrap > table > thead tr th {
-  background: white;
-  position: sticky;
-  opacity: 1;
-  top: 0;
+    background: white;
+    position: sticky;
+    opacity: 1;
+    top: 0;
+}
+
+a.disabled {
+    pointer-events: none !important;
+  cursor: pointer !important;
+}
+
+legend {
+    display: none;
+}
+label > input[type='file']
+{
+    display: none !important;
 }

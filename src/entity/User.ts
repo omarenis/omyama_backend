@@ -16,6 +16,7 @@ export class UserModel {
     @Column({type: 'bool'}) is_active: boolean;
     @Column({type: 'text', default: null, nullable: true}) password: string;
     @OneToOne(() => ProfileModel, (profile: ProfileModel) => profile.user, {cascade: true})
+    @Column({type: 'text'}) role: string;
     profile: ProfileModel;
     async setPassword(password: string) {
         this.password =  await hash(password, SECRET_KEY);
@@ -45,6 +46,7 @@ export class ProfileModel {
 }
 
 export interface User {
+    role: string;
     username: string;
     email: string;
     profile ?: Profile;
@@ -58,6 +60,7 @@ export interface  Profile {
     lastname: string;
     gainedAmount: number;
     phone: string;
+    user ?: number | UserModel;
     image ?: string;
     id ?: number;
 }

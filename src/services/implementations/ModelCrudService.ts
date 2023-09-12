@@ -33,35 +33,43 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
     }
 
     convertDataIntoModelInstance(instance: P): T {
-        const modelInstance: T = ({} as T);
-        Object.keys(instance).forEach((key: string): void => {
-            modelInstance[key] = instance[key];
+        let field = null;
+        Object.keys(this.modelConfig).forEach(async (key: string): Promise<void> => {
+            if (this.modelConfig[key].required && !instance[key]) {
+                throw new Error(`${key} is required `)
+            }
+            if (this.modelConfig[key].type.indexOf('_')> -1 && !isNaN(instance[key])) {
+                if (!this.modelConfig[key].classMap) {
+                    throw new Error(`class Map not specified for the field ${key}`)
+                }
+                field = AppDataSource.getRepository(this.modelConfig[key].classMap).findOneBy({id: instance[key]})
+                if (!field) {
+                    throw new Error(`${field.constructor.name.toLowerCase()} does not exist with the specified id ${instance[key]}`)
+                }
+                instance[key] = field;
+            }
+            if (this.modelConfig[key].type === 'blob') {
+                if(await saveFile(instance[key]))
+                {
+                    instance[key] = `/uploads/${instance[key].name}`;
+                }
+                }
         });
         if (this.modelConfig?.slug !== undefined) {
-            modelInstance['slug'] = slugify(modelInstance[this.modelConfig?.slug.fieldToSlug]);
+            instance['slug'] = slugify(instance[this.modelConfig?.slug.fieldToSlug]);
         }
-        return modelInstance;
+        return (instance as unknown as T);
     }
 
     async create(instance: P): Promise<P> {
-        console.log(instance);
-        for (const key of Object.keys(instance)) {
-            if (this.modelConfig[key]?.unique) {
-                let data = await this.repository.findOneBy({
-                    [key]: instance[key]
-                });
-                if (data) {
-                    throw new Error('instance must not exist0');
-                }
-            }
-            if (this.modelConfig[key].type === 'blob') {
-                saveFile(instance[key]).then((response) => {
+        try {
+            const modelInstance = this.convertDataIntoModelInstance(instance);
 
-                });
-            }
+        return (modelInstance as unknown as P);
+        } catch (err)
+        {
+
         }
-        const modelInstance = this.convertDataIntoModelInstance(instance);
-        return (await this.repository.save(modelInstance) as unknown as P);
     }
 
     async put(instance: P, id: number): Promise<P> {
@@ -74,7 +82,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
                 instance_model[key] = instance[key];
             } else if (instance[key] !== null) {
                 saveFile(instance[key]).then((response) => {
-                    instance_model[key] = response;
+                    instance_model[key] = `/uploads/${instance[key].name}`;
                 });
             }
         });

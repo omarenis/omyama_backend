@@ -1,10 +1,6 @@
 {% extends 'dashboard/template.twig' %}
 {% block styles %}
-    <style>
-        legend {
-            display: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ '/css/dashboard.css' }}">
 {% endblock %}
 {% block content %}
     <div class="multisteps-form container-fluid">
@@ -12,10 +8,10 @@
             <div class="col-12 mx-auto mt-5">
                 <div class="multisteps-form__progress">
                     <a class="multisteps-form__progress-btn js-active text-white text-center" type="button"
-                       title="Product Info" href="/dashboard/events/{{ req.params.id }}">
+                       title="Product Info" href="/dashboard/events/{{ req.params.id }}" >
                         Event Essential Information
                     </a>
-                    <a class="multisteps-form__progress-btn text-center" type="button" title="Media">Speakers and
+                    <a class="multisteps-form__progress-btn text-center" type="button" title="Media"  href="/dashboard/events/{{ req.params.id }}/contributors" >Speakers and
                         Sponsors</a>
                     <a class="multisteps-form__progress-btn text-center" type="button" title="Socials">Detail of
                         event</a>

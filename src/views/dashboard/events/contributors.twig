@@ -1,8 +1,14 @@
 {% extends '/dashboard/events/template.twig' %}
 {% block formStep %}
-    <div class="multisteps-form__content">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
+    <div class="multisteps-form__content d-flex align-items-center">
+        <button type="button" class="btn btn-outline-primary d-flex align-items-center me-4 " data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+            <img src="{{ '/img/speaker.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
+            <span class="text-capitalize ms-2">add speaker</span>
+        </button>
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <img src="{{ '/img/save-money.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
+            <span class="text-capitalize ms-2">add speaker</span>
         </button>
     </div>
     <form class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -13,70 +19,53 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6 col-sm-12 row mt-3">
-                            <div class="d-flex">
-                                <label>First Name</label>
-                                <input class="multisteps-form__input form-control" type="text"
-                                       placeholder="First Name"/>
+                    <div class="row mt-3">
+                        <div class="col-md-8 col-sm-12 row">
+                            <div class="d-flex align-items-center mb-2">
+                                <label for="fullName" class="w-25 text-center">Full Name</label>
+                                <input id="fullName" class="multisteps-form__input form-control w-75" type="text"
+                                       placeholder="Full Name" name="fullName"/>
                             </div>
-                            <div class="">
-                                <label>Last Name</label>
-                                <input class="multisteps-form__input form-control" type="text"
-                                       placeholder="Last Name"/>
+                            <div class="d-flex align-items-center mb-2">
+                                <label for="job" class="w-25 text-center">Job</label>
+                                <input id="job" class="multisteps-form__input form-control w-75" type="text"
+                                       placeholder="Full Name" name="job"/>
                             </div>
-
-                            <div class="">
-                                <label>Job</label>
-                                <input class="multisteps-form__input form-control" type="text"
-                                       placeholder="Job title"/>
-                            </div>
-                            <div class="row">
-                                <label for="contribution" class="col-md-4 col-sm-12">Contribution</label>
-                                <div class="col-md-8 col-sm-12">
-                                    <select id="contribution" class="form-control" name="contribution">
-                                        <option value="speaker">Speaker</option>
-                                        <option value="speaker">Speaker</option>
-                                    </select>
-                                </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <label class="w-25 text-center" for="description">Description</label>
+                                <textarea class="form-control w-100" id="description" name="description"></textarea>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 mt-3 mt-sm-0">
-                            <label class="mt-4 form-label">Add Speaker Picture </label>
-                            <div class="dropzone form-control h-100" id="upload">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 ">
-                        <label class="mt-4">Description</label>
-                        <p class="form-text text-muted text-xs ms-1 d-inline">
-                            (optional)
-                        </p>
-                        <div id="edit-deschiption" class="h-50">
-                            <p>Some initial <strong>bold</strong> text</p>
+                        <div class="col-12 col-sm-4 d-flex flex-column align-items-center justify-content-center">
+                            <img class=" h-100" alt="image of speaker" src="{{ '/img/speaker.png' }}" id="uploaded_file"
+                                 loading="lazy" width="200px" height="150px"/>
+                            <label class="mt-4 form-label d-flex align-items-center btn btn-info" for="image">
+                                <span class="text-white">Add Picture</span>
+                                <input type="file" id="image" name="image"/>
+                            </label>
                         </div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-12">
-                            <label>Email Account</label>
-                            <input class="multisteps-form__input form-control" type="email"
-                                   placeholder="Email"/>
+                        <div class="col-12 ">
+                            <label for="email">Email Account</label>
+                            <input id="email" class="multisteps-form__input form-control" type="email"
+                                   placeholder="Email" name="email"/>
                         </div>
                         <div class="col-12 mt-3">
-                            <label>Github Account</label>
-                            <input class="multisteps-form__input form-control" type="text"
+                            <label for="linkedin">Linkedin Account</label>
+                            <input id="linkedin" class="multisteps-form__input form-control" type="url"
                                    placeholder="https://..."/>
                         </div>
                         <div class="col-12 mt-3">
-                            <label>Linkedin Account</label>
-                            <input class="multisteps-form__input form-control" type="text"
-                                   placeholder="https://..."/>
+                            <label for="linkedin">Linkedin Account</label>
+                            <input class="multisteps-form__input form-control" type="url"
+                                   id="linkedin" name="linkedin"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -85,6 +74,12 @@
 {% block scripts %}
     {{ parent() }}
     <script type="text/javascript">
-
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', (event) => {
+        document.getElementById('uploaded_file').setAttribute('src', event.target.result);
+      });
+      document.getElementById('image').addEventListener('change', (event) => {
+        fileReader.readAsDataURL(event.target.files[0]);
+      })
     </script>
 {% endblock %}

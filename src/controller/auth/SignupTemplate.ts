@@ -1,13 +1,17 @@
 import {Request, Response} from "express";
 import {IModelCrudService} from "../../services/interfaces/IModelCrud";
-import {User, UserModel} from "../../entity/User";
+import {Profile, ProfileModel, User, UserModel} from "../../entity/User";
 import {UserServiceImplementation} from "../../services/implementations/UserServiceImplementation";
+import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
+import * as cluster from "cluster";
 
 export class SignupTemplate {
-    private readonly service: IModelCrudService<User>;
+    private readonly service: UserServiceImplementation;
+    private readonly profileService: ModelCrudServiceImplementation<ProfileModel, Profile>;
 
     constructor() {
         this.service = new UserServiceImplementation();
+        this.profileService = new ModelCrudServiceImplementation<ProfileModel, Profile>(ProfileModel);
     }
 
     async get(request: Request, response: Response) {
@@ -27,25 +31,27 @@ export class SignupTemplate {
                 });
             } else {
                 try {
-                    await this.service.create({
+                    const user = await this.service.create({
                         username: request.body.username,
                         email: request.body.email,
                         password: request.body.password,
+                        role: 'customer',
                         profile: {
                             firstname: request.body.firstname,
                             lastname: request.body.lastname,
                             address: request.body.address,
                             gainedAmount: 0,
-                            phone: request.body.phone
+                            phone: request.body.phone,
                         }
                     });
                     response.redirect('/');
                     return;
                 } catch (err) {
+                    console.log(err);
                     response.status(404);
                 }
             }
         }
-        return response.render('public/auth/signup.twig');
+        return response.render('/public/interfaces/auth/signup.twig');
     }
 }

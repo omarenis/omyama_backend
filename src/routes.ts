@@ -12,7 +12,8 @@ interface Route {
     method: string,
     route: string,
     controller: any,
-    action: string
+    action: string,
+    roleUserToAccess ?: string
 }
 
 export const Routes: Route[] = [
@@ -55,19 +56,29 @@ export const Routes: Route[] = [
         method: 'get',
         route: '/dashboard/events',
         action: 'get',
-        controller: EventList
+        controller: EventList,
+        roleUserToAccess: 'customer'
+    },
+        {
+        method: 'get',
+        route: '/dashboard/events/:id',
+        action: 'get',
+        controller: SingleEvent,
+        roleUserToAccess: 'customer'
     },
     {
         method: 'post',
         route: '/dashboard/events/:id',
         action: 'post',
-        controller: SingleEvent
+        controller: SingleEvent,
+        roleUserToAccess: 'customer'
     },
     {
         method: 'get',
         route: '/dashboard/events/:id',
         action: 'get',
-        controller: SingleEvent
+        controller: SingleEvent,
+        roleUserToAccess: 'customer'
     },
         {
         method: 'get',

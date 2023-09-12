@@ -14,12 +14,13 @@ export class UserServiceImplementation extends ModelCrudServiceImplementation<Us
         this._profileRepository = AppDataSource.getRepository(ProfileModel);
     }
 
-    async create(instance: User): Promise<User> {
+    async create(instance: User): Promise<UserModel> {
         const userModel = new UserModel();
         userModel.email = instance.email;
         userModel.username = instance.username;
         userModel.is_superuser = false;
         userModel.is_active = true;
+        userModel.role = instance.role;
         userModel.password = await  hash(instance.password, SECRET_KEY);
         if (instance.profile !== undefined) {
             userModel.profile = new ProfileModel();
@@ -30,7 +31,9 @@ export class UserServiceImplementation extends ModelCrudServiceImplementation<Us
             userModel.profile.phone = instance.profile.phone;
         }
         await this.repository.save(userModel);
+        userModel.profile.user = userModel;
+        await this._profileRepository.save(userModel.profile);
         instance.id = userModel.id
-        return instance;
+        return userModel;
     }
 }

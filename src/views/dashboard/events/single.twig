@@ -10,7 +10,7 @@
                         <legend></legend>
                         <label for="title" class="form-label">Event Title</label>
                         <input type="text" class="form-control" name="title" id="title"
-                               value="" required/>
+                               required/>
                     </fieldset>
                     <fieldset class="row">
                         <legend></legend>
@@ -19,13 +19,13 @@
                             <input class="form-control datetimepicker" name="dateStart" id="startDate"
                                    type="date" required
                                    placeholder="Please select start date"
-                                   value=""/>
+                            />
                         </div>
                         <div class="col-md-6 col-sm-12 form-group">
                             <label class="form-label" for="dateEnd">End Date</label>
                             <input class="form-control datetimepicker" id="dateEnd" name="dateEnd"
                                    type="date" required
-                                   placeholder="Please select end date" data-input>
+                                   placeholder="Please select end date" data-input/>
                         </div>
                     </fieldset>
                     <div class="mt-1">
@@ -42,10 +42,10 @@
                                 </div>
                             </fieldset>
                             <fieldset class="col-md-6 col-sm-12 d-sm-block d-flex align-items-center"
-                                      id="locationContainer" style="display: none">
+                                      id="addressContainer" style="display: none">
                                 <legend style="display: none">Address</legend>
                                 <label for="address">Address</label>
-                                <input type="text" value=""
+                                <input type="text"
                                        class="form-control" name="address" id="address"/>
                             </fieldset>
                             <fieldset class="col-md-6 col-sm-12 d-sm-block d-flex align-items-center"
@@ -53,7 +53,7 @@
                                 <legend style="display: none">Url</legend>
                                 <label for="url">Url</label>
                                 <input type="text" value=""
-                                       class="form-control" name="url" id="address"/>
+                                       class="form-control" name="url" id="url"/>
                             </fieldset>
                         </div>
                         <div class="row mt-2">
@@ -72,9 +72,8 @@
                                 <legend style="display: none">price transport</legend>
                                 <label for="priceTransporting">price of transport</label>
                                 <input type="number"
-                                       value=""
                                        class="form-control" name="priceTransporting"
-                                       id="priceTransporting" required/>
+                                       id="priceTransporting"/>
                             </fieldset>
                         </div>
                         <div class="row mt-2">
@@ -93,15 +92,10 @@
                                 <div class="row">
                                     <label for="hosting">Hosting</label>
                                     <input type="text"
-                                           value=""
-                                           class="form-control col-md-6 col-sm-12" name="hosting"
-                                           id="hosting"/>
-                                    <label for="hosting col-form-label" class="mt-2">price
-                                        hosting</label>
-                                    <input type="number"
-                                           value=""
-                                           class="form-control col-md-6 col-sm-12" name="priceHosting"
-                                           id="hosting"/>
+                                           class="form-control col-md-6 col-sm-12" name="hosting" id="hosting"/>
+                                    <label for="priceHosting" class="mt-2">price hosting</label>
+                                    <input type="number" class="form-control col-md-6 col-sm-12"
+                                           name="priceHosting" id="priceHosting"/>
                                 </div>
                             </fieldset>
                         </div>
@@ -121,15 +115,6 @@
                 </div>
             </div>
         </div>
-        <div id="location" class="d-block g-2">
-            <label for="projectPlace" class="form-label">Event Place</label>
-            <input type="text" class="form-control" id="projectPLace" name="location">
-        </div>
-        <div class="d-block g-2">
-            <label for="projectPlace" class="form-label">Event Place</label>
-            <input type="text" class="form-control" id="projectPLace" name="location">
-        </div>
-        <hr/>
         <input name="description" id="description" style="display: none" value=""/>
         <label class="mt-4" for="description">Event Description</label>
         <div style="max-height: 100%" id="editor">
@@ -146,32 +131,70 @@
     <script type="text/javascript" src="/js/plugins/flatpickr.min.js"></script>
     <script type="text/javascript">
       flatpickr('.datetimepicker');
-      const element = document.getElementById('locationContainer');
-      const address = document.getElementById('addressContainer');
-      const url = document.getElementById('urlContainer');
-      const hosting = document.getElementById('hosting');
+      // address
+      const addressContainer = document.getElementById('addressContainer');
+      const address = document.getElementById('address');
+      const isOnline = document.getElementById('isOnline');
+      // url
+      const urlContainer = document.getElementById('urlContainer');
       const url = document.getElementById('url');
+      const hosting = document.getElementById('hosting');
       const form = document.getElementById('form');
       const title = document.getElementById('title');
       const startDate = document.getElementById('startDate');
-      const endDate = document.getElementById('endDate');
+      const endDate = document.getElementById('dateEnd');
       const priceTransporting = document.getElementById('priceTransporting');
+      const priceHosting = document.getElementById('priceHosting');
       const withTransport = document.getElementById('withTransport');
       const withHosting = document.getElementById('withHosting');
+      const quill = new Quill('#editor', {
+        theme: 'snow',
+        selector: 'textarea'
+      });
+      const eventIsOnline = () => {
+        isOnline.setAttribute('checked', 'checked');
+        addressContainer.setAttribute('style', 'display: none !important;');
+        priceTransporting.setAttribute('disabled', 'disabled');
+        withTransport.setAttribute('disabled', 'disabled');
+        hosting.setAttribute('disabled', 'disabled');
+        withHosting.setAttribute("disabled", 'disabled');
+        priceHosting.setAttribute('disabled', 'disabled');
+      }
+
+      const eventIsNotOnline = () => {
+        addressContainer.setAttribute('style', 'display: block !important');
+        urlContainer.setAttribute('style', 'display: none !important');
+        withTransport.removeAttribute("disabled");
+        priceTransporting.removeAttribute('disabled');
+        address.removeAttribute('disabled');
+        hosting.removeAttribute('disabled');
+        withHosting.removeAttribute('disabled');
+        priceHosting.removeAttribute('disabled');
+      }
+
       {% if _object is defined %}
       title.setAttribute('value', '{{ _object.title }}');
-      startDate.setAttribute('value', "{{ _object.startDate }}");
-      endDate.setAttribute('value', "{{ _object.endDate }}");
+      startDate.setAttribute('value', "{{ _object.dateStart | date }}");
+      endDate.setAttribute('value', "{{ _object.dateEnd | date }}");
       form.setAttribute('action', '/dashboard/events/{{ _object.id }}');
-
       hosting.setAttribute('value', "{{ _object.hosting !=  null ? _object.hosting }}");
-      priceTransporting.setAttribute('value', '{{ _object.price != null ? _object.priceTransporting }}');
+      priceTransporting.setAttribute('value', '{{ _object.priceTransporting != null ? _object.priceTransporting }}');
+      document.getElementById('imageLabel').setAttribute('src', '{{ _object.image }}');
+      const value = `{{ _object.description }}`;
+      const delta = quill.clipboard.convert(value)
+      quill.setContents(delta, 'silent');
+      {% if _object.isOnline %}
+      eventIsOnline();
+      url.setAttribute('value', '{{ _object.url }}');
+
+      {% endif %}
       {% else %}
       document.getElementById('image').setAttribute('required', 'required');
-      form.setAttribute('action', '/dashboard/events/create')
+      form.setAttribute('action', '/dashboard/events/create');
       document.getElementById('form-title').innerText = 'Create Event';
+      document.getElementById('isOnline').setAttribute('checked', 'checked');
+      eventIsOnline();
       {% endif %}
-
       const disableInput = (input) => {
         if (input.getAttribute('type') !== 'checkbox' && input.getAttribute('type') !== 'radio') {
           input.setAttribute('value', '');
@@ -180,14 +203,7 @@
         }
         input.setAttribute('disabled', 'disabled');
       }
-      const elementIsOnline = (event, inputElement) => {
-      }
 
-
-      const quill = new Quill('#editor', {
-        theme: 'snow',
-        selector: 'textarea'
-      });
       quill.on('text-change', function (delta, oldDelta, source) {
 
       });
@@ -203,7 +219,7 @@
         }
         reader.readAsDataURL(event.target.files[0]);
       });
-
+      address.setAttribute('value', "{{ _object is defined  ? _object.location: '' }}");
       document.getElementById('isOnline').addEventListener('change', (event) => {
         if (event.target.checked) {
           disableInput(address);
@@ -211,12 +227,13 @@
           disableInput(priceTransporting);
           disableInput(withTransport);
           address.value = '';
+          addressContainer.setAttribute('style', 'display: none !important');
+          urlContainer.setAttribute('style', 'display: block !important');
+          eventIsOnline();
         } else {
-          hosting.removeAttribute("disabled");
-          withTransport.removeAttribute("disabled");
-          address.removeAttribute('disabled');
+          address.value = '';
+          eventIsNotOnline();
         }
-        element.setAttribute('value', "{{ _object is defined  ? _object.location: '' }}");
       });
     </script>
 {% endblock %}

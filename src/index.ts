@@ -12,21 +12,54 @@ import * as fileUpload from "express-fileupload";
 import {downloadFile, Request} from "../appConfig";
 import * as cors from "cors";
 import * as connect_memcached from "connect-memcached";
+
+const checkRole = (req, res, next, role) => {
+    if (role === undefined) {
+        next();
+    } else {
+        console.log(req.session.user )
+        if (req.session && req.session.user !== undefined) {
+            if (req.session.user.role !== role) {
+                res.status(403);
+            } else {
+                next();
+            }
+        } else {
+            if (req.session.user === undefined) {
+                res.status(200).redirect('/public/auth/login');
+            }
+        }
+    }
+}
 const flash = require('flash-express');
 const MemcachedStore = connect_memcached(session);
 AppDataSource.initialize().then(async () => {
     const userRepository = AppDataSource.getRepository(UserModel);
     let admin = await userRepository.findOneBy({username: 'admin'});
+    let customer = await userRepository.findOneBy({username: 'customer'});
     if (admin == null) {
         admin = AppDataSource.getRepository(UserModel).create({
             username: 'admin',
             email: 'omartrikji712@gmail.com',
             is_superuser: true,
             password: "hello world",
-            is_active: true
+            is_active: true,
+            role: 'admin'
         });
         await admin.setPassword("admin@admin");
         await userRepository.save(admin);
+    }
+    if (customer == null) {
+        customer = AppDataSource.getRepository(UserModel).create({
+            username: 'customer',
+            email: 'omartriki@gmail.com',
+            is_superuser: false,
+            password: "testtest",
+            is_active: true,
+            role: 'customer'
+        });
+        await customer.setPassword("customer@customer");
+        await userRepository.save(customer);
     }
 
     const app = require('express')();
@@ -76,8 +109,8 @@ AppDataSource.initialize().then(async () => {
         response.render('test.twig');
     });
 
-    app.get('/',  (request: Request, response: Response) => {
-       return response.render('public/interfaces/visitor/index.twig');
+    app.get('/', (request: Request, response: Response) => {
+        return response.render('public/interfaces/visitor/index.twig');
     });
 
     app.get('/uploads/:filename', downloadFile);
@@ -93,10 +126,13 @@ AppDataSource.initialize().then(async () => {
         response.render('test.twig');
     }
 
+
     app.get('/test', index_controller);
     // register express routes from defined application routes
     Routes.forEach(route => {
-        app[route.method](route.route, (req: any, res: Response, next: Function) => {
+        app[route.method](route.route, (req, res, next) => {
+            checkRole(req, res, next, route?.roleUserToAccess);
+        }, (req: any, res: Response, next: Function) => {
             const result = (new (route.controller))[route.action](req, res, next);
             if (result instanceof Promise) {
                 result.then(result => result !== null && result !== undefined ? res.send(result) : undefined);
