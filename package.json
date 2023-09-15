@@ -35,7 +35,7 @@
       "flash-express": "^1.0.4",
       "jest": "^29.5.0",
       "mysql": "^2.14.1",
-      "mysql2": "^3.3.0",
+      "mysql2": "^3.6.1",
       "node-mailjet": "^6.0.4",
       "node-twig": "^1.2.0",
       "reflect-metadata": "^0.1.13",

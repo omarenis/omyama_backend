@@ -2,20 +2,23 @@
 {% block formStep %}
     <div class="multisteps-form__content d-flex align-items-center">
         <button type="button" class="btn btn-outline-primary d-flex align-items-center me-4 " data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-            <img src="{{ '/img/speaker.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
-            <span class="text-capitalize ms-2">add speaker</span>
+                id="add_speaker"
+                data-bs-target="#formCreationEditContribution">
+            <img src="{{ '/img/speaker.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px" />
+            <span class="text-capitalize ms-2">Add speaker</span>
         </button>
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#formCreationEditContribution"
+                id="add_sponsor">
             <img src="{{ '/img/save-money.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
-            <span class="text-capitalize ms-2">add speaker</span>
+            <span class="text-capitalize ms-2">Add Sponsor</span>
         </button>
     </div>
-    <form class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <form class="modal fade" id="formCreationEditContribution" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" action="/dashboard/events/{{ req.params.id }}/contributors" enctype="multipart/form-data" method="post">
+        <input type="hidden" name="contribution" id="contribution" />
         <div class="modal-dialog modal-lg modal-dialog-scrollable w-100 align-self-center">
             <div class="modal-content" style="min-width: 1000px !important">
                 <div class="modal-header">
-                    <h5 class="font-weight-bolder">Speaker Information</h5>
+                    <h5 class="font-weight-bolder" id="title_form">Speaker Information</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -24,16 +27,16 @@
                             <div class="d-flex align-items-center mb-2">
                                 <label for="fullName" class="w-25 text-center">Full Name</label>
                                 <input id="fullName" class="multisteps-form__input form-control w-75" type="text"
-                                       placeholder="Full Name" name="fullName"/>
+                                       placeholder="Full Name" name="fullName" autocomplete="true"/>
                             </div>
-                            <div class="d-flex align-items-center mb-2">
-                                <label for="job" class="w-25 text-center">Job</label>
-                                <input id="job" class="multisteps-form__input form-control w-75" type="text"
-                                       placeholder="Full Name" name="job"/>
+                            <div class="d-flex align-items-center mb-2" id="positionContainer">
+                                <label for="position" id="positionLabel" class="w-25 text-center">Position</label>
+                                <input id="position" class="multisteps-form__input form-control w-75" type="text"
+                                       placeholder="Position" name="position" autocomplete="true"/>
                             </div>
                             <div class="d-flex align-items-center mb-2">
                                 <label class="w-25 text-center" for="description">Description</label>
-                                <textarea class="form-control w-100" id="description" name="description"></textarea>
+                                <textarea class="form-control w-100" rows="8" autocomplete="true" id="description" name="description"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4 d-flex flex-column align-items-center justify-content-center">
@@ -41,31 +44,31 @@
                                  loading="lazy" width="200px" height="150px"/>
                             <label class="mt-4 form-label d-flex align-items-center btn btn-info" for="image">
                                 <span class="text-white">Add Picture</span>
-                                <input type="file" id="image" name="image"/>
+                                <input type="file" id="image" name="image" accept="image/*" autocomplete="true" />
                             </label>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-12 ">
-                            <label for="email">Email Account</label>
-                            <input id="email" class="multisteps-form__input form-control" type="email"
-                                   placeholder="Email" name="email"/>
+                            <label for="google">Email Account</label>
+                            <input id="google" class="form-control" type="email"
+                                   placeholder="Email" name="google" autocomplete="true"/>
                         </div>
                         <div class="col-12 mt-3">
-                            <label for="linkedin">Linkedin Account</label>
-                            <input id="linkedin" class="multisteps-form__input form-control" type="url"
-                                   placeholder="https://..."/>
+                            <label for="facebook">Facebook Account</label>
+                            <input id="facebook" class="multisteps-form__input form-control" type="url"
+                                   placeholder="https://..." autocomplete="true"/>
                         </div>
                         <div class="col-12 mt-3">
                             <label for="linkedin">Linkedin Account</label>
                             <input class="multisteps-form__input form-control" type="url"
-                                   id="linkedin" name="linkedin"/>
+                                   id="linkedin" name="linkedin" autocomplete="true"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary" id="submitForm">Save</button>
                 </div>
             </div>
         </div>
@@ -75,11 +78,63 @@
     {{ parent() }}
     <script type="text/javascript">
       const fileReader = new FileReader()
+      const positionContainer = document.getElementById('positionContainer');
+      const image = document.getElementById('uploaded_file');
+      const submitForm  = document.getElementById('submitForm');
+      const fullnameLabel = document.querySelector('label[for="fullName"]');
+      let imageFile = null;
+      image.setAttribute('loading', 'lazy');
       fileReader.addEventListener('load', (event) => {
         document.getElementById('uploaded_file').setAttribute('src', event.target.result);
       });
       document.getElementById('image').addEventListener('change', (event) => {
+        imageFile = event.target.files[0];
         fileReader.readAsDataURL(event.target.files[0]);
+      })
+      document.getElementById('add_speaker').addEventListener('click', () => {
+        document.getElementById('title_form').innerText = 'Add Speaker';
+        positionContainer.classList.replace("d-none", "d-flex");
+        fullnameLabel.innerText = 'Full Name';
+        image.setAttribute('src', '/img/speaker.png');
+        submitForm.innerText = 'Save Speaker';
+      });
+      document.getElementById('add_sponsor').addEventListener('click', () => {
+        console.log(document.querySelector('label[for="fullName"]'));
+        positionContainer.classList.replace("d-flex", "d-none");
+        document.getElementById('position').setAttribute('value', "");
+        image.setAttribute('src', '/img/save-money.png');
+        fullnameLabel.innerText = 'company name';
+        submitForm.innerText = 'Save Sponsor';
+      })
+      const form = document.getElementById('formCreationEditContribution');
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log();
+        console.log(document.getElementById('image').getAttribute('value'));
+        const data = {
+          fullName: form.elements.fullName,
+          description: form.elements.description,
+          contribution: form.elements.contribution,
+          image: form.elements.image.files[0],
+          google: form.elements.google.value,
+          facebook: form.elements.facebook.value,
+          linkedin: form.elements.linkedin.value
+        };
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key])
+        });
+
+        $.ajax({
+          url: '{{ req.protocol + '://' + req.get('host') + req.originalUrl }}',
+          method: 'POST',
+          contentType: 'multipart/form-data',
+          data: formData,
+          success: () => {
+            console.log('hello');
+          }
+        })
       })
     </script>
 {% endblock %}

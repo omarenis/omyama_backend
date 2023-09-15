@@ -13,7 +13,7 @@ interface Route {
     route: string,
     controller: any,
     action: string,
-    roleUserToAccess ?: string
+    roleUserToAccess?: string
 }
 
 export const Routes: Route[] = [
@@ -30,16 +30,16 @@ export const Routes: Route[] = [
         action: 'post'
     },
     {
-    method: 'get',
-    route: '/public/auth/login',
-    controller: ILoginTemplate,
-    action: 'get'
-}, {
-    method: 'post',
-    route: '/public/auth/login',
-    controller: ILoginTemplate,
-    action: 'post'
-},
+        method: 'get',
+        route: '/public/auth/login',
+        controller: ILoginTemplate,
+        action: 'get'
+    }, {
+        method: 'post',
+        route: '/public/auth/login',
+        controller: ILoginTemplate,
+        action: 'post'
+    },
     {
         method: 'get',
         route: '/public/auth/signup',
@@ -59,7 +59,7 @@ export const Routes: Route[] = [
         controller: EventList,
         roleUserToAccess: 'customer'
     },
-        {
+    {
         method: 'get',
         route: '/dashboard/events/:id',
         action: 'get',
@@ -80,10 +80,16 @@ export const Routes: Route[] = [
         controller: SingleEvent,
         roleUserToAccess: 'customer'
     },
-        {
+    {
         method: 'get',
         route: '/dashboard/events/:id/contributors',
         action: 'get',
+        controller: ContributorController
+    },
+    {
+        method: 'post',
+        route: '/dashboard/events/:id/contributors',
+        action: 'post',
         controller: ContributorController
     },
     // the pages crud
