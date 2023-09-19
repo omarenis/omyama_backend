@@ -4,7 +4,7 @@ import { TicketModel } from "./Ticket";
 import {ParticipationModel} from "./Participation";
 
 import {SECRET_KEY} from "../../appConfig";
-import EventModel from "./Event";
+import {EventModel} from "./Event";
 
 @Entity({name: 'users'})
 export class UserModel {
@@ -27,7 +27,7 @@ export class UserModel {
     }
 }
 
-@Entity()
+@Entity({name: 'profiles'})
 export class ProfileModel {
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) firstname: string;

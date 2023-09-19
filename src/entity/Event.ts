@@ -4,12 +4,10 @@ import {Ticket, TicketModel} from "./Ticket";
 import {Profile, ProfileModel} from "./User";
 import {PageModel} from "./cms/Page";
 import {Contributor, ContributorModel} from "./Contributor";
-import {Blob} from "buffer";
 import { UploadedFile } from "express-fileupload";
 
 @Entity({name: 'events'})
-export default class EventModel {
-
+export class EventModel {
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) title: string;
     @Column({type: 'text'}) description: string;
@@ -50,5 +48,5 @@ export const modelConfig = {
     hosting: {type: 'string', required: false },
     priceHosting: {type: 'float', required: true },
     priceTransporting: {type: 'float', required: true},
-    customer: {type: "foreign_key", required: true, classMap: ProfileModel}
+    customer: {type: "foreign_key", required: true, classMap: () => ProfileModel}
 }

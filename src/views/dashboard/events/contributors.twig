@@ -82,6 +82,7 @@
       const image = document.getElementById('uploaded_file');
       const submitForm  = document.getElementById('submitForm');
       const fullnameLabel = document.querySelector('label[for="fullName"]');
+      const contribution = document.getElementById('contribution');
       let imageFile = null;
       image.setAttribute('loading', 'lazy');
       fileReader.addEventListener('load', (event) => {
@@ -92,6 +93,7 @@
         fileReader.readAsDataURL(event.target.files[0]);
       })
       document.getElementById('add_speaker').addEventListener('click', () => {
+        contribution.setAttribute('value', 'speaker');
         document.getElementById('title_form').innerText = 'Add Speaker';
         positionContainer.classList.replace("d-none", "d-flex");
         fullnameLabel.innerText = 'Full Name';
@@ -99,6 +101,7 @@
         submitForm.innerText = 'Save Speaker';
       });
       document.getElementById('add_sponsor').addEventListener('click', () => {
+        contribution.setAttribute('value', 'sponsor');
         console.log(document.querySelector('label[for="fullName"]'));
         positionContainer.classList.replace("d-flex", "d-none");
         document.getElementById('position').setAttribute('value', "");
@@ -113,11 +116,11 @@
         console.log();
         console.log(document.getElementById('image').getAttribute('value'));
         const data = {
-          fullName: form.elements.fullName,
-          description: form.elements.description,
-          contribution: form.elements.contribution,
+          fullName: form.elements.fullName.valueOf(),
+          description: form.elements.description.valueOf(),
+          contribution: form.elements.contribution.valueOf(),
           image: form.elements.image.files[0],
-          google: form.elements.google.value,
+          google: form.elements.google.value.valueOf(),
           facebook: form.elements.facebook.value,
           linkedin: form.elements.linkedin.value
         };
@@ -125,16 +128,13 @@
         Object.keys(data).forEach((key) => {
           formData.append(key, data[key])
         });
-
-        $.ajax({
-          url: '{{ req.protocol + '://' + req.get('host') + req.originalUrl }}',
-          method: 'POST',
-          contentType: 'multipart/form-data',
-          data: formData,
-          success: () => {
-            console.log('hello');
-          }
-        })
-      })
+        console.log('{{req.get('host') }}')
+        const xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', () => {
+          console.log('')
+        });
+        xhr.open('POST','{{ req.protocol }}://{{ req.get('host') }}{{ req.originalUrl }}');
+        xhr.send(formData);
+      });
     </script>
 {% endblock %}

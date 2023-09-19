@@ -39,6 +39,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
                 throw new Error(`${key} is required `)
             }
             if (this.modelConfig[key].type.indexOf('_')> -1 && !isNaN(instance[key])) {
+                console.log(key, this.modelConfig[key]);
                 if (!this.modelConfig[key].classMap) {
                     throw new Error(`class Map not specified for the field ${key}`)
                 }

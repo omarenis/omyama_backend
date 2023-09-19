@@ -1,5 +1,4 @@
-import EventModel from "../../../entity/Event";
-import Event from "../../../entity/Event";
+import {Event, EventModel} from "../../../entity/Event";
 import {IModelListViewImplementation} from "../../framework/ModelListView";
 
 export class EventList extends IModelListViewImplementation<EventModel, Event>{

@@ -1,4 +1,4 @@
-import EventModel, {Event, modelConfig as eventModelConfig} from "../../../entity/Event";
+import {Event, EventModel, modelConfig as eventModelConfig} from "../../../entity/Event";
 import {FormViewImplementation} from "../../framework/IFormView";
 import {Request, Response} from "express";
 
@@ -7,6 +7,7 @@ const {upload, saveFile} = require('../../../../appConfig');
 export class SingleEvent extends FormViewImplementation<EventModel, Event> {
     constructor() {
         super(EventModel, 'dashboard/events/single.twig', '/web/events', eventModelConfig);
+        console.log(eventModelConfig);
     }
 
     async post(request: Request, response: Response) {

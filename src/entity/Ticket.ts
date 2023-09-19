@@ -1,6 +1,6 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import EventModel, {Event} from "./Event";
 import {ProfileModel} from "./User";
+import {EventModel} from "./Event";
 
 @Entity({name: 'tickets'})
 export class TicketModel

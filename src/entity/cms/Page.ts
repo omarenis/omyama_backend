@@ -1,5 +1,5 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import EventModel, {Event} from "../Event";
+import  {Event, EventModel} from "../Event";
 
 @Entity()
 export class PageModel {
