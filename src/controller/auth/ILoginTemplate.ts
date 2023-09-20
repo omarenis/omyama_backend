@@ -37,11 +37,8 @@ export class ILoginTemplate {
         }
         request.session.user = user;
         await request.session.save(function (err) {
-            console.log("err = ", err);
         }, (data) => {
-            console.log(data);
         });
-        console.log(request.session.user);
         response.redirect('/');
     }
 }

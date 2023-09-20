@@ -1,5 +1,5 @@
-import {ObjectType, AppDataSource} from "../../data-source";
 import {EntityNotFoundError, ObjectLiteral, Repository} from "typeorm";
+import {ObjectType, AppDataSource} from "../../data-source";
 import {IModelCrudService} from "../interfaces/IModelCrud";
 import slugify from "slugify";
 import {saveFile} from "../../../appConfig";
@@ -34,27 +34,15 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
 
     convertDataIntoModelInstance(instance: P): T {
         let field = null;
-        Object.keys(this.modelConfig).forEach(async (key: string): Promise<void> => {
+        Object.keys(this.modelConfig).forEach((key: string): void => {
             if (this.modelConfig[key].required && !instance[key]) {
                 throw new Error(`${key} is required `)
             }
-            if (this.modelConfig[key].type.indexOf('_')> -1 && !isNaN(instance[key])) {
-                console.log(key, this.modelConfig[key]);
-                if (!this.modelConfig[key].classMap) {
-                    throw new Error(`class Map not specified for the field ${key}`)
-                }
-                field = AppDataSource.getRepository(this.modelConfig[key].classMap).findOneBy({id: instance[key]})
-                if (!field) {
-                    throw new Error(`${field.constructor.name.toLowerCase()} does not exist with the specified id ${instance[key]}`)
-                }
-                instance[key] = field;
-            }
             if (this.modelConfig[key].type === 'blob') {
-                if(await saveFile(instance[key]))
-                {
+                saveFile(instance[key]).then(() => {
                     instance[key] = `/uploads/${instance[key].name}`;
-                }
-                }
+                });
+            }
         });
         if (this.modelConfig?.slug !== undefined) {
             instance['slug'] = slugify(instance[this.modelConfig?.slug.fieldToSlug]);
@@ -102,7 +90,6 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
 
     async findAll(): Promise<P[]> {
         const model_instances: T[] = (await this.repository.find() as T[]);
-        console.log(model_instances);
         return [].concat(
             model_instances.map((model_instance) => {
                 return this.loadData(model_instance);

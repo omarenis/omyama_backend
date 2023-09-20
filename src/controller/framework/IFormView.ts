@@ -22,10 +22,8 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
     async get(request: Request, response: Response) {
         const context: { [ky: string]: any } = {};
         if (request.params.id !== 'create') {
-            console.log(request.params);
             context['_object'] = await this._service.getBy({id: request.params.id});
         }
-        console.log(context);
         response.render(this._template, context);
     }
 
@@ -35,7 +33,6 @@ export class FormViewImplementation<T, P> implements IFormView<T, P> {
             await promise;
             response.redirect(this._redirectUrl);
         } catch (err) {
-            console.log(err);
             response.status(500);
 
         }

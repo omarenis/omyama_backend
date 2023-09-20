@@ -6,7 +6,6 @@ import {Routes} from "./routes";
 import * as path from "path";
 import * as session from 'express-session';
 import "reflect-metadata";
-import {UserModel} from "./entity/User";
 import {join} from "path";
 import * as fileUpload from "express-fileupload";
 import {downloadFile, Request} from "../appConfig";
@@ -17,50 +16,20 @@ const checkRole = (req, res, next, role) => {
     if (role === undefined) {
         next();
     } else {
-        console.log(req.session.user )
-        if (req.session && req.session.user !== undefined) {
+        if ( req.session?.user !== undefined) {
             if (req.session.user.role !== role) {
                 res.status(403);
             } else {
                 next();
             }
         } else {
-            if (req.session.user === undefined) {
                 res.status(200).redirect('/public/auth/login');
-            }
         }
     }
 }
 const flash = require('flash-express');
 const MemcachedStore = connect_memcached(session);
 AppDataSource.initialize().then(async () => {
-    const userRepository = AppDataSource.getRepository(UserModel);
-    let admin = await userRepository.findOneBy({username: 'admin'});
-    let customer = await userRepository.findOneBy({username: 'customer'});
-    if (admin == null) {
-        admin = AppDataSource.getRepository(UserModel).create({
-            username: 'admin',
-            email: 'omartrikji712@gmail.com',
-            is_superuser: true,
-            password: "hello world",
-            is_active: true,
-            role: 'admin'
-        });
-        await admin.setPassword("admin@admin");
-        await userRepository.save(admin);
-    }
-    if (customer == null) {
-        customer = AppDataSource.getRepository(UserModel).create({
-            username: 'customer',
-            email: 'omartriki@gmail.com',
-            is_superuser: false,
-            password: "testtest",
-            is_active: true,
-            role: 'customer'
-        });
-        await customer.setPassword("customer@customer");
-        await userRepository.save(customer);
-    }
 
     const app = require('express')();
     app.use(cors());

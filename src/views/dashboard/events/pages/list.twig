@@ -11,7 +11,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table align-items-center mb-0">
+                    <table class="table align-items-center mb-0" aria-description="hello world">
+                         <caption>New York City Marathon Results 2013</caption>
                         <thead>
                         <tr>
                             <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">
@@ -125,7 +126,6 @@
       const form = document.forms['create_page_for_event'];
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log(form.elements);
       });
     </script>
 {% endblock %}

@@ -1,10 +1,12 @@
 import {ModelCrudServiceImplementation} from "../../../services/implementations/ModelCrudService";
 import {Contributor, ContributorModel, modelConfig} from "../../../entity/Contributor";
 import {Request, Response} from "../../../../appConfig";
+import {AppDataSource} from "../../../data-source";
+import {EventModel} from "../../../entity/Event";
 
 export const  ContributorController  = () => {
     const service = new ModelCrudServiceImplementation<ContributorModel, Contributor>(ContributorModel, modelConfig);
-    console.log(modelConfig);
+    const eventRepository = AppDataSource.getRepository(EventModel);
     return {
         get: async (request: Request, response: Response) => {
             const contributors = await service.findBy({
@@ -17,18 +19,16 @@ export const  ContributorController  = () => {
                 const contributor: Contributor = {
                     fullName: request.body.fullName,
                     position: request.body.position,
-                    contribution: request.body.contribution !== undefined ? request.body.contribution : 'unknow',
+                    contribution: request.body.contribution,
                     image: request.files.image,
                     description: request.body.description,
-                    event: Number(request.params.id),
+                    event: await eventRepository.findOneBy({id: Number(request.params.id)}),
                     google: request.body.google,
                     facebook: request.body.facebook,
                     linkedin: request.body.linkedin
                 }
-                const response = await  service.create(contributor);
-                console.log(contributor);
+                await  service.create(contributor);
             } catch(err) {
-                console.log(err);
             }
         },
         put: (request: Request, response: Response) => {

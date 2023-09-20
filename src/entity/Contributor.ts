@@ -1,6 +1,5 @@
 import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import { EventModel, Event } from "./Event";
-import {AppDataSource} from "../data-source";
+import { EventModel } from "./Event";
 
 @Entity({name: 'contributors'})
 export class ContributorModel {
@@ -24,7 +23,7 @@ export class Contributor {
                 public description: string,
                 public image: string,
                 public contribution: string,
-                public event: number | Event,
+                public event: number | EventModel,
                 public google ?: string,
                 public facebook ?: string,
                 public linkedin ?: string,
@@ -42,5 +41,4 @@ export const modelConfig = {
     facebook: {type: 'string', required: true},
     google: {type: 'string', required: false},
     linkedin: {type: 'string', required: false},
-    event: { type: 'foreign_key', required: true, repository: AppDataSource.getRepository(EventModel) },
 }

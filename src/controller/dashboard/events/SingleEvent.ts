@@ -42,12 +42,10 @@ export class SingleEvent extends FormViewImplementation<EventModel, Event> {
                 customer: request.session['user'].profile,
             };
             try {
-                const uploaded = await saveFile(request.files.image);
-                const _ = await this._service.create(data);
-                console.log(_);
+                await saveFile(request.files.image);
+                await this._service.create(data);
                 response.redirect('/dashboard/events');
             } catch (err) {
-                console.log(err);
                 return response.render(this._template, {message: err.message})
             }
         }

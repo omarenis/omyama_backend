@@ -1,9 +1,7 @@
 import {Request, Response} from "express";
-import {IModelCrudService} from "../../services/interfaces/IModelCrud";
-import {Profile, ProfileModel, User, UserModel} from "../../entity/User";
+import { Profile, ProfileModel } from "../../entity/User";
 import {UserServiceImplementation} from "../../services/implementations/UserServiceImplementation";
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
-import * as cluster from "cluster";
 
 export class SignupTemplate {
     private readonly service: UserServiceImplementation;
@@ -31,7 +29,7 @@ export class SignupTemplate {
                 });
             } else {
                 try {
-                    const user = await this.service.create({
+                    await this.service.create({
                         username: request.body.username,
                         email: request.body.email,
                         password: request.body.password,
@@ -47,7 +45,6 @@ export class SignupTemplate {
                     response.redirect('/');
                     return;
                 } catch (err) {
-                    console.log(err);
                     response.status(404);
                 }
             }
