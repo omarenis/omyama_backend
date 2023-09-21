@@ -1,5 +1,5 @@
 import {EntityNotFoundError, ObjectLiteral, Repository} from "typeorm";
-import {ObjectType, AppDataSource} from "../../data-source";
+import { ObjectType } from "../../data-source";
 import {IModelCrudService} from "../interfaces/IModelCrud";
 import slugify from "slugify";
 import {saveFile} from "../../../appConfig";
@@ -7,13 +7,11 @@ import {saveFile} from "../../../appConfig";
 export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P> {
     protected readonly repository: Repository<ObjectLiteral>;
     private readonly type: ObjectType<T>;
-    private readonly model: any;
     private readonly modelConfig ?: { [key: string]: any };
 
-    constructor(Model: Function, modelConfig ?: { [key: string]: any }) {
-        this.model = Model;
+    constructor(repository: Repository<ObjectLiteral>, modelConfig ?: { [key: string]: any }) {
+        this.repository = repository;
         this.modelConfig = modelConfig;
-        this.repository = AppDataSource.getRepository(Model);
     }
 
     public async findBy(params) {
@@ -63,6 +61,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
 
     async put(instance: P, id: number): Promise<P> {
         const instance_model = this.repository.findOneBy({id: id});
+        console.log(this.repository.target);
         if (instance_model === null) {
             throw EvalError('instance not found');
         }
@@ -83,7 +82,7 @@ export class ModelCrudServiceImplementation<T, P> implements IModelCrudService<P
         if (_object !== null) {
             await this.repository.delete(_object);
         } else {
-            throw new EntityNotFoundError(this.model, `${this.model.name.toLowerCase()} not found`);
+            throw new EntityNotFoundError(this.repository.target, `${this.repository.target} not found`);
         }
         await this.repository.delete(id);
     }
