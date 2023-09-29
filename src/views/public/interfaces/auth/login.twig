@@ -1,7 +1,7 @@
 {% extends 'public/template.twig' %}
 {% block main %}
     <main class="main-content main-content-bg mt-0">
-        <div class="page-header min-vh-100" style="background-image: url('/img/1.jpg');">
+        <div class="page-header min-vh-100" style="background-image: url('{{ req.get('host') }}://{{ req.originalUrm }}/img/1.jpg');">
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container">
                 <div class="row justify-content-center">

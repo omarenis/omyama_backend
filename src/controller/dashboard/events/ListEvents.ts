@@ -1,8 +1,6 @@
-import {Event, EventModel} from "../../../entity/Event";
-import {IModelListViewImplementation} from "../../framework/ModelListView";
+import {Event, EventModel} from "../../../entities/Event";
+import {IModelListView, IModelListViewImplementation} from "../../framework/ModelListView";
+import eventService from "../../../services/event-service";
 
-export class EventList extends IModelListViewImplementation<EventModel, Event>{
-    constructor() {
-        super(EventModel, 'dashboard/events/list.twig', 'web/events/create');
-    }
-}
+
+export const EventList: IModelListView<EventModel, Event> = IModelListViewImplementation<EventModel, Event>('dashboard/events/list.twig', 'web/events/create', eventService);

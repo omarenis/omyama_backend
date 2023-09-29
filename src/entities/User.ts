@@ -1,6 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne} from "typeorm"
-import {compare, hash } from 'bcrypt';
-import { TicketModel } from "./Ticket";
+import {compare, hash} from 'bcrypt';
+import {TicketModel} from "./Ticket";
 import {ParticipationModel} from "./Participation";
 
 import {SECRET_KEY} from "../../appConfig";
@@ -18,8 +18,9 @@ export class UserModel {
     @OneToOne(() => ProfileModel, (profile: ProfileModel) => profile.user, {cascade: true})
     @Column({type: 'text'}) role: string;
     profile: ProfileModel;
+
     async setPassword(password: string) {
-        this.password =  await hash(password, SECRET_KEY);
+        this.password = await hash(password, SECRET_KEY);
     }
 
     check_password(password: string) {
@@ -31,7 +32,7 @@ export class UserModel {
 export class ProfileModel {
     @PrimaryGeneratedColumn() id: number;
     @Column({type: 'text'}) firstname: string;
-        @Column({type: 'text'}) lastname: string;
+    @Column({type: 'text'}) lastname: string;
     @Column({type: 'text', nullable: true}) image: string;
     @Column({type: 'float'}) gainedAmount: number;
     @Column({type: 'text'}) address: string;
@@ -49,18 +50,32 @@ export interface User {
     role: string;
     username: string;
     email: string;
-    profile ?: Profile;
-    password ?: string;
-    id ?: number;
+    profile?: Profile;
+    password?: string;
+    is_active: boolean
+    id?: number;
+    check_password(password: string): Promise<boolean> | undefined;
+    setPassword(password: string): Promise<void> | undefined;
 }
 
-export interface  Profile {
+export interface Profile {
     address: string;
     firstname: string;
     lastname: string;
     gainedAmount: number;
     phone: string;
-    user ?: number | UserModel;
-    image ?: string;
-    id ?: number;
+    user?: number | UserModel;
+    image?: string;
+    id?: number;
+}
+
+
+const userModelConfig = {
+    role: {type: 'string', required: false},
+    username: {type: 'string', required: true, unique: true},
+    firstname: {type: 'string', required: true, unique: true},
+    email: {type: 'number', required: false},
+}
+const profileModelConfig = {
+
 }

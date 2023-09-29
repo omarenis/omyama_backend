@@ -1,6 +1,7 @@
 import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
-import {Block, BlockModel} from "../../entity/cms/Block";
+import {Block, BlockModel} from "../../entities/cms/Block";
 import { Request, Response } from "../../../appConfig";
+import {blockRepository} from "../../repositories";
 
 interface Image
 {
@@ -18,7 +19,7 @@ function serializeDataFromStringToObject<T>(data: string)
     return (JSON.parse(data) as T)
 }
 
-const blockService = new ModelCrudServiceImplementation<BlockModel, Block>(BlockModel)
+const blockService = ModelCrudServiceImplementation<BlockModel, Block>(blockRepository)
 export function ImageForm(request: Request, response: Response): void | Response
 {
     if(request.method === 'POST')

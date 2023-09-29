@@ -1,20 +1,17 @@
 import {ModelTemplate} from "../../framework/ModelCrudController";
-import {Page, PageModel} from "../../../entity/cms/Page";
+import {Page, PageModel} from "../../../entities/cms/Page";
 import {Request, Response} from "../../../../appConfig";
+import {pageRepository} from "../../../repositories";
+import {pageService} from "../../../services/page-service";
 
-export class PageListTemplate extends ModelTemplate<PageModel, Page> {
-    private max = 0;
-    constructor() {
-        super('dashboard/events/pages/list.twig', PageModel, '/dashboard/events/pages');
-    }
+export const PageListTemplate = ModelTemplate<PageModel, Page>('dashboard/events/pages/list.twig', pageService, '/dashboard/events/pages');
 
-    async get(request: Request, response: Response): Promise<void>
-    {
-        return response.render(this.template, {pages: await this.service.findAll()});
-    }
+PageListTemplate.get = async function (request: Request, response: Response) {
+     return response.render(this._template, {pages: await this.service.findAll()});
+}
 
-    async post(request: Request, response: Response): Promise<void> {
-        let page = await this.service.findOneBy({title: request.body.title});
+PageListTemplate.post = async function (request: Request, response: Response) {
+     let page = await this.service.findOneBy({title: request.body.title});
         if(page !== null)
         {
             response.status(400);
@@ -27,5 +24,4 @@ export class PageListTemplate extends ModelTemplate<PageModel, Page> {
             event: Number(request.query.event)
         });
         response.json(page).status(201);
-    }
 }

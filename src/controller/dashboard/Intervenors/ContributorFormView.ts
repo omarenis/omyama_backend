@@ -1,9 +1,9 @@
-import {FormViewImplementation} from "../../framework/IFormView";
-import {Contributor, ContributorModel} from "../../../entity/Contributor";
+import {Contributor, ContributorModel} from "../../../entities/Contributor";
 import {ModelCrudServiceImplementation} from "../../../services/implementations/ModelCrudService";
+import {contributorRepository} from "../../../repositories";
 
 const ContributorFormView = ()  => {
-    const contributorsService = new ModelCrudServiceImplementation<ContributorModel, Contributor>(ContributorModel);
+    const contributorsService =  ModelCrudServiceImplementation<ContributorModel, Contributor>(contributorRepository);
     return {
         get: () => {
 

@@ -1,54 +1,48 @@
 import {Request, Response} from "express";
-import { Profile, ProfileModel } from "../../entity/User";
-import {UserServiceImplementation} from "../../services/implementations/UserServiceImplementation";
-import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
+import {userService} from "../../services/user-service";
 
-export class SignupTemplate {
-    private readonly service: UserServiceImplementation;
-    private readonly profileService: ModelCrudServiceImplementation<ProfileModel, Profile>;
-
-    constructor() {
-        this.service = new UserServiceImplementation();
-        this.profileService = new ModelCrudServiceImplementation<ProfileModel, Profile>(ProfileModel);
-    }
-
-    async get(request: Request, response: Response) {
-        return response.render('public/interfaces/auth/signup.twig');
-    }
-
-    async post(request: Request, response: Response) {
-        let user = await this.service.getBy({email: request.body.email});
-        if (user !== null) {
-            request.flash('user found with the specified username', 'error');
-        } else {
-            user = await this.service.getBy({username: request.body.username});
+export const SignUpTemplateInstance =  {
+        async get(_: Request, response: Response) {
+            return response.render('public/interfaces/auth/signup.twig');
+        },
+        async post(request: Request, response: Response) {
+            let user = await userService.findOneBy({email: request.body.email});
             if (user !== null) {
-                response.render('public/interfaces/signup.twig', {
-                    message: 'user found with the specified email',
-                    category: 400
-                });
+                request.flash('user found with the specified username', 'error');
             } else {
-                try {
-                    await this.service.create({
-                        username: request.body.username,
-                        email: request.body.email,
-                        password: request.body.password,
-                        role: 'customer',
-                        profile: {
-                            firstname: request.body.firstname,
-                            lastname: request.body.lastname,
-                            address: request.body.address,
-                            gainedAmount: 0,
-                            phone: request.body.phone,
-                        }
+                user = await userService.findOneBy({username: request.body.username});
+                if (user !== null) {
+                    response.render('public/interfaces/signup.twig', {
+                        message: 'user found with the specified email',
+                        category: 400
                     });
-                    response.redirect('/');
-                    return;
-                } catch (err) {
-                    response.status(404);
+                } else {
+                    try {
+                        await userService.create({
+                            check_password(password: string): Promise<boolean> | undefined {
+                                return Promise.resolve(undefined);
+                            }, setPassword(password: string): Promise<void> | undefined {
+                                return Promise.resolve(undefined);
+                            },
+                            username: request.body.username,
+                            email: request.body.email,
+                            password: request.body.password,
+                            role: 'customer', is_active: true,
+                            profile: {
+                                firstname: request.body.firstname,
+                                lastname: request.body.lastname,
+                                address: request.body.address,
+                                gainedAmount: 0,
+                                phone: request.body.phone,
+                            }
+                        });
+                        response.redirect('/');
+                        return;
+                    } catch (err) {
+                        response.status(404);
+                    }
                 }
             }
+            return response.render('/public/interfaces/auth/signup.twig');
         }
-        return response.render('/public/interfaces/auth/signup.twig');
-    }
 }

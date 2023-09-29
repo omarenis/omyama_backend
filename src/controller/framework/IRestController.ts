@@ -1,8 +1,8 @@
-import {Request, Response} from "express";
+import {Request, Response} from "../../../appConfig";
 
 export interface IRestController<P> {
-    findAll(request: Request, response: Response): Promise<P[]>;
-    create(request: Request, response: Response): Promise<P>;
-    update(request: Request, response: Response): Promise<P>;
+    get(request: Request, response: Response): Promise<P[]>;
+    post(request: Request, response: Response): Promise<P>;
+    put(request: Request, response: Response): Promise<P>;
     delete(request: Request, response: Response): Promise<void>;
 }

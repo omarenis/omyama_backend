@@ -1,12 +1,11 @@
-import {ILoginTemplate} from "./controller/auth/ILoginTemplate";
-import {SignupTemplate} from "./controller/auth/SignupTemplate";
-import {SpeakerRestController} from "./controller/SpeakerRestController";
+import { ILoginTemplateInstance } from "./controller/auth/ILoginTemplate";
+import { SignUpTemplateInstance } from "./controller/auth/SignupTemplate";
 import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
 import {EventList} from "./controller/dashboard/events/ListEvents";
 import {PageListTemplate} from "./controller/dashboard/pages/PageListTemplate";
 import {UsersView} from "./controller/dashboard/users/list";
 import {ContactPage} from "./controller/visitor";
-import {ContributorController} from "./controller/dashboard/events/ContributorConytroller";
+import {ContributorController} from "./controller/dashboard/events/ContributorController";
 
 interface Route {
     method: string,
@@ -32,23 +31,23 @@ export const Routes: Route[] = [
     {
         method: 'get',
         route: '/public/auth/login',
-        controller: ILoginTemplate,
+        controller: ILoginTemplateInstance,
         action: 'get'
     }, {
         method: 'post',
         route: '/public/auth/login',
-        controller: ILoginTemplate,
+        controller: ILoginTemplateInstance,
         action: 'post'
     },
     {
         method: 'get',
         route: '/public/auth/signup',
-        controller: SignupTemplate,
+        controller: SignUpTemplateInstance,
         action: 'get'
     }, {
         method: 'post',
         route: '/public/auth/signup',
-        controller: SignupTemplate,
+        controller: SignUpTemplateInstance,
         action: 'post'
     },
     // the events crud
