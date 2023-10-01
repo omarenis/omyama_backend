@@ -1,6 +1,7 @@
 import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {EventModel} from "./Event";
 import {ProgramItemModel} from "./ProgramIntem";
+import {eventRepository} from "../repositories";
 
 @Entity({name: 'contributors'})
 export class ContributorModel {
@@ -45,4 +46,5 @@ export const modelConfig = {
     facebook: {type: 'string', required: true},
     google: {type: 'string', required: false},
     linkedin: {type: 'string', required: false},
+    event: {type: 'foreign_key', required: true, repository: eventRepository}
 }

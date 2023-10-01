@@ -1,7 +1,6 @@
 import {ModelTemplate} from "../../framework/ModelCrudController";
 import {Page, PageModel} from "../../../entities/cms/Page";
 import {Request, Response} from "../../../../appConfig";
-import {pageRepository} from "../../../repositories";
 import {pageService} from "../../../services/page-service";
 
 export const PageListTemplate = ModelTemplate<PageModel, Page>('dashboard/events/pages/list.twig', pageService, '/dashboard/events/pages');

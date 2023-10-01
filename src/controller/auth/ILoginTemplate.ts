@@ -1,16 +1,12 @@
 import {Request, Response} from "express";
-import {ModelCrudServiceImplementation} from "../../services/implementations/ModelCrudService";
-import {User, UserModel} from "../../entities/User";
-import {userRepository} from "../../repositories";
-import {IModelCrudService} from "../../services/interfaces/IModelCrud";
-const _userService: IModelCrudService<UserModel, User> = ModelCrudServiceImplementation<UserModel, User>(userRepository);
+import { userService } from "../../services/user-service";
 export const ILoginTemplateInstance= {
-        get(request: Request, response: Response) {
+        get(_: Request, response: Response) {
             response.render('public/interfaces/auth/login.twig');
         },
         async post(request: any, response: Response) {
             const username = request.body.username;
-            const user = await _userService.findOneBy({username});
+            const user = await userService.findOneBy({username});
             if (user === null) {
                 return response.render('public/interfaces/auth/login.twig', {
                     message: 'user not found with the specified username',

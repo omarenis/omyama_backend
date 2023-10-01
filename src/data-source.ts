@@ -18,4 +18,3 @@ export const AppDataSource = new DataSource({
     migrations: [],
     subscribers: [],
 })
-export type ObjectType<T> = { new (): T } | Function;

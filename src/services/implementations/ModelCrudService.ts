@@ -8,29 +8,28 @@ export function ModelCrudServiceImplementation<T, P>(repository: Repository<Obje
     const _modelConfig: { [key: string]: any } = modelConfig;
     function convertDataIntoModelInstance(instance: P): T {
         Object.keys(_modelConfig).forEach((key: string): void => {
-            if (this.modelConfig[key].required && !instance[key]) {
+            if (modelConfig[key].required && !instance[key]) {
                 throw new Error(`${key} is required `)
             }
-            if (this.modelConfig[key].type === 'blob') {
+            if (modelConfig[key].type === 'blob') {
                 saveFile(instance[key]).then(() => {
                     instance[key] = `/uploads/${instance[key].name}`;
                 });
             }
         });
-        if (_modelConfig?.slug !== undefined) {
+        if (modelConfig?.slug !== undefined) {
             instance['slug'] = slugify(instance[_modelConfig?.slug.fieldToSlug]);
         }
         return (instance as unknown as T);
     }
 
     return {
-        repository: _repository,
         create: async (instance: P): Promise<P> => {
             try {
-                const modelInstance: T = convertDataIntoModelInstance(instance);
+                const modelInstance: T = await repository.save( convertDataIntoModelInstance(instance));
                 return (modelInstance as unknown as P);
             } catch (err) {
-
+                console.log(err);
             }
         },
         findAll: async (): Promise<P[]> => (await _repository.find() as P[]),

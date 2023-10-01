@@ -4,17 +4,116 @@
         <button type="button" class="btn btn-outline-primary d-flex align-items-center me-4 " data-bs-toggle="modal"
                 id="add_speaker"
                 data-bs-target="#formCreationEditContribution">
-            <img src="{{ '/img/speaker.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px" />
+            <img src="{{ '/img/speaker.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
             <span class="text-capitalize ms-2">Add speaker</span>
         </button>
-        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#formCreationEditContribution"
+        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#formCreationEditContribution"
                 id="add_sponsor">
             <img src="{{ '/img/save-money.png' }}" alt="speaker add button" loading="lazy" width="40px" height="40px"/>
             <span class="text-capitalize ms-2">Add Sponsor</span>
         </button>
     </div>
-    <form class="modal fade" id="formCreationEditContribution" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" action="/dashboard/events/{{ req.params.id }}/contributors" enctype="multipart/form-data" method="post">
-        <input type="hidden" name="contribution" id="contribution" />
+    <div class="container card" style="border-radius: 20px; border: 1px solid gray">
+        <div class="table-responsive">
+            <table class="table table-flush" id="products-list">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Contributor</th>
+                    <th scope="col">position</th>
+                    <th scope="col">contribution</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for contributor in _objects %}
+                <tr>
+                    <td>
+                        <div class="d-flex">
+                            <div class="form-check my-auto">
+                            </div>
+                            <img class="w-10 ms-3" loading="lazy"
+                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
+                                 alt="hoodie">
+                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
+                        </div>
+                    </td>
+                    <td class="text-sm">position</td>
+                    <td class="text-sm">contributon</td>
+                    <td class="text-sm">
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
+                            <i class="fas fa-eye text-secondary"></i>
+                        </a>
+                        <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
+                           data-bs-original-title="Edit product">
+                            <i class="fas fa-user-edit text-secondary"></i>
+                        </a>
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
+                            <i class="fas fa-trash text-secondary"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td>
+                        <div class="d-flex">
+                            <div class="form-check my-auto">
+                            </div>
+                            <img class="w-10 ms-3"
+                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
+                                 alt="hoodie">
+                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
+                        </div>
+                    </td>
+                    <td class="text-sm">position</td>
+                    <td class="text-sm">contributon</td>
+                    <td class="text-sm">
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
+                            <i class="fas fa-eye text-secondary"></i>
+                        </a>
+                        <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
+                           data-bs-original-title="Edit product">
+                            <i class="fas fa-user-edit text-secondary"></i>
+                        </a>
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
+                            <i class="fas fa-trash text-secondary"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="d-flex">
+                            <div class="form-check my-auto">
+                            </div>
+                            <img class="w-10 ms-3"
+                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
+                                 alt="hoodie">
+                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
+                        </div>
+                    </td>
+                    <td class="text-sm">position</td>
+                    <td class="text-sm">contributon</td>
+                    <td class="text-sm">
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
+                            <i class="fas fa-eye text-secondary"></i>
+                        </a>
+                        <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
+                           data-bs-original-title="Edit product">
+                            <i class="fas fa-user-edit text-secondary"></i>
+                        </a>
+                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
+                            <i class="fas fa-trash text-secondary"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <form class="modal fade" id="formCreationEditContribution" tabindex="-1" aria-labelledby="exampleModalLabel"
+          aria-hidden="true" action="/dashboard/events/{{ req.params.id }}/contributors" enctype="multipart/form-data"
+          method="post">
+        <input type="hidden" name="contribution" id="contribution" required />
         <div class="modal-dialog modal-lg modal-dialog-scrollable w-100 align-self-center">
             <div class="modal-content" style="min-width: 1000px !important">
                 <div class="modal-header">
@@ -27,16 +126,17 @@
                             <div class="d-flex align-items-center mb-2">
                                 <label for="fullName" class="w-25 text-center">Full Name</label>
                                 <input id="fullName" class="multisteps-form__input form-control w-75" type="text"
-                                       placeholder="Full Name" name="fullName" autocomplete="true"/>
+                                       placeholder="Full Name" name="fullName" autocomplete="true" required />
                             </div>
                             <div class="d-flex align-items-center mb-2" id="positionContainer">
                                 <label for="position" id="positionLabel" class="w-25 text-center">Position</label>
                                 <input id="position" class="multisteps-form__input form-control w-75" type="text"
-                                       placeholder="Position" name="position" autocomplete="true"/>
+                                       placeholder="Position" name="position" autocomplete="true" required />
                             </div>
                             <div class="d-flex align-items-center mb-2">
                                 <label class="w-25 text-center" for="description">Description</label>
-                                <textarea class="form-control w-100" rows="8" autocomplete="true" id="description" name="description"></textarea>
+                                <textarea class="form-control w-100" rows="8" autocomplete="true" id="description" required
+                                          name="description"></textarea>
                             </div>
                         </div>
                         <div class="col-12 col-sm-4 d-flex flex-column align-items-center justify-content-center">
@@ -44,7 +144,7 @@
                                  loading="lazy" width="200px" height="150px"/>
                             <label class="mt-4 form-label d-flex align-items-center btn btn-info" for="image">
                                 <span class="text-white">Add Picture</span>
-                                <input type="file" id="image" name="image" accept="image/*" autocomplete="true" />
+                                <input type="file" id="image" name="image" accept="image/*" autocomplete="true"/>
                             </label>
                         </div>
                     </div>
@@ -77,10 +177,11 @@
 {% block scripts %}
     {{ parent() }}
     <script type="text/javascript">
-      const fileReader = new FileReader()
+      const fileReader = new FileReader();
+      const url = '{{ req.protocol }}://{{ req.get('host') }}{{ req.originalUrl }}/create';
       const positionContainer = document.getElementById('positionContainer');
       const image = document.getElementById('uploaded_file');
-      const submitForm  = document.getElementById('submitForm');
+      const submitForm = document.getElementById('submitForm');
       const fullnameLabel = document.querySelector('label[for="fullName"]');
       const contribution = document.getElementById('contribution');
       let imageFile = null;
@@ -102,7 +203,6 @@
       });
       document.getElementById('add_sponsor').addEventListener('click', () => {
         contribution.setAttribute('value', 'sponsor');
-        console.log(document.querySelector('label[for="fullName"]'));
         positionContainer.classList.replace("d-flex", "d-none");
         document.getElementById('position').setAttribute('value', "");
         image.setAttribute('src', '/img/save-money.png');
@@ -113,27 +213,30 @@
 
       form.addEventListener('submit', (event) => {
         event.preventDefault();
-        console.log();
         console.log(document.getElementById('image').getAttribute('value'));
         const data = {
-          fullName: form.elements.fullName.valueOf(),
-          description: form.elements.description.valueOf(),
-          contribution: form.elements.contribution.valueOf(),
+          fullName: form.elements.fullName.value,
+          description: form.elements.description.value,
+          contribution: form.elements.contribution.value,
           image: form.elements.image.files[0],
-          google: form.elements.google.value.valueOf(),
+          google: form.elements.google.value,
           facebook: form.elements.facebook.value,
-          linkedin: form.elements.linkedin.value
+          linkedin: form.elements.linkedin.value,
+          position: form.elements.position.value
         };
         const formData = new FormData();
         Object.keys(data).forEach((key) => {
           formData.append(key, data[key])
         });
-        console.log('{{req.get('host') }}')
         const xhr = new XMLHttpRequest();
         xhr.addEventListener('load', () => {
-          console.log('')
+          console.log(xhr.statusText);
         });
-        xhr.open('POST','{{ req.protocol }}://{{ req.get('host') }}{{ req.originalUrl }}');
+        xhr.addEventListener('readystatechange', () => {
+          console.log("hello");
+        })
+        console.log(url);
+        xhr.open('POST', url);
         xhr.send(formData);
       });
     </script>

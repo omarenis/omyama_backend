@@ -1,4 +1,4 @@
-import {Event, EventModel, modelConfig, modelConfig as eventModelConfig} from "../../../entities/Event";
+import {Event, EventModel, modelConfig} from "../../../entities/Event";
 import {FormViewImplementation} from "../../framework/IFormView";
 import {Request, Response} from "express";
 import {eventRepository} from "../../../repositories";

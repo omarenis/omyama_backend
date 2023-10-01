@@ -79,6 +79,7 @@ export const Routes: Route[] = [
         controller: SingleEvent,
         roleUserToAccess: 'customer'
     },
+    // contributors crud
     {
         method: 'get',
         route: '/dashboard/events/:id/contributors',
@@ -87,6 +88,44 @@ export const Routes: Route[] = [
     },
     {
         method: 'post',
+        route: '/dashboard/events/:id/contributors',
+        action: 'post',
+        controller: ContributorController
+    },
+    {
+        method: 'put',
+        route: '/dashboard/events/:id/contributors',
+        action: 'put',
+        controller: ContributorController
+    },
+    {
+        method: 'delete',
+        route: '/dashboard/events/:id/contributors',
+        action: 'post',
+        controller: ContributorController
+    },
+
+    // pricing crud
+    {
+        method: 'get',
+        route: '/dashboard/events/:eventId/contributors',
+        action: 'get',
+        controller: ContributorController
+    },
+    {
+        method: 'post',
+        route: '/dashboard/events/:eventId/contributors/create',
+        action: 'post',
+        controller: ContributorController
+    },
+    {
+        method: 'put',
+        route: '/dashboard/events/:eventId/contributors',
+        action: 'put',
+        controller: ContributorController
+    },
+    {
+        method: 'delete',
         route: '/dashboard/events/:id/contributors',
         action: 'post',
         controller: ContributorController

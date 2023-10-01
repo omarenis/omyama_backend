@@ -3,7 +3,6 @@ import { NextFunction, Request, Response } from "express"
 import {User, UserModel} from "../entities/User"
 
 export class UserController {
-
     private userRepository = AppDataSource.getRepository(UserModel)
     async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find()

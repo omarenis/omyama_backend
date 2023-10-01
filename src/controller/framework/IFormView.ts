@@ -18,13 +18,15 @@ export function FormViewImplementation<T, P>(service: IModelCrudService<T, P>, t
         _redirectUrl: redirectUrl,
         get: async (request: Request, response: Response) => {
             const context: { [ky: string]: any } = {};
+            console.log(request.params.id);
             if (request.params.id !== 'create') {
-                context['_object'] = await this._service.findBy({id: request.params.id});
+                context['_object'] = await service.findOneBy({id: request.params.id});
             }
-            response.render(this._template, context);
+            console.log(context);
+            response.render(template, context);
         },
         post: async (request: Request, response: Response) => {
-            const promise: Promise<P> = request.params.id !== 'create' ? this._service.put(request.body, Number(request.params.id)) : this._service.create(request.body);
+            const promise: Promise<P> = request.params.id !== 'create' ? service.put(request.body, Number(request.params.id)) : service.create(request.body);
             try {
                 await promise;
                 response.redirect(this._redirectUrl);
@@ -45,12 +47,12 @@ export function FormViewImplementationWithAjax<T, P>(service: IModelCrudService<
         get: async (request: Request, response: Response) => {
             const context: { [ky: string]: any } = {};
             if (request.params.id !== 'create') {
-                context['_object'] = await this._service.findBy({id: request.params.id});
+                context['_object'] = await service.findBy({id: request.params.id});
             }
-            response.render(this._template, context);
+            response.render(template, context);
         },
         post: async (request: Request, response: Response) => {
-            const promise: Promise<P> = request.params.id !== 'create' ? this._service.put(request.body, Number(request.params.id)) : this._service.create(request.body);
+            const promise: Promise<P> = request.params.id !== 'create' ? service.put(request.body, Number(request.params.id)) : service.create(request.body);
             try {
                 await promise;
                 response.json({});
