@@ -2,20 +2,20 @@ import {IRestController} from "../../framework/IRestController";
 import {ProgramItem} from "../../../entities/ProgramIntem";
 import {Request, Response} from "../../../../appConfig";
 import programService from "../../../services/program-service";
+import contributorService from "../../../services/contributor-service";
 const ProgramController: IRestController<ProgramItem> = {
     get: async (request: Request, response: Response) => {
-        response.render('', {'programs': await programService.findBy({
+        response.render('dashboard/events/programs.twig', { programs: await programService.findBy({
             contributors: {
                 event: request.params.id
             }
-        })} );
+        }), contributors: contributorService.findBy({ event: request.params.id, contribution: 'speaker' })} );
     },
     post: async (request: Request, response: Response) => {
         try {
             return await programService.create({
-                contributor: request.body.contributor,
+                contributor: Number(request.body.contributor),
                 description: request.body.description,
-                logo: request.files.logo,
                 title: request.body.title
             });
         } catch (error) {
@@ -25,11 +25,10 @@ const ProgramController: IRestController<ProgramItem> = {
         }
     },
     put: async (request: Request, response: Response) => {
-        console.log(request.params.eventId);
-        console.log(request.params.id);
         return null;
     },
     delete: async (Request, response: Response) => {
 
     }
 }
+export default ProgramController;

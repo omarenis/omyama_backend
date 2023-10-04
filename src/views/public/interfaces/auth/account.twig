@@ -1,0 +1,90 @@
+{% import '/public/components/account-settings.twig' as accountSettings %}
+{% extends 'public/template.twig' %}
+{% block main %}
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    <main class="main-content position-relative border-radius-lg ">
+        <div class="container-fluid my-5 py-2">
+            <div class="row mb-5">
+                <div class="col-lg-3">
+                    <div class="card position-sticky top-1">
+                        <ul class="nav flex-column bg-white border-radius-lg p-3">
+                            <li class="nav-item">
+                                <a class="nav-link text-body d-flex align-items-center" data-scroll=""
+                                   href="#profile">
+                                    <i class="ni ni-spaceship me-2 text-dark opacity-6"></i>
+                                    <span class="text-sm">Profile</span>
+                                </a>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <a class="nav-link text-body d-flex align-items-center" data-scroll=""
+                                   href="#basic-info">
+                                    <i class="ni ni-books me-2 text-dark opacity-6"></i>
+                                    <span class="text-sm">Basic Info</span>
+                                </a>
+                            </li>
+                            <li class="nav-item pt-2">
+                                <a class="nav-link text-body d-flex align-items-center" data-scroll=""
+                                   href="#password">
+                                    <i class="ni ni-atom me-2 text-dark opacity-6"></i>
+                                    <span class="text-sm">Change Password</span>
+                                </a>
+                            </li>
+
+
+                            <li class="nav-item pt-2">
+                                <a class="nav-link text-body d-flex align-items-center" data-scroll=""
+                                   href="#delete">
+                                    <i class="ni ni-settings-gear-65 me-2 text-dark opacity-6"></i>
+                                    <span class="text-sm">Delete Account</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 mt-lg-0 mt-4">
+                    <div class="card card-body" id="profile">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="col-sm-auto col-4">
+                                <div class="avatar avatar-xl position-relative">
+                                    <img src="/img/team/team1.jpeg" alt="bruce"
+                                         class="w-100 border-radius-lg shadow-sm">
+                                </div>
+                            </div>
+                            <div class="col-sm-auto col-8 my-auto">
+                                <div class="h-100">
+                                    <h5 class="mb-1 font-weight-bolder">
+                                        Mark Johnson
+                                    </h5>
+                                    <p class="mb-0 font-weight-bold text-sm">
+                                        CEO / Co-Founder
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex">
+
+                                <div class="form-check form-switch ms-2">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Basic Info -->
+                    <div class="card mt-4" id="basic-info">
+                        <div class="card-header">
+                            <h5>Basic Info</h5>
+                        </div>
+                        {{ accountSettings.acountData() }}
+                        <!-- Card Change Password -->
+                        <div class="card mt-4" id="password">
+                            {{ accountSettings.resetPassword() }}
+                        </div>
+                        <!-- Card Change Password -->
+
+                        <!-- Card Delete Account -->
+                        {{ accountSettings.deleteAccount() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

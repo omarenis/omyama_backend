@@ -12,7 +12,7 @@ import {downloadFile, Request} from "../appConfig";
 import * as cors from "cors";
 import * as connect_memcached from "connect-memcached";
 
-const checkRole = (req, res, next, role) => {
+const checkRole = (req: Request, res: Response, next: Function, role: string) => {
     if (role === undefined) {
         next();
     } else {
@@ -27,13 +27,11 @@ const checkRole = (req, res, next, role) => {
         }
     }
 }
-const flash = require('flash-express');
 const MemcachedStore = connect_memcached(session);
 AppDataSource.initialize().then(async () => {
-
     const app = require('express')();
     app.use(cors());
-    app.use(flash());
+    app.use(require('flash-express')());
     app.use(require('connect-flash')());
     app.set('/', 'static');
     app.set("twig options", {
@@ -69,37 +67,43 @@ AppDataSource.initialize().then(async () => {
         preserveExtension: true
     }));
 
-    app.use(function (req: Request, res: Response, next) {
+    app.use(function (req: Request, res: Response, next: Function) {
         res.locals.req = req;
         res.locals.flash = req.flash;
         next();
     });
-    app.get('/test', function (request: any, response: Response) {
-        response.render('test.twig');
-    });
 
-    app.get('/', (request: Request, response: Response) => {
+    app.get('/', (_: Request, response: Response) => {
         return response.render('public/interfaces/visitor/index.twig');
     });
 
     app.get('/uploads/:filename', downloadFile);
-    app.post('/upload', (req: any, res, next) => {
-        req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err) => {
+    app.post('/upload', (req: Request, res: Response, _: Function) => {
+        req.files.file.mv(join(__dirname, `uploads/${req.files.file.name}`), (err: any) => {
             if (err === undefined) {
                 res.send('hello world');
             }
         });
     });
 
-    function index_controller(request: any, response: Response) {
-        response.render('test.twig');
+    function test_controller(_: any, response: Response) {
+        response.render('test/test.twig');
     }
 
+    function test_2_controller(_: any, response: Response)
+    {
+        response.render('test/test2.twig');
+    }
 
-    app.get('/test', index_controller);
+    function pricing_page(_:any, response: Response)
+    {
+        response.render('public/interfaces/visitor/');
+    }
+
+    app.get('/test1', test_controller);
+    app.get('/test2', test_2_controller);
     // register express routes from defined application routes
     Routes.forEach(route => {
-        console.log(route.controller);
         app[route.method](route.route, (req, res, next) => {
             checkRole(req, res, next, route?.roleUserToAccess);
         }, (req: any, res: Response, next: Function) => {

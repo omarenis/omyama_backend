@@ -9,9 +9,9 @@
         {% block title %} {% endblock %}
     </title>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
-    <link href="/css/nucleo-icons.css" rel="stylesheet"/>
-    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
-    <link href="/css/nucleo-svg.css" rel="stylesheet"/>
+    <link href="{{ "/css/nucleo-icons.css" }}" rel="stylesheet"/>
+    <link href="{{ "/css/nucleo-svg.css" }}" rel="stylesheet"/>
+    <link href="{{ "/css/nucleo-svg.css" }}" rel="stylesheet"/>
     <!-- CSS Files -->
     <link href="{{ '/css/argon-dashboard.min.css' }}" rel="stylesheet"/>
     {% block styles %} {% endblock %}
@@ -30,8 +30,8 @@
     <script type="text/javascript" src="{{ "/js/core/popper.min.js" }}"></script>
     <script type="text/javascript" src="{{ "/js/core/bootstrap.min.js" }}"></script>
     <script type="text/javascript" src="{{ '/js/plugins/perfect-scrollbar.min.js' }}"></script>
-    <script type="text/javascript" src="/js/plugins/smooth-scrollbar.min.js"></script>
-    <script type="text/javascript" src="/js/plugins/quill.min.js"></script>
+    <script type="text/javascript" src="{{ "/js/plugins/smooth-scrollbar.min.js" }}"></script>
+    <script type="text/javascript" src="{{ "/js/plugins/quill.min.js" }}"></script>
     <script type="text/javascript">
       const win = navigator.platform.indexOf('Win') > -1;
       if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -40,7 +40,7 @@
         });
       }
     </script>
-    <script src="/js/argon-dashboard.min.js"></script>
+    <script src="{{ "/js/argon-dashboard.min.js" }}"></script>
 {% endblock scripts %}
 </body>
 </html>

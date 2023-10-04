@@ -7,5 +7,5 @@ export interface IModelCrudService<T, P>
     findOneBy(params: {[key: string]: string}): Promise<P>;
     findBy(params ?: object): Promise<P[]>;
     loadData(instanceModel: T): P;
-    put(instance: P, id: number): Promise<P>
+    put(instance: Partial<P>, id: number): Promise<P>
 }

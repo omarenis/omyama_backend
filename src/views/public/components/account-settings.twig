@@ -1,0 +1,107 @@
+{% macro accountData(user) %}
+    <form class="card-body pt-0" action="post" enctype="multipart/form-data" method="post">
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label" for="firstname">First Name</label>
+                <div class="input-group">
+                    <input id="firstname" name="firstName" class="form-control"
+                           type="text" placeholder="Alec" required="required"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="form-label" for="lastname">Last Name</label>
+                <div class="input-group">
+                    <input id="lastname" name="lastName" class="form-control"
+                           type="text" placeholder="Thompson" required="required"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label mt-4" for="email">Email</label>
+                <div class="input-group">
+                    <input name="email" class="form-control" type="email"
+                           placeholder="example@email.com" id="email"/>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <label class="form-label mt-4" for="location">Your Address</label>
+                <div class="input-group">
+                    <input id="location" name="location" class="form-control"
+                           type="text" placeholder="Sydney, A"/>
+                </div>
+            </div>
+            <div class="col-6">
+                <label class="form-label mt-4" for="phone">Phone Number</label>
+                <div class="input-group">
+                    <input id="phone" name="phone" class="form-control"
+                           type="number" placeholder="+40 735 631 620"/>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endmacro %}
+
+{% macro resetPassword() %}
+    <div class="card-header">
+        <h5>Change Password</h5>
+    </div>
+    <form class="card-body pt-0">
+        <label class="form-label">Current password</label>
+        <div class="form-group">
+            <input class="form-control" type="password"
+                   placeholder="Current password">
+        </div>
+        <label class="form-label">New password</label>
+        <div class="form-group">
+            <input class="form-control" type="password"
+                   placeholder="New password">
+        </div>
+        <label class="form-label">Confirm new password</label>
+        <div class="form-group">
+            <input class="form-control" type="password"
+                   placeholder="Confirm password">
+        </div>
+        <h5 class="mt-5">Password requirements</h5>
+        <p class="text-muted mb-2">
+            Please follow this guide for a strong password:
+        </p>
+        <ul class="text-muted ps-4 mb-0 float-start">
+            <li>
+                <span class="text-sm">One special characters</span>
+            </li>
+            <li>
+                <span class="text-sm">Min 6 characters</span>
+            </li>
+            <li>
+                <span class="text-sm">One number (2 are recommended)</span>
+            </li>
+            <li>
+                <span class="text-sm">Change it often</span>
+            </li>
+        </ul>
+        <button class="btn bg-gradient-dark btn-sm float-end mt-6 mb-0">Update
+            password
+        </button>
+    </form>
+{% endmacro %}
+
+{% macro deleteAccount() %}
+<div class="card mt-4" id="delete">
+                            <div class="card-header">
+                                <h5>Delete Account</h5>
+                                <p class="text-sm mb-0">Once you delete your account, there is no going
+                                    back. Please be certain.</p>
+                            </div>
+                            <div class="card-body d-sm-flex pt-0">
+
+
+                                <button class="btn bg-gradient-danger mb-0 " type="button"
+                                        name="button">Delete Account
+                                </button>
+                            </div>
+                        </div>
+{% endmacro %}

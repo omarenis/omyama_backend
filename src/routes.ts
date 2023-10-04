@@ -2,10 +2,11 @@ import { ILoginTemplateInstance } from "./controller/auth/ILoginTemplate";
 import { SignUpTemplateInstance } from "./controller/auth/SignupTemplate";
 import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
 import {EventList} from "./controller/dashboard/events/ListEvents";
-import {PageListTemplate} from "./controller/dashboard/pages/PageListTemplate";
+import {PageListTemplate} from "./controller/dashboard/events/pages/PageListTemplate";
 import {UsersView} from "./controller/dashboard/users/list";
 import {ContactPage} from "./controller/visitor";
 import {ContributorController} from "./controller/dashboard/events/ContributorController";
+import ProgramController from "./controller/dashboard/events/ProgramController";
 
 interface Route {
     method: string,
@@ -105,31 +106,32 @@ export const Routes: Route[] = [
         controller: ContributorController
     },
 
-    // pricing crud
+    // program crud
     {
         method: 'get',
         route: '/dashboard/events/:eventId/contributors',
         action: 'get',
-        controller: ContributorController
+        controller: ProgramController
     },
     {
         method: 'post',
         route: '/dashboard/events/:eventId/contributors/create',
         action: 'post',
-        controller: ContributorController
+        controller: ProgramController
     },
     {
         method: 'put',
         route: '/dashboard/events/:eventId/contributors',
         action: 'put',
-        controller: ContributorController
+        controller: ProgramController
     },
     {
         method: 'delete',
         route: '/dashboard/events/:id/contributors',
         action: 'post',
-        controller: ContributorController
+        controller: ProgramController
     },
+
     // the pages crud
     {
         method: 'get',

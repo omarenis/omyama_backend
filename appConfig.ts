@@ -12,10 +12,10 @@ export interface Response extends GlobalResponse {
 
 }
 
-export const SECRET_KEY = "$2b$10$bqgY5QHENX0IcRDfg8.upO";
-export const REDIS_SECRET_KEY = "2(DCA4Vjjdt)y#B*W8Fu38#gD2a$qTV5Wsb23Du#pW7&WVsk3TW%8IIF!*R%MTy^";
+export const SECRET_KEY: string = "$2b$10$bqgY5QHENX0IcRDfg8.upO";
+export const REDIS_SECRET_KEY: string = "2(DCA4Vjjdt)y#B*W8Fu38#gD2a$qTV5Wsb23Du#pW7&WVsk3TW%8IIF!*R%MTy^";
 export const type = "mysql";
-export const host = "localhost";
+export const host = "127.0.0.1";
 export const port = 3306;
 export const username = "test";
 export const password = "test";
