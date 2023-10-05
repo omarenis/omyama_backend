@@ -4,7 +4,7 @@ import {SingleEvent} from "./controller/dashboard/events/SingleEvent";
 import {EventList} from "./controller/dashboard/events/ListEvents";
 import {PageListTemplate} from "./controller/dashboard/events/pages/PageListTemplate";
 import {UsersView} from "./controller/dashboard/users/list";
-import {ContactPage} from "./controller/visitor";
+import {contributorPublicController} from "./controller/visitor";
 import {ContributorController} from "./controller/dashboard/events/ContributorController";
 import ProgramController from "./controller/dashboard/events/ProgramController";
 
@@ -17,18 +17,6 @@ interface Route {
 }
 
 export const Routes: Route[] = [
-    {
-        method: 'get',
-        route: '/public/contact',
-        controller: ContactPage,
-        action: 'get'
-    },
-    {
-        method: 'post',
-        route: '/public/contact',
-        controller: ContactPage,
-        action: 'post'
-    },
     {
         method: 'get',
         route: '/public/auth/login',
@@ -109,26 +97,26 @@ export const Routes: Route[] = [
     // program crud
     {
         method: 'get',
-        route: '/dashboard/events/:eventId/contributors',
+        route: '/dashboard/events/:id/program',
         action: 'get',
         controller: ProgramController
     },
     {
         method: 'post',
-        route: '/dashboard/events/:eventId/contributors/create',
+        route: '/dashboard/events/:eventId/program/create',
         action: 'post',
         controller: ProgramController
     },
     {
         method: 'put',
-        route: '/dashboard/events/:eventId/contributors',
+        route: '/dashboard/events/:eventId/program/:id',
         action: 'put',
         controller: ProgramController
     },
     {
         method: 'delete',
-        route: '/dashboard/events/:id/contributors',
-        action: 'post',
+        route: '/dashboard/events/:eventId/program/:id',
+        action: 'delete',
         controller: ProgramController
     },
 
@@ -145,11 +133,20 @@ export const Routes: Route[] = [
         action: 'post',
         controller: SingleEvent
     },
+
+
+    // public epages for event
     {
         method: 'get',
-        route: '/public/events/:id',
+        route: '/public/events/:slug',
         action: 'get',
         controller: SingleEvent
+    },
+    {
+        method: 'get',
+        action: 'get',
+        route: '/public/events/:eventSlug/speakers/:fullName',
+        controller: contributorPublicController
     },
     {
         method: 'get',

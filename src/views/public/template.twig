@@ -179,9 +179,9 @@
     </style>
 {% endblock %}
 {% block header %}
-        {% block navbar %}
-            <header class="bg-transparent">
-                <nav class="navbar navbar-expand-lg border-radius-0 shadow-none fixed-top">
+    {% block navbar %}
+        <header class="bg-transparent">
+            <nav class="navbar navbar-expand-lg border-radius-0 shadow-none fixed-top">
                 <div class="container-fluid container-lg ps-2 pe-0">
                     <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-white text-xl"
                        href="/public">
@@ -241,43 +241,43 @@
                                 </a>
                             </li>
                             {% if req.session.user is defined and not req.session.user.is_superuser %}
-                            <li class="nav-item  ms-2">
-                                <a role="button" href="/dashboard/events"
-                                   class="nav-link ps-3  cursor-pointer text-center "
-                                   id="dropdownMenuDocs">
-                                    go to dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item  ms-2">
-                                <a role="button" href="/public/auth/logout"
-                                   class="nav-link  cursor-pointer text-center "
-                                   id="dropdownMenuDocs">
-                                    logout
-                                </a>
-                            </li>
+                                <li class="nav-item  ms-2">
+                                    <a role="button" href="/dashboard/events"
+                                       class="nav-link ps-3  cursor-pointer text-center "
+                                       id="dropdownMenuDocs">
+                                        go to dashboard
+                                    </a>
+                                </li>
+                                <li class="nav-item  ms-2">
+                                    <a role="button" href="/public/auth/logout"
+                                       class="nav-link  cursor-pointer text-center "
+                                       id="dropdownMenuDocs">
+                                        logout
+                                    </a>
+                                </li>
                             {% elseif req.session.user is not defined %}
-                            <li class="nav-item  ms-2">
-                                <a role="button" href="/public/auth/login"
-                                   class="nav-link ps-3  cursor-pointer text-center "
-                                   id="dropdownMenuDocs">
-                                    Sign in
-                                </a>
-                            </li>
-                            <li class="nav-item  ms-2">
-                                <a role="button" href="/public/auth/signup"
-                                   class="nav-link  cursor-pointer text-center "
-                                   id="dropdownMenuDocs">
-                                    Sign up
-                                </a>
-                            </li>
+                                <li class="nav-item  ms-2">
+                                    <a role="button" href="/public/auth/login"
+                                       class="nav-link ps-3  cursor-pointer text-center "
+                                       id="dropdownMenuDocs">
+                                        Sign in
+                                    </a>
+                                </li>
+                                <li class="nav-item  ms-2">
+                                    <a role="button" href="/public/auth/signup"
+                                       class="nav-link  cursor-pointer text-center "
+                                       id="dropdownMenuDocs">
+                                        Sign up
+                                    </a>
+                                </li>
                             {% endif %}
 
                         </ul>
                     </div>
                 </div>
             </nav>
-            </header>
-        {% endblock %}
+        </header>
+    {% endblock %}
 {% endblock %}
 <main>
     {% block main %}

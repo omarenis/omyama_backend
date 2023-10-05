@@ -1,9 +1,9 @@
 import {mailjet, Request, Response} from "../../appConfig";
 import eventService from "../services/event-service";
+import contributorService from "../services/contributor-service";
 
-export const ContactPage = {
-    get: (_: Request, response: Response) => response.render('public/interfaces/visitor/contact.twig'),
-    post: (request: Request, response: Response) => {
+export const ContactBloc = {
+    post: (request: Request, _: Response) => {
         if (request.method === 'POST') {
             mailjet.post('send', {version: 'v3.1'}).request({
                 Messages: [
@@ -32,18 +32,47 @@ export const ContactPage = {
 
 
 export const eventPage = {
-    get: (request: Request, response: Response) => {
-        const event = eventService.findOneBy({
+    get: async (request: Request, response: Response) => {
+        const event = await eventService.findOneBy({
             'slug': request.params.slug
         });
-        response.render('public/interfaces/events/single.twig')
+        if(event !== null)
+        {
+            const speakers = [];
+            const sponsors = [];
+            event.contributors.forEach((contributor) => {
+                if(contributor)
+                {
+                    response.render('public/interfaces/events/single.twig', {image: event.image, sponsors, speakers, settings: event.settings, })
+                }
+            })
+
+        }
     }
 }
 
+export const contributorPublicController = {
+    get: async (request: Request, response: Response) => {
+        const contributor = await contributorService.findOneBy({
+            event: {
+                slug: request.params.eventSlug
+            },
+            fullName: request.params.fullName
+        });
+        if(contributor !== null)
+        {
+            response.status(200);
+            response.render('/public/interfaces/events/speaker.twig', {contributor});
+        } else {
+            response.status(404);
+            response.send();
+        }
+    }
+}
 
 export const Participation = {
     get: (request: Request, response: Response) => {
-
+        response.render('/public/interfaces/events/participation.twig');
     },
     post: (request: Request, response: Response) => {
 

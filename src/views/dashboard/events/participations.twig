@@ -7,148 +7,147 @@
     </style>
 {% endblock %}
 {% block formStep %}
-<div class="container-fluid py-4">
-    <div class="d-sm-flex justify-content-between">
-        <div class="d-flex">
-            <div class="dropdown d-inline">
-                <a href="javascript:" class="btn btn-outline-white dropdown-toggle " data-bs-toggle="dropdown"
-                   id="navbarDropdownMenuLink2">
-                    Filters
-                </a>
-                <ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2"
-                    data-popper-placement="left-start">
-                    <li>
-                        <a class="dropdown-item border-radius-md" href="javascript:">Status: Paid</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item border-radius-md" href="javascript:">Status: Refunded</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item border-radius-md" href="javascript:">Status: Canceled</a>
-                    </li>
-                    <li>
-                        <hr class="horizontal dark my-2">
-                    </li>
-                    <li>
-                        <a class="dropdown-item border-radius-md text-danger" href="javascript:">Remove Filter</a>
-                    </li>
-                </ul>
-            </div>
-            <button class="btn btn-icon btn-outline-white ms-2 export" data-type="csv" type="button">
+    <div class="container-fluid py-4">
+        <div class="d-sm-flex justify-content-between">
+            <div class="d-flex">
+                <div class="dropdown d-inline">
+                    <a href="javascript:" class="btn btn-outline-white dropdown-toggle " data-bs-toggle="dropdown"
+                       id="navbarDropdownMenuLink2">
+                        Filters
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg-start px-2 py-3" aria-labelledby="navbarDropdownMenuLink2"
+                        data-popper-placement="left-start">
+                        <li>
+                            <a class="dropdown-item border-radius-md" href="javascript:">Status: Paid</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item border-radius-md" href="javascript:">Status: Refunded</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item border-radius-md" href="javascript:">Status: Canceled</a>
+                        </li>
+                        <li>
+                            <hr class="horizontal dark my-2">
+                        </li>
+                        <li>
+                            <a class="dropdown-item border-radius-md text-danger" href="javascript:">Remove Filter</a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="btn btn-icon btn-outline-white ms-2 export" data-type="csv" type="button">
                     <span class="btn-inner--icon">
                         <i class="ni ni-archive-2"></i>
                     </span>
-                <span class="btn-inner--text">Export CSV</span>
-            </button>
+                    <span class="btn-inner--text">Export CSV</span>
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table table-flush" id="datatable-search">
-                        <thead class="thead-light">
-                        <tr>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Participant
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Date participation
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Status
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Email
-                            </th>
-                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                Phone number
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="text-xs font-weight-bold  align-middle text-center">
-                                <div class="d-flex align-items-center">
-                                    <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
-                                    <span>Orlando Imieto</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center text-xs font-weight-bold">
-                                <span class="align-middle text-center">1 Nov, 10:20 AM</span>
-                            </td>
-                            <td class="text-xs font-weight-bold">
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-check" aria-hidden="true"></i>
-                                    </button>
-                                    <span>Paid</span>
-                                </div>
-                            </td>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="table-responsive">
+                        <table class="table table-flush" id="datatable-search">
+                            <thead class="thead-light">
+                            <tr>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Participant
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Date participation
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Status
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Email
+                                </th>
+                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Phone number
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="text-xs font-weight-bold  align-middle text-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                        <span>Orlando Imieto</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-xs font-weight-bold">
+                                    <span class="align-middle text-center">1 Nov, 10:20 AM</span>
+                                </td>
+                                <td class="text-xs font-weight-bold">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-icon-only btn-rounded btn-outline-success mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-check" aria-hidden="true"></i>
+                                        </button>
+                                        <span>Paid</span>
+                                    </div>
+                                </td>
 
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
-                            </td>
-                            <td class="text-xs font-weight-bold align-middle text-center">
-                                <span class="align-middle text-center">58211413</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-xs font-weight-bold  align-middle text-center">
-                                <div class="d-flex align-items-center">
-                                    <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
-                                    <span>Orlando Imieto</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center">
-                                <span class="align-middle text-center text-xs font-weight-bold">1 Nov, 10:20 AM</span>
-                            </td>
-                            <td class="text-xs font-weight-bold">
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-undo" aria-hidden="true"></i>
-                                    </button>
-                                    <span>Refunded</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
-                            </td>
-                            <td class="text-xs font-weight-bold align-middle text-center">
-                                <span class="align-middle text-center">58211413</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-xs font-weight-bold  align-middle text-center">
-                                <div class="d-flex align-items-center">
-                                    <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
-                                    <span>Orlando Imieto</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center">
-                                <span class="align-middle text-center text-xs font-weight-bold">1 Nov, 10:20 AM</span>
-                            </td>
-                            <td class="text-xs font-weight-bold">
-                                <div class="d-flex align-items-center">
-                                    <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
-                                        <i class="fas fa-times" aria-hidden="true"></i>
-                                    </button>
-                                    <span>Canceled</span>
-                                </div>
-                            </td>
-                            <td class="align-middle text-center text-sm">
-                                <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
-                            </td>
-                            <td class="text-xs font-weight-bold align-middle text-center">
-                                <span class="my-2 text-xs">58211413</span>
-                            </td>
-                        </tr>
-
-                        </tbody>
-                    </table>
+                                <td class="align-middle text-center text-sm">
+                                    <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
+                                </td>
+                                <td class="text-xs font-weight-bold align-middle text-center">
+                                    <span class="align-middle text-center">58211413</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs font-weight-bold  align-middle text-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                        <span>Orlando Imieto</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="align-middle text-center text-xs font-weight-bold">1 Nov, 10:20 AM</span>
+                                </td>
+                                <td class="text-xs font-weight-bold">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-icon-only btn-rounded btn-outline-dark mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-undo" aria-hidden="true"></i>
+                                        </button>
+                                        <span>Refunded</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
+                                </td>
+                                <td class="text-xs font-weight-bold align-middle text-center">
+                                    <span class="align-middle text-center">58211413</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-xs font-weight-bold  align-middle text-center">
+                                    <div class="d-flex align-items-center">
+                                        <img src="/img/team-1.jpg" class="avatar avatar-xs me-2" alt="user image">
+                                        <span>Orlando Imieto</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <span class="align-middle text-center text-xs font-weight-bold">1 Nov, 10:20 AM</span>
+                                </td>
+                                <td class="text-xs font-weight-bold">
+                                    <div class="d-flex align-items-center">
+                                        <button class="btn btn-icon-only btn-rounded btn-outline-danger mb-0 me-2 btn-sm d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-times" aria-hidden="true"></i>
+                                        </button>
+                                        <span>Canceled</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <p class="text-secondary mb-0 text-sm">laurent@user.com</p>
+                                </td>
+                                <td class="text-xs font-weight-bold align-middle text-center">
+                                    <span class="my-2 text-xs">58211413</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}

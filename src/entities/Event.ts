@@ -1,10 +1,12 @@
 import "reflect-metadata";
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Ticket, TicketModel} from "./Ticket";
 import {Profile, ProfileModel} from "./User";
 import {PageModel} from "./cms/Page";
 import {Contributor, ContributorModel} from "./Contributor";
 import { UploadedFile } from "express-fileupload";
+import {SettingsEvent, SettingsEventModel} from "./Settings";
+import {profileRepository} from "../repositories";
 
 @Entity({name: 'events'})
 export class EventModel {
@@ -22,8 +24,9 @@ export class EventModel {
     @Column({type: "float"}) priceHosting: number;
     @Column({type: 'float', nullable: true, default: null}) priceTransporting: number;
     @ManyToOne(() => ProfileModel, (customer) => customer.events) customer: ProfileModel;
-    @OneToMany(() => PageModel, (page: PageModel) => page.event) pages: PageModel;
+    @OneToMany(() => PageModel, (page: PageModel) => page.event) pages: PageModel[];
     @OneToMany(() => ContributorModel, (contributor) => contributor.event) contributors: ContributorModel[];
+    @OneToOne(() => SettingsEventModel, (settings) => settings.event) settings: SettingsEventModel;
 }
 
 export class Event {
@@ -31,7 +34,8 @@ export class Event {
                 public dateEnd: Date, public address: string, public hosting: string, public priceHosting: number,
                 public priceTransporting: number, public isOnline: boolean, public url: string, public customer: Profile, public id ?: number,
                 public tickets ?: Ticket[],
-                public contributors ?: Contributor[]) {
+                public contributors ?: Contributor[],
+                public settings ?: SettingsEvent) {
     }
 }
 
@@ -48,5 +52,5 @@ export const modelConfig = {
     hosting: {type: 'string', required: false },
     priceHosting: {type: 'float', required: true },
     priceTransporting: {type: 'float', required: true},
-    customer: {type: "foreign_key", required: true, classMap: () => ProfileModel}
+    customer: {type: "foreign_key", required: true, repository: profileRepository}
 }

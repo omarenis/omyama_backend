@@ -1,0 +1,41 @@
+{% extends 'public/interfaces/events/template.twig' %}
+{% block styles %}
+    {{ parent() }}
+    <style>
+        legend {
+            display: none;
+        }
+    </style>
+{% endblock %}
+{% block main %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="mb-4">Speaker Details</h5>
+                        <div class="row">
+                            <div class="col-xl-5 col-lg-6 text-center">
+                                <img class="w-100 border-radius-lg shadow-lg mx-auto"
+                                     src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/product-thumb.jpg"
+                                     alt="chair">
+                            </div>
+                            <div class="col-lg-5 mx-auto">
+                                <h3 class="mt-lg-0 mt-4">Name of speaker</h3>
+                                <h4 class="mt-4">
+                                    Position
+                                </h4>
+                                <label class="mt-4">Description</label>
+                                <p>The most beautiful curves of this swivel stool adds an elegant touch to any
+                                    environment
+                                    hhhhhhhhhhhhhhhhhhhhhhhh
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

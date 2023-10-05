@@ -5,11 +5,14 @@ import programService from "../../../services/program-service";
 import contributorService from "../../../services/contributor-service";
 const ProgramController: IRestController<ProgramItem> = {
     get: async (request: Request, response: Response) => {
-        response.render('dashboard/events/programs.twig', { programs: await programService.findBy({
-            contributors: {
-                event: request.params.id
+        console.log(request.params);
+        response.render('dashboard/events/program.twig', { programs: await programService.findBy({
+            contributor: {
+                event: {
+                    id: Number(request.params.id)
+                }
             }
-        }), contributors: contributorService.findBy({ event: request.params.id, contribution: 'speaker' })} );
+        }), contributors: contributorService.findBy({ event: {id: Number(request.params.id)}, contribution: 'speaker' })} );
     },
     post: async (request: Request, response: Response) => {
         try {

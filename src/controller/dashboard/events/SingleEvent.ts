@@ -3,10 +3,11 @@ import {FormViewImplementation} from "../../framework/IFormView";
 import {Request, Response} from "express";
 import {eventRepository} from "../../../repositories";
 import {ModelCrudServiceImplementation} from "../../../services/implementations/ModelCrudService";
+import eventService from "../../../services/event-service";
 
 const {upload, saveFile} = require('../../../../appConfig');
 
-export const SingleEvent = FormViewImplementation<EventModel, Event>(ModelCrudServiceImplementation<EventModel, Event>(eventRepository, modelConfig), 'dashboard/events/single.twig', '/dashboard/events');
+export const SingleEvent = FormViewImplementation<EventModel, Event>(eventService, 'dashboard/events/single.twig', '/dashboard/events');
 SingleEvent.post = async (request: Request, response: Response) => {
     let event = null;
     if (request.params.id !== 'create') {
@@ -16,9 +17,9 @@ SingleEvent.post = async (request: Request, response: Response) => {
         }
     } else {
         console.log(request.body);
-        const events = await SingleEvent._service.findOneBy({title: request.body.title});
+        const events = await eventService.findOneBy({title: request.body.title});
         if (events !== null) {
-            response.render(SingleEvent._template, {message: 'event is already created'});
+            response.render('dashboard/events/single.twig', {message: 'event is already created'});
         }
     }
     if (event === null) {
@@ -38,10 +39,17 @@ SingleEvent.post = async (request: Request, response: Response) => {
         };
         try {
             await saveFile(request.files.image);
-            await SingleEvent._service.create(data);
-            response.redirect('/dashboard/events');
+            let redirect = '/dashboard/events'
+            if(request.params.id === 'create')
+            {
+            await eventService.create(data);
+            } else {
+                await eventService.put(data, Number(request.params.id));
+                redirect = `/dashboard/events/${Number(request.params.id)}`;
+            }
+            response.redirect(redirect);
         } catch (err) {
-            return response.render(SingleEvent._template, {message: err.message})
+            return response.render('dashboard/events/single.twig', {message: err.message})
         }
     }
 }

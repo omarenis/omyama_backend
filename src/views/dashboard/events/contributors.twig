@@ -26,20 +26,20 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for contributor in _objects %}
+                {% for contributor in contributors %}
                 <tr>
                     <td>
                         <div class="d-flex">
                             <div class="form-check my-auto">
                             </div>
                             <img class="w-10 ms-3" loading="lazy"
-                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
+                                 src="{{ contributor.image }}"
                                  alt="hoodie">
-                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
+                            <h6 class="ms-3 my-auto">{{ contributor.fullName }}</h6>
                         </div>
                     </td>
-                    <td class="text-sm">position</td>
-                    <td class="text-sm">contributon</td>
+                    <td class="text-sm">{{ contributor.position }}</td>
+                    <td class="text-sm">{{ contributor.contribution }}</td>
                     <td class="text-sm">
                         <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
                             <i class="fas fa-eye text-secondary"></i>
@@ -54,58 +54,6 @@
                     </td>
                 </tr>
                 {% endfor %}
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="form-check my-auto">
-                            </div>
-                            <img class="w-10 ms-3"
-                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
-                                 alt="hoodie">
-                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
-                        </div>
-                    </td>
-                    <td class="text-sm">position</td>
-                    <td class="text-sm">contributon</td>
-                    <td class="text-sm">
-                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
-                            <i class="fas fa-eye text-secondary"></i>
-                        </a>
-                        <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
-                           data-bs-original-title="Edit product">
-                            <i class="fas fa-user-edit text-secondary"></i>
-                        </a>
-                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
-                            <i class="fas fa-trash text-secondary"></i>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="d-flex">
-                            <div class="form-check my-auto">
-                            </div>
-                            <img class="w-10 ms-3"
-                                 src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/soft-ui-design-system/assets/img/ecommerce/adidas-hoodie.jpg"
-                                 alt="hoodie">
-                            <h6 class="ms-3 my-auto">BKLGO Full Zip Hoodie</h6>
-                        </div>
-                    </td>
-                    <td class="text-sm">position</td>
-                    <td class="text-sm">contributon</td>
-                    <td class="text-sm">
-                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Preview product">
-                            <i class="fas fa-eye text-secondary"></i>
-                        </a>
-                        <a href="javascript:" class="mx-3" data-bs-toggle="tooltip"
-                           data-bs-original-title="Edit product">
-                            <i class="fas fa-user-edit text-secondary"></i>
-                        </a>
-                        <a href="javascript:" data-bs-toggle="tooltip" data-bs-original-title="Delete product">
-                            <i class="fas fa-trash text-secondary"></i>
-                        </a>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>
